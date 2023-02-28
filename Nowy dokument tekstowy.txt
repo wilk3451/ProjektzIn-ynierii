@@ -17,6 +17,7 @@ ustawienia wyświetlania, dźwięku, savy itp
 
 stany dźwięku - walka, łażenie, menu
 
+sterowanie
 
 ekran włączania
 star gry - menu, autorzy, wybór sava, przyciski - start, wyjdź itp
