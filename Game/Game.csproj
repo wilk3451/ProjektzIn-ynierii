@@ -64,6 +64,9 @@
     <Compile Include="UserControls\UserControl_SelectCharacter.xaml.cs">
       <DependentUpon>UserControl_SelectCharacter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Window_MainMenu_Settings.xaml.cs">
+      <DependentUpon>Window_MainMenu_Settings.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -81,6 +84,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\UserControl_SelectCharacter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Window_MainMenu_Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -114,8 +121,6 @@
   <ItemGroup>
     <Resource Include="Creature.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Windows\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

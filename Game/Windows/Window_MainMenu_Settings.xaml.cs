@@ -10,22 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-
-namespace Game
+namespace Game.Windows
 {
     /// <summary>
-    /// Logika interakcji dla klasy MainWindow.xaml
+    /// Logika interakcji dla klasy Window_MainMenu_Settings.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Window_MainMenu_Settings : Window
     {
-        public MainWindow()
+        public Window_MainMenu_Settings()
         {
             InitializeComponent();
-
-            Content = new UserControl_MainMenu();
         }
     }
 }

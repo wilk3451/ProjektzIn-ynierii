@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Game.Windows;
 
 namespace Game
 {
@@ -35,17 +36,23 @@ namespace Game
 
         private void button_Load_Last_Save_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-
+            (Parent as Window).Content = new UserControl_SelectCharacter();
         }
 
         private void button_Settings_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            
+            Window_MainMenu_Settings settings = new Window_MainMenu_Settings()
+            {
+                Owner = this.Parent as Window,
+                ShowInTaskbar = false
+            };
+
+            settings.ShowDialog();
         }
 
         private void button_About_Click(object sender, RoutedEventArgs e)
         {
-
+            (Parent as Window).Content = new UserControl_SelectCharacter();
         }
 
         private void button_Exit_Click(object sender, RoutedEventArgs e)

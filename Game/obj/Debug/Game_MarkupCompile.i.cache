@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\PC\source\repos\Game\obj\Debug\
+C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\
 Game
 none
 false
 DEBUG;TRACE
-C:\Users\PC\source\repos\Game\App.xaml
-3-219306509
+C:\Users\PC\source\repos\ProjektzInzynierii\Game\App.xaml
+4-666164877
 
-8-177893632
+9873521257
 13-1505183044
-MainWindow.xaml;UserControls\UserControl_MainMenu.xaml;UserControls\UserControl_SelectCharacter.xaml;
+MainWindow.xaml;UserControls\UserControl_MainMenu.xaml;UserControls\UserControl_SelectCharacter.xaml;Windows\Window_MainMenu_Settings.xaml;
 
 True
 

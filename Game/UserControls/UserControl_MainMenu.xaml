@@ -6,27 +6,54 @@
              xmlns:local="clr-namespace:Game"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             Background="White">
+             Background="#1d040f">
 
     <UserControl.Resources>
 
     </UserControl.Resources>
 
 
-    <Border Margin="10"
-            CornerRadius="20">
+    <Border Margin="2">
+
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <LinearGradientBrush.GradientStops>
+                    <GradientStop Color="#020024" Offset="0.0" />
+                    <GradientStop Color="#481132" Offset="0.75" />
+                    <GradientStop Color="#6a1a38" Offset="1.0" />
+                </LinearGradientBrush.GradientStops>
+            </LinearGradientBrush>
+        </Border.Background>
 
         <Grid>
             <Grid.Resources>
                 <Style TargetType="{x:Type Border}">
-                    <Setter Property="Margin" Value="10"/>
+                    <Setter Property="Margin" Value="0"/>
                 </Style>
 
+
                 <Style TargetType="{x:Type Button}">
-                    <Setter Property="Margin" Value="10 10 10 10"/>
-                    <Setter Property="FontSize" Value="30"/>
-                    
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Margin" Value="5 5 5 5"/>
+                    <Setter Property="FontSize" Value="28"/>
+                    <Setter Property="Foreground" Value="#cfb28f"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="{TemplateBinding Background}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="#e4cdc8"/>
+                        </Trigger>
+                    </Style.Triggers>
                 </Style>
+
             </Grid.Resources>
 
             
@@ -36,7 +63,7 @@
 
             
             <Grid.RowDefinitions>
-                <RowDefinition Height="150"></RowDefinition>
+                <RowDefinition Height="130"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
             </Grid.RowDefinitions>
@@ -46,8 +73,10 @@
                        Grid.Column="0"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       FontSize="72"
-                       FontWeight="Bold">
+                       FontSize="60"
+                       FontWeight="Bold"
+                       Foreground="#cfb28f"
+                       >
                 Our Game
             </TextBlock>
 
@@ -65,7 +94,7 @@
                 <Grid Grid.Column="0"
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Stretch"
-                      Margin="30">
+                      Margin="10">
 
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -75,11 +104,11 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <Button Grid.Row="0" Name="button_Load" Content="Continue" Click="button_Load_Last_Save_Click" Background="SkyBlue" IsEnabled="False"/>
-                    <Button Grid.Row="1" Content="New game" Click="button_New_Game_Click" Background="LightGreen"/>
-                    <Button Grid.Row="2" Content="Settings" Click="button_Settings_Click" Background="#ffe868"/>
-                    <Button Grid.Row="3" Content="About" Click="button_About_Click" Background="Coral"/>
-                    <Button Grid.Row="4" Content="Exit" Click="button_Exit_Click" ToolTip="Goodbye" Background="Salmon"/>
+                    <Button Grid.Row="0" Name="button_Load" Content="Continue" Click="button_Load_Last_Save_Click" IsEnabled="False"/>
+                    <Button Grid.Row="1" Content="New game" Click="button_New_Game_Click"/>
+                    <Button Grid.Row="2" Content="Settings" Click="button_Settings_Click"/>
+                    <Button Grid.Row="3" Content="About" Click="button_About_Click"/>
+                    <Button Grid.Row="4" Content="Exit" Click="button_Exit_Click" ToolTip="Goodbye"/>
                 </Grid>
             </Grid>
             <TextBlock Grid.Column="0" Grid.Row="2" Name="tblc_version" Text="© 2015-2023" VerticalAlignment="Bottom"/>
