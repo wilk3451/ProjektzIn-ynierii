@@ -23,5 +23,10 @@ namespace Game.Windows
         {
             InitializeComponent();
         }
+
+        private void button_Close(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

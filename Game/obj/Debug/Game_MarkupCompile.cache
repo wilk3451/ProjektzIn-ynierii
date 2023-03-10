@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\PC\source\repos\ProjektzInzynierii\Game\App.xaml
-4-666164877
+51911104626
 
-81715880624
+91831562650
 13-1505183044
-MainWindow.xaml;UserControls\UserControl_MainMenu.xaml;UserControls\UserControl_SelectCharacter.xaml;Windows\Window_MainMenu_Settings.xaml;
+MainWindow.xaml;UserControls\UserControl_MainMenu.xaml;UserControls\UserControl_SelectCharacter.xaml;Windows\Window_MainMenu_About.xaml;Windows\Window_MainMenu_Settings.xaml;
 
 False
 

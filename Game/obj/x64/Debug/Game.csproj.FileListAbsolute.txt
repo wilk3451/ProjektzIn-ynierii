@@ -1,0 +1,4 @@
+C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\x64\Debug\Game.csproj.AssemblyReference.cache
+C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\x64\Debug\Windows\Window_MainMenu_Settings.g.cs
+C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\x64\Debug\Game_MarkupCompile.cache
+C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\x64\Debug\Game_MarkupCompile.lref

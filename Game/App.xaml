@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:Game"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <FontFamily x:Key="CustomFont">"/Fonts/#BERNHC"</FontFamily>
     </Application.Resources>
 </Application>

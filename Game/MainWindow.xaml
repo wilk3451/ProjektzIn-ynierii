@@ -11,13 +11,11 @@
         WindowStartupLocation="CenterScreen"
         WindowState="Normal">
 
+
     <Window.Resources>
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="Margin" Value="0 5 0 0"/>
-            <Setter Property="FontSize" Value="20"/>
-        </Style>
+        
     </Window.Resources>
-    
+
     <Grid>
         
     </Grid>

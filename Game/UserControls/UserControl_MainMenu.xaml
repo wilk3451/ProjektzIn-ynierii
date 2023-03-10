@@ -5,16 +5,59 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Game"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
+             d:DesignHeight="600" d:DesignWidth="920"
              Background="#1d040f">
 
     <UserControl.Resources>
 
+        <Style TargetType="Border">
+            <Setter Property="Background" Value="#191919"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="TextElement.FontFamily" Value="/Game;component/Fonts/#Bernard MT Condensed"/>
+        </Style>
+
+
+
+        <Style TargetType="Button">
+            
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Margin" Value="5 10 5 5"/>
+            <Setter Property="FontSize" Value="36"/>
+            <Setter Property="Foreground" Value="#c3c3c3"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#e4cdc8"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+
+        <Style TargetType="TextBlock" x:Key="Title">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="70"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#c3c3c3"/>
+        </Style>
+
+
+       
+
     </UserControl.Resources>
 
 
-    <Border Margin="2">
-
+    <Border>
+        <!--
         <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                 <LinearGradientBrush.GradientStops>
@@ -23,64 +66,29 @@
                     <GradientStop Color="#6a1a38" Offset="1.0" />
                 </LinearGradientBrush.GradientStops>
             </LinearGradientBrush>
-        </Border.Background>
+        </Border.Background> -->
 
-        <Grid>
-            <Grid.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="Margin" Value="0"/>
-                </Style>
+        <Grid Margin="30">
 
-
-                <Style TargetType="{x:Type Button}">
-                    <Setter Property="Background" Value="Transparent"/>
-                    <Setter Property="Margin" Value="5 5 5 5"/>
-                    <Setter Property="FontSize" Value="28"/>
-                    <Setter Property="Foreground" Value="#cfb28f"/>
-                    <Setter Property="BorderThickness" Value="0"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <Border Background="{TemplateBinding Background}">
-                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="#e4cdc8"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-
-            </Grid.Resources>
-
-            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="130"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
             </Grid.RowDefinitions>
 
-            
+
             <TextBlock Grid.Row="0"
                        Grid.Column="0"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       FontSize="60"
-                       FontWeight="Bold"
-                       Foreground="#cfb28f"
-                       >
+                       Style="{StaticResource Title}">
                 Our Game
             </TextBlock>
 
-            
+
             <Grid Grid.Column="0" Grid.Row="1"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center">
@@ -90,7 +98,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                
+
                 <Grid Grid.Column="0"
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Stretch"
@@ -114,11 +122,5 @@
             <TextBlock Grid.Column="0" Grid.Row="2" Name="tblc_version" Text="© 2015-2023" VerticalAlignment="Bottom"/>
         </Grid>
     </Border>
-
-
-
-
-
-
 
 </UserControl>

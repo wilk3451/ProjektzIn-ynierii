@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Game.Windows;
+using Game.UserControls;
+
 
 namespace Game
 {
@@ -52,7 +54,13 @@ namespace Game
 
         private void button_About_Click(object sender, RoutedEventArgs e)
         {
-            (Parent as Window).Content = new UserControl_SelectCharacter();
+            Window_MainMenu_About about = new Window_MainMenu_About()
+            {
+                Owner = this.Parent as Window,
+                ShowInTaskbar = false
+            };
+
+            about.ShowDialog();
         }
 
         private void button_Exit_Click(object sender, RoutedEventArgs e)

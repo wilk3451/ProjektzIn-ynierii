@@ -38,3 +38,6 @@ C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\Game.exe
 C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\Game.pdb
 C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\Windows\Window_MainMenu_Settings.g.cs
 C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\Windows\Window_MainMenu_Settings.baml
+C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\Windows\Window_MainMenu_About.g.cs
+C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\Windows\Window_MainMenu_About.baml
+C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\App.baml
