@@ -33,7 +33,18 @@ namespace Game
 
         private void button_New_Game_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            (Parent as Window).Content = new UserControl_SelectCharacter();
+            //(Parent as Window).Content = new UserControl_SelectCharacter();
+            // normalnie w tym miejscu mogłoby być tworzone nowe okno wyboru postaci, jak gracz kliknie w postać - tamto okno musi zostac zamknięte
+            // i stworzone nowe - ekranu gry z przekazanymi danymi...
+            // teraz: od razu tworzy się okienko gry:
+
+            Window_GameScreen gameScreen = new Window_GameScreen()
+            {
+                Owner = this.Parent as Window,
+                ShowInTaskbar = false
+            };
+
+            gameScreen.ShowDialog();
         }
 
         private void button_Load_Last_Save_Click(object sender, System.Windows.RoutedEventArgs e)

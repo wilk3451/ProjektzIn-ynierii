@@ -84,6 +84,9 @@
     <Compile Include="UserControls\UserControl_SelectCharacter.xaml.cs">
       <DependentUpon>UserControl_SelectCharacter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Window_GameScreen.xaml.cs">
+      <DependentUpon>Window_GameScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\Window_MainMenu_About.xaml.cs">
       <DependentUpon>Window_MainMenu_About.xaml</DependentUpon>
     </Compile>
@@ -107,6 +110,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\UserControl_SelectCharacter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Window_GameScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

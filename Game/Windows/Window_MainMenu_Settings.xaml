@@ -12,134 +12,147 @@
         WindowState="Normal">
 
     <Window.Resources>
+
+        <Style TargetType="Border">
+                <Setter Property="Background" Value="#191919"/>
+                <Setter Property="Margin" Value="0"/>
+            <Setter Property="TextElement.FontFamily" Value="/Game;component/Fonts/#Bernard MT Condensed"/>
+        </Style>
+
+        <Style TargetType="Button">
+
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Margin" Value="5 5 5 5"/>
+            <Setter Property="FontSize" Value="36"/>
+            <Setter Property="Foreground" Value="#c3c3c3"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#8a8a8a"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+
+        <Style TargetType="TextBlock" x:Key="Title">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="58"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#c3c3c3"/>
+        </Style>
+
         <Style TargetType="TextBlock">
-            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="Foreground" Value="#c3c3c3"/>
         </Style>
     </Window.Resources>
 
 
-    <Grid Margin="70 130">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="160"></ColumnDefinition>
-            <ColumnDefinition Width="100"></ColumnDefinition>
-            <ColumnDefinition Width="160"></ColumnDefinition>
-            <ColumnDefinition Width="100"></ColumnDefinition>
-            <ColumnDefinition Width="190"></ColumnDefinition>
-            <ColumnDefinition Width="50"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-
-        <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
 
 
 
-        <Grid Grid.Column="0" Grid.Row="0">
-            <TextBlock>Move up</TextBlock>
+    <Border>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="170"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="150"></RowDefinition>
+            </Grid.RowDefinitions>
+
+
+            <Grid Grid.Row="0">
+                <TextBlock Style="{StaticResource Title}">
+                    Controls
+                </TextBlock>
+            </Grid>
+
+
+
+
+
+            <Grid Grid.Row="1">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="360"></ColumnDefinition>
+                        <ColumnDefinition Width="160"></ColumnDefinition>
+                        <ColumnDefinition Width="40"></ColumnDefinition>
+                        <ColumnDefinition Width="360"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+
+                    <Grid Grid.Column="1" Grid.Row="0">
+                        <TextBlock>Move up</TextBlock>
+                    </Grid>
+                    <Grid Grid.Column="1" Grid.Row="1">
+                        <TextBlock>Move down</TextBlock>
+                    </Grid>
+                    <Grid Grid.Column="1" Grid.Row="2">
+                        <TextBlock>Move left</TextBlock>
+                    </Grid>
+                    <Grid Grid.Column="1" Grid.Row="3">
+                        <TextBlock>Move right</TextBlock>
+                    </Grid>
+                    <Grid Grid.Column="1" Grid.Row="4">
+                        <TextBlock>Menu</TextBlock>
+                    </Grid>
+
+
+                    <Grid Grid.Column="2" Grid.Row="0">
+                        <TextBlock>W</TextBlock>
+                    </Grid>
+                    <Grid Grid.Column="2" Grid.Row="1">
+                        <TextBlock>S</TextBlock>
+                    </Grid>
+                    <Grid Grid.Column="2" Grid.Row="2">
+                        <TextBlock>A</TextBlock>
+                    </Grid>
+                    <Grid Grid.Column="2" Grid.Row="3">
+                        <TextBlock>D</TextBlock>
+                    </Grid>
+                    <Grid Grid.Column="2" Grid.Row="4">
+                        <TextBlock>M</TextBlock>
+                    </Grid>
+
+                </Grid>
+
+            </Grid>
+        
+            
+            
+            
+            <Grid Grid.Row="2">
+                <Button Content="Go Back" Click="button_Close"></Button>
+            </Grid>
+            
         </Grid>
-        <Grid Grid.Column="0" Grid.Row="1">
-            <TextBlock>Move down</TextBlock>
-        </Grid>
-        <Grid Grid.Column="0" Grid.Row="2">
-            <TextBlock>Move left</TextBlock>
-        </Grid>
-        <Grid Grid.Column="0" Grid.Row="3">
-            <TextBlock>Move right</TextBlock>
-        </Grid>
+        
 
 
-
-
-        <Grid Grid.Column="1" Grid.Row="0">
-            <TextBlock>W</TextBlock>
-        </Grid>
-        <Grid Grid.Column="1" Grid.Row="1">
-            <TextBlock>S</TextBlock>
-        </Grid>
-        <Grid Grid.Column="1" Grid.Row="2">
-            <TextBlock>A</TextBlock>
-        </Grid>
-        <Grid Grid.Column="1" Grid.Row="3">
-            <TextBlock>D</TextBlock>
-        </Grid>
-
-
-
-
-
-        <Grid Grid.Column="2" Grid.Row="0">
-            <TextBlock>Normal Attack</TextBlock>
-        </Grid>
-        <Grid Grid.Column="2" Grid.Row="1">
-            <TextBlock>Use Skill</TextBlock>
-        </Grid>
-        <Grid Grid.Column="2" Grid.Row="2">
-            <TextBlock>Special Attack</TextBlock>
-        </Grid>
-        <Grid Grid.Column="2" Grid.Row="3">
-            <TextBlock>Dash</TextBlock>
-        </Grid>
-
-
-
-
-        <Grid Grid.Column="3" Grid.Row="0">
-            <TextBlock>LMB</TextBlock>
-        </Grid>
-        <Grid Grid.Column="3" Grid.Row="1">
-            <TextBlock>E</TextBlock>
-        </Grid>
-        <Grid Grid.Column="3" Grid.Row="2">
-            <TextBlock>Q</TextBlock>
-        </Grid>
-        <Grid Grid.Column="3" Grid.Row="3">
-            <TextBlock>RMB</TextBlock>
-        </Grid>
-
-
-
-
-        <Grid Grid.Column="4" Grid.Row="0">
-            <TextBlock>Interact / Use</TextBlock>
-        </Grid>
-        <Grid Grid.Column="4" Grid.Row="1">
-            <TextBlock>Inventory</TextBlock>
-        </Grid>
-        <Grid Grid.Column="4" Grid.Row="2">
-            <TextBlock>Character Screen</TextBlock>
-        </Grid>
-        <Grid Grid.Column="4" Grid.Row="3">
-            <TextBlock>Menu</TextBlock>
-        </Grid>
-
-
-
-        <Grid Grid.Column="5" Grid.Row="0">
-            <TextBlock>F</TextBlock>
-        </Grid>
-        <Grid Grid.Column="5" Grid.Row="1">
-            <TextBlock>I</TextBlock>
-        </Grid>
-        <Grid Grid.Column="5" Grid.Row="2">
-            <TextBlock>C</TextBlock>
-        </Grid>
-        <Grid Grid.Column="5" Grid.Row="3">
-            <TextBlock>M</TextBlock>
-        </Grid>
-
-        <Grid Grid.Column="2" Grid.Row="4">
-            <Button Content="Go Back" Click="button_Close"></Button>
-        </Grid>
-
-    </Grid>
-
-
-
-
+    </Border>
+    
 
 
 </Window>

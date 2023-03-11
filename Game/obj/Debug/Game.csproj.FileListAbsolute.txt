@@ -41,3 +41,5 @@ C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\Windows\Window_MainMe
 C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\Windows\Window_MainMenu_About.g.cs
 C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\Windows\Window_MainMenu_About.baml
 C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\App.baml
+C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\Windows\Window_GameScreen.g.cs
+C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\Windows\Window_GameScreen.baml

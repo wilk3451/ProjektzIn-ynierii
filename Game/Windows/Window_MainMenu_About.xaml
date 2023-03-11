@@ -5,8 +5,64 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Game.Windows"
         mc:Ignorable="d"
-        Title="Window_MainMenu_About" Height="450" Width="800">
-    <Grid>
+        Title="Window_MainMenu_About" Height="600" Width="920"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Normal">
+
+    
+    <Window.Resources>
+
+        <Style TargetType="Border">
+            <Setter Property="Background" Value="#191919"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="TextElement.FontFamily" Value="/Game;component/Fonts/#Bernard MT Condensed"/>
+        </Style>
+
+        <Style TargetType="Button">
+
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Margin" Value="5 5 5 5"/>
+            <Setter Property="FontSize" Value="36"/>
+            <Setter Property="Foreground" Value="#c3c3c3"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#8a8a8a"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+
+        <Style TargetType="TextBlock" x:Key="Title">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="58"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#c3c3c3"/>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="Foreground" Value="#c3c3c3"/>
+        </Style>
+    </Window.Resources>
+
+
+
+
+    <Border>
+        
         <Button Content="Close" Click="button_Close"></Button>
-    </Grid>
+    </Border>
 </Window>
