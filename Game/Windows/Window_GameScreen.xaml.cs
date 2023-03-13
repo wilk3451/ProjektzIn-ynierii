@@ -48,21 +48,25 @@ namespace Game.Windows
             if (goLeft == true && Canvas.GetLeft(Player) > 5)
             {
                 Canvas.SetLeft(Player, Canvas.GetLeft(Player) - playerSpeed);
+                kolizja("l");
             }
 
             if (goRight == true && Canvas.GetLeft(Player) + (Player.Width + 20) < Application.Current.MainWindow.Width)
             {
                 Canvas.SetLeft(Player, Canvas.GetLeft(Player) + playerSpeed);
+                kolizja("p");
             }
 
             if (goUp == true && Canvas.GetTop(Player) > 5)
             {
                 Canvas.SetTop(Player, Canvas.GetTop(Player) - playerSpeed);
+                kolizja("g");
             }
 
             if (goDown == true && Canvas.GetTop(Player) + (Player.Height * 2) < Application.Current.MainWindow.Height)
             {
                 Canvas.SetTop(Player, Canvas.GetTop(Player) + playerSpeed);
+                kolizja("d");
             }
         }
 
@@ -103,6 +107,43 @@ namespace Game.Windows
             if (e.Key == Key.S)
             {
                 goDown = false;
+            }
+        }
+
+        private void kolizja(string kierunek)
+        {
+            foreach(var x in Test.Children.OfType<Rectangle>())
+            {
+                if ((string)x.Tag == "kolizja")
+                {
+                    Rect playerHB = new Rect(Canvas.GetLeft(Player), Canvas.GetTop(Player), Player.Width, Player.Height);
+                    Rect Kolidowanie = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);//hitboxy
+
+                    if (playerHB.IntersectsWith(Kolidowanie))
+                    {
+                        if (kierunek == "l")
+                        {
+                            Canvas.SetLeft(Player, Canvas.GetLeft(Player) + playerSpeed);
+                            
+                        }
+                        else if(kierunek == "p")
+                        {
+                            Canvas.SetLeft(Player, Canvas.GetLeft(Player) - playerSpeed);
+                            
+                        }
+                        else if (kierunek == "g")
+                        {
+                            Canvas.SetTop(Player, Canvas.GetTop(Player) + playerSpeed);
+
+                        }
+                        else if (kierunek == "d")
+                        {
+                            Canvas.SetTop(Player, Canvas.GetTop(Player) - playerSpeed);
+
+                        }
+
+                    }
+                }   
             }
         }
     }

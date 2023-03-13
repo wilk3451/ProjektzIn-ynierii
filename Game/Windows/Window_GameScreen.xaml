@@ -10,18 +10,21 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         WindowState="Normal">
-    
-    
+
+
     <Canvas x:Name="Test"
             Background="Gray"
             Focusable="True"
             KeyDown="KeyIsDown"
             KeyUp="KeyIsUp">
 
-        <Rectangle x:Name="Player" Height="50" Width="50" Fill="Black" Canvas.Left="50" Canvas.Top="50"/>
-        
+        <Rectangle x:Name="Player" Tag="uzytkownik"  Height="50" Width="50" Fill="Black" Canvas.Left="448" Canvas.Top="198"/>
+        <Rectangle x:Name="Sciana" Height="278" Tag="kolizja" Width="57" Fill="red" Canvas.Left="84.8" Canvas.Top="53"/>
+        <Rectangle x:Name="Sciana_Copy" Height="88" Tag="kolizja" Width="479" Fill="red" Canvas.Left="147" Canvas.Top="53"/>
+        <Rectangle x:Name="Sciana_Copy1" Height="278" Tag="kolizja" Width="57" Fill="red" Canvas.Left="631" Canvas.Top="53"/>
+        <Rectangle x:Name="Sciana_Copy2" Height="59" Tag="kolizja" Width="489" Fill="red" Canvas.Left="142" Canvas.Top="272"/>
 
     </Canvas>
-    
-    
+
+
 </Window>
