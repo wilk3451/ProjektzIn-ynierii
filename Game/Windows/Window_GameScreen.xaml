@@ -5,20 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Game.Windows"
         mc:Ignorable="d"
-        Title="Window_GameScreen" Height="450" Width="800"
+        Title="Window_GameScreen" Height="480" Width="810"
         WindowStyle="SingleBorderWindow"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         WindowState="Normal">
     
     
-    <Canvas x:Name="Test"
+    <Canvas x:Name="gameArea"
             Background="Gray"
             Focusable="True"
-            KeyDown="KeyIsDown"
-            KeyUp="KeyIsUp">
+            Height="450"
+            Width="800">
 
-        <Rectangle x:Name="Player" Height="50" Width="50" Fill="Black" Canvas.Left="50" Canvas.Top="50"/>
+        
         
 
     </Canvas>
