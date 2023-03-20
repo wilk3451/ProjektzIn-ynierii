@@ -60,13 +60,22 @@ namespace Game.Windows
         public void DrawWorld()
         {
             // Rysowanie głownego bohatera
+            // Body
             player.Body = new Rectangle();
             gameArea.Children.Add(player.Body);
             player.Body.Width = 20;
             player.Body.Height = 20;
             player.Body.Fill = new SolidColorBrush(Colors.Violet);
             gameArea.DataContext = player.Body;
-
+            // Face
+            player.Face = new Rectangle();
+            gameArea.Children.Add(player.Face);
+            player.Face.Width = 10;
+            player.Face.Height = 20;
+            Canvas.SetTop(player.Face, player.Position.Y);
+            Canvas.SetLeft(player.Face, player.Position.X);
+            player.Face.Fill = new SolidColorBrush(Colors.Black);
+            gameArea.DataContext = player.Face;
 
 
 
@@ -122,21 +131,29 @@ namespace Game.Windows
             if ((Keyboard.GetKeyStates(Key.D) & KeyStates.Down) > 0)
             {
                 player.Position.X += moveDistance;
+                player.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
+                player.Face.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
             }
 
             if ((Keyboard.GetKeyStates(Key.A) & KeyStates.Down) > 0)
             {
                 player.Position.X -= moveDistance;
+                player.RenderTransform = new RotateTransform(0, player.Width / 2, player.Height / 2);
+                player.Face.RenderTransform = new RotateTransform(0, player.Width / 2, player.Height / 2);
             }
 
             if ((Keyboard.GetKeyStates(Key.W) & KeyStates.Down) > 0)
             {
                 player.Position.Y -= moveDistance;
+                player.RenderTransform = new RotateTransform(90, player.Width / 2, player.Height / 2);
+                player.Face.RenderTransform = new RotateTransform(90, player.Width / 2, player.Height / 2);
             }
 
             if ((Keyboard.GetKeyStates(Key.S) & KeyStates.Down) > 0)
             {
                 player.Position.Y += moveDistance;
+                player.RenderTransform = new RotateTransform(-90, player.Width / 2, player.Height / 2);
+                player.Face.RenderTransform = new RotateTransform(-90, player.Width / 2, player.Height / 2);
             }
         }
 
@@ -148,6 +165,8 @@ namespace Game.Windows
         {
             Canvas.SetLeft(player.Body, player.Position.X);
             Canvas.SetTop(player.Body, player.Position.Y);
+            Canvas.SetLeft(player.Face, player.Position.X);
+            Canvas.SetTop(player.Face, player.Position.Y);
         }
 
 
