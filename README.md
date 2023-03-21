@@ -39,7 +39,7 @@ jeremi - sprawdzić, czy funkcje kolizji rzeczywiście działają
   
   klasa Mapa, która alokuje pamięć na tablicę mapa[string] i według niej generuje potrzebne obiety typu ściana itp (jak było)
   
-bool kolizja(Player player, Wall wall)
+bool kolizja(Player player, Wall wall)//zrob jako metodae
 {}
 
 za tydzień:
