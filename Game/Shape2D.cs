@@ -17,7 +17,9 @@ namespace Game
             this.Position = Position;
             this.Scale = Scale;
             this.Tag = Tag;
+            
         }
+       
     }
 
     public class ListofShapes

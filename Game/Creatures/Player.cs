@@ -23,5 +23,6 @@ namespace Game.Creatures
 
             Face = new System.Windows.Shapes.Rectangle();
         }
+        
     }
 }

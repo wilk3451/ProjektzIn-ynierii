@@ -29,7 +29,9 @@ namespace Game.Windows
 
         public Player player = new Player(vector, 20, 20);
 
-        //private static List<Shape2D> AllShapes = new List<Shape2D>();
+
+
+        public List<Wall> Walls = new List<Wall>();
 
 
 
@@ -56,6 +58,16 @@ namespace Game.Windows
 
 
 
+        string[,] Map =
+            {
+                {"w","w","w","w","w","w","w","w","w","w"},
+                {"w",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",","w",",",",",",",",",",","w"},
+                {"w",",",",","w",",",",",",",",",",","w"},
+                {"w",",","w","w",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",","w"},
+                {"w","w","w","w","w","w","w","w","w","w"},
+            };
 
         public void DrawWorld()
         {
@@ -79,43 +91,29 @@ namespace Game.Windows
 
 
 
-            // Przykład ścian - dla obiektów jednego typu - lista!
+            
+            for(int i = 0; i < Map.GetLength(0); i++)
+            {
+                for(int j = 0; j < Map.GetLength(1); j++)
+                {
+                    if (Map[i, j] == "w")
+                    {
+                        Wall sciana = new Wall(new Vector2(i*80,j*80), 80, 80);
+                        sciana.Body = new Rectangle();
+                        sciana.Body.Width = 80;
+                        sciana.Body.Height = 80;//czemu ustawienia z konstruktora nie dzialaja?
+                        gameArea.Children.Add(sciana.Body);
 
-            Rectangle leftWall = new Rectangle();
-            gameArea.Children.Add(leftWall);
-            leftWall.Width = 20;
-            leftWall.Height = gameArea.Height;
-            leftWall.Fill = new SolidColorBrush(Colors.Brown);
-            Canvas.SetTop(leftWall, 0);
-            Canvas.SetLeft(leftWall, 0);
-            gameArea.DataContext = leftWall;
+                        Canvas.SetTop(sciana.Body, sciana.Position.Y);
+                        Canvas.SetLeft(sciana.Body, sciana.Position.X);
 
-            Rectangle rightWall = new Rectangle();
-            gameArea.Children.Add(rightWall);
-            rightWall.Width = 20;
-            rightWall.Height = gameArea.Height;
-            rightWall.Fill = new SolidColorBrush(Colors.Brown);
-            Canvas.SetTop(rightWall, 0);
-            Canvas.SetLeft(rightWall, gameArea.Width - rightWall.Width);
-            gameArea.DataContext = rightWall;
-
-            Rectangle topWall = new Rectangle();
-            gameArea.Children.Add(topWall);
-            topWall.Width = gameArea.Width;
-            topWall.Height = 20;
-            topWall.Fill = new SolidColorBrush(Colors.Brown);
-            Canvas.SetTop(topWall, 0);
-            Canvas.SetLeft(topWall, 0);
-            gameArea.DataContext = topWall;
-
-            Rectangle bottomWall = new Rectangle();
-            gameArea.Children.Add(bottomWall);
-            bottomWall.Width = gameArea.Width;
-            bottomWall.Height = 20;
-            bottomWall.Fill = new SolidColorBrush(Colors.Brown);
-            Canvas.SetTop(bottomWall, gameArea.Height - bottomWall.Height);
-            Canvas.SetLeft(bottomWall, 0);
-            gameArea.DataContext = bottomWall;
+                        sciana.Body.Fill = new SolidColorBrush(Colors.Blue);
+                        gameArea.DataContext = sciana.Body;
+                        Walls.Add(sciana);
+                        
+                    }
+                }
+            }
         }
 
 
@@ -128,32 +126,72 @@ namespace Game.Windows
         {
             int moveDistance = (int)player.Speed;
 
+            Vector2 lastPosition = Vector2.Zero();
+
             if ((Keyboard.GetKeyStates(Key.D) & KeyStates.Down) > 0)
             {
-                player.Position.X += moveDistance;
-                player.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
-                player.Face.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
+                if (!isCollidingWithWall(player,new Vector2(moveDistance,0)))
+                {
+                    player.Position.X += moveDistance;
+                    player.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
+                    player.Face.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
+                }
+                else {
+                    player.Position.X -= moveDistance;
+                    //player.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
+                    //player.Face.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
+                }
+                
             }
 
             if ((Keyboard.GetKeyStates(Key.A) & KeyStates.Down) > 0)
             {
-                player.Position.X -= moveDistance;
-                player.RenderTransform = new RotateTransform(0, player.Width / 2, player.Height / 2);
-                player.Face.RenderTransform = new RotateTransform(0, player.Width / 2, player.Height / 2);
+                if (!isCollidingWithWall(player, new Vector2(-moveDistance, 0)))
+                {
+                    player.Position.X -= moveDistance;
+                    player.RenderTransform = new RotateTransform(0, player.Width / 2, player.Height / 2);
+                    player.Face.RenderTransform = new RotateTransform(0, player.Width / 2, player.Height / 2);
+                }
+                else
+                {
+                    player.Position.X += moveDistance;
+                    //player.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
+                    //player.Face.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
+                }
             }
 
             if ((Keyboard.GetKeyStates(Key.W) & KeyStates.Down) > 0)
             {
-                player.Position.Y -= moveDistance;
-                player.RenderTransform = new RotateTransform(90, player.Width / 2, player.Height / 2);
-                player.Face.RenderTransform = new RotateTransform(90, player.Width / 2, player.Height / 2);
+                if (!isCollidingWithWall(player, new Vector2(0,moveDistance)))
+                {
+                    player.Position.Y -= moveDistance;
+                    player.RenderTransform = new RotateTransform(90, player.Width / 2, player.Height / 2);
+                    player.Face.RenderTransform = new RotateTransform(90, player.Width / 2, player.Height / 2);
+                }
+                else
+                {
+                    player.Position.Y += moveDistance;
+                    //player.RenderTransform = new RotateTransform(-90, player.Width / 2, player.Height / 2);
+                    //player.Face.RenderTransform = new RotateTransform(-90, player.Width / 2, player.Height / 2);
+                }
+                
+                
             }
 
             if ((Keyboard.GetKeyStates(Key.S) & KeyStates.Down) > 0)
             {
-                player.Position.Y += moveDistance;
-                player.RenderTransform = new RotateTransform(-90, player.Width / 2, player.Height / 2);
-                player.Face.RenderTransform = new RotateTransform(-90, player.Width / 2, player.Height / 2);
+                if (!isCollidingWithWall(player, new Vector2(0, -moveDistance)))
+                {
+                    player.Position.Y += moveDistance;
+                    player.RenderTransform = new RotateTransform(-90, player.Width / 2, player.Height / 2);
+                    player.Face.RenderTransform = new RotateTransform(-90, player.Width / 2, player.Height / 2);
+                }
+                else {
+                    player.Position.Y -= moveDistance;
+                    //player.RenderTransform = new RotateTransform(90, player.Width / 2, player.Height / 2);
+                    //player.Face.RenderTransform = new RotateTransform(90, player.Width / 2, player.Height / 2);
+                }
+                
             }
         }
 
@@ -169,48 +207,34 @@ namespace Game.Windows
             Canvas.SetTop(player.Face, player.Position.Y);
         }
 
-
-
-
-
-        /*
-        private void kolizja(int kierunek)
+        bool isCollidingWithWall(GameSprite Object, Vector2 v)
         {
-            foreach (var x in gameArea.Children.OfType<Rectangle>())
+            foreach (Wall w in Walls)
             {
-                if ((string)x.Tag == "kolizja")
+                Rect playerHB = new Rect(Canvas.GetLeft(Object.Body) + v.X, Canvas.GetTop(Object.Body) + v.Y, Object.Width, Object.Height);
+                Rect wallHB = new Rect(Canvas.GetLeft(w.Body), Canvas.GetTop(w.Body), w.Width, w.Height);
+
+                if (playerHB.IntersectsWith(wallHB))
                 {
-                    Rect playerHB = new Rect(Canvas.GetLeft(player.Body), Canvas.GetTop(player.Body), Player.Width, Player.Height);
-                    Rect Kolidowanie = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);//hitboxy
+                    return true;
+                }
 
-                    if (playerHB.IntersectsWith(Kolidowanie))
-                    {
-                        if (kierunek == 1)
-                        {
-                            Canvas.SetLeft(player.Body, Canvas.GetLeft(player.Body) + playerSpeed);
+            }
+            return false;
+        }
 
-                        }
-                        else if (kierunek == 2)
-                        {
-                            Canvas.SetLeft(player.Body, Canvas.GetLeft(player.Body) - playerSpeed);
-
-                        }
-                        else if (kierunek == 3)
-                        {
-                            Canvas.SetTop(player.Body, Canvas.GetTop(player.Body) + playerSpeed);
-
-                        }
-                        else if (kierunek == 4)
-                        {
-                            Canvas.SetTop(player.Body, Canvas.GetTop(player.Body) - playerSpeed);
-
-                        }
-                    }
+        public bool isColliding(GameSprite o1,GameSprite o2)
+        {
+            if((o1.Position.X+o1.Width<=o2.Position.X+o2.Width)&&(o1.Position.X + o1.Width >= o2.Position.X)){
+                if ((o1.Position.Y + o1.Height <= o2.Position.Y + o2.Height)&& (o1.Position.Y + o1.Height >= o2.Position.Y)){
+                    return true;
                 }
             }
+            return false;
         }
-        */
 
+
+       
 
         /*
         private bool SomethingIsHere()
