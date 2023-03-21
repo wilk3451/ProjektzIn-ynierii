@@ -26,3 +26,46 @@ folder - ObiektyInteraktywne
       int diament
       
       rand()
+
+
+
+
+
+21.03
+
+jeremi - sprawdzić, czy funkcje kolizji rzeczywiście działają
+  dla trzymania wielu obiektów jednego typu tablica o małym rozmiarze
+  np Wall tab* = new Wall[] // nowa struktura jak sznur
+  
+  klasa Mapa, która alokuje pamięć na tablicę mapa[string] i według niej generuje potrzebne obiety typu ściana itp (jak było)
+  
+bool kolizja(Player player, Wall wall)
+{}
+
+za tydzień:
+struktura przechowująca Itemy i klasa Item
+
+
+enum Equipment = {kryształ, kasa}
+
+class Item
+{
+  Equipment;
+}
+
+struct Inventory // przechowujące obiekty typu Item
+
+
+
+Karolina - postaci cd, system walki, wrogowie
+
+
+
+
+
+
+
+
+
+
+
