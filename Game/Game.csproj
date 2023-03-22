@@ -78,12 +78,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Creatures\GameSprite.cs" />
+    <Compile Include="Creatures\Player.cs" />
+    <Compile Include="Creatures\wall.cs" />
+    <Compile Include="Shape2D.cs" />
     <Compile Include="UserControls\UserControl_MainMenu.xaml.cs">
       <DependentUpon>UserControl_MainMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\UserControl_SelectCharacter.xaml.cs">
       <DependentUpon>UserControl_SelectCharacter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vector2.cs" />
     <Compile Include="Windows\Window_GameScreen.xaml.cs">
       <DependentUpon>Window_GameScreen.xaml</DependentUpon>
     </Compile>
