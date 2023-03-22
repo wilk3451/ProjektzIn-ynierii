@@ -135,6 +135,7 @@ namespace Game.Windows
 
             if ((Keyboard.GetKeyStates(Key.D) & KeyStates.Down) > 0)
             {
+
                 if (!isCollidingWithWall(player,new Vector2(moveDistance,0)))
                 {
                     player.Position.X += moveDistance;
@@ -147,10 +148,12 @@ namespace Game.Windows
                     //player.Face.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
                 }
                 
+
             }
 
             if ((Keyboard.GetKeyStates(Key.A) & KeyStates.Down) > 0)
             {
+
                 if (!isCollidingWithWall(player, new Vector2(-moveDistance, 0)))
                 {
                     player.Position.X -= moveDistance;
@@ -163,10 +166,14 @@ namespace Game.Windows
                     //player.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
                     //player.Face.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
                 }
+
+                
+
             }
 
             if ((Keyboard.GetKeyStates(Key.W) & KeyStates.Down) > 0)
             {
+
                 if (!isCollidingWithWall(player, new Vector2(0,moveDistance)))
                 {
                     player.Position.Y -= moveDistance;
@@ -181,10 +188,14 @@ namespace Game.Windows
                 }
                 
                 
+
+               
+
             }
 
             if ((Keyboard.GetKeyStates(Key.S) & KeyStates.Down) > 0)
             {
+
                 if (!isCollidingWithWall(player, new Vector2(0, -moveDistance)))
                 {
                     player.Position.Y += moveDistance;
@@ -197,6 +208,7 @@ namespace Game.Windows
                     //player.Face.RenderTransform = new RotateTransform(90, player.Width / 2, player.Height / 2);
                 }
                 
+
             }
         }
 
@@ -338,6 +350,47 @@ namespace Game.Windows
             }
         }
 
+
+        */
+/*
+
+        private void kolizja(string kierunek)
+        {
+            foreach(var x in Test.Children.OfType<Rectangle>())
+            {
+                if ((string)x.Tag == "kolizja")
+                {
+                    Rect playerHB = new Rect(Canvas.GetLeft(Player), Canvas.GetTop(Player), Player.Width, Player.Height);
+                    Rect Kolidowanie = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);//hitboxy
+
+                    if (playerHB.IntersectsWith(Kolidowanie))
+                    {
+                        if (kierunek == "l")
+                        {
+                            Canvas.SetLeft(Player, Canvas.GetLeft(Player) + playerSpeed);
+                            
+                        }
+                        else if(kierunek == "p")
+                        {
+                            Canvas.SetLeft(Player, Canvas.GetLeft(Player) - playerSpeed);
+                            
+                        }
+                        else if (kierunek == "g")
+                        {
+                            Canvas.SetTop(Player, Canvas.GetTop(Player) + playerSpeed);
+
+                        }
+                        else if (kierunek == "d")
+                        {
+                            Canvas.SetTop(Player, Canvas.GetTop(Player) - playerSpeed);
+
+                        }
+
+                    }
+                }   
+            }
+        }
+        
         */
 
     }
