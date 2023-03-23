@@ -20,6 +20,9 @@ namespace Game.Windows
     /// <summary>
     /// Logika interakcji dla klasy Window_GameScreen.xaml
     /// </summary>
+    /// 
+
+
     public partial class Window_GameScreen : Window
     {
 
@@ -33,11 +36,32 @@ namespace Game.Windows
 
         public List<Wall> Walls = new List<Wall>();
 
+        public static string[,] map_string = new string[,]
+            {
+                {"w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w"},
+                {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w"},
+
+            };
+        public Map map = new Map(map_string);
+
+
+
 
 
 
         public Window_GameScreen()
         {
+
+
             InitializeComponent();
 
             gameArea.Focus();
@@ -58,21 +82,6 @@ namespace Game.Windows
 
 
 
-        string[,] Map =
-            {
-                {"w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w"},
-                {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",","w"},
-                {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",","w"},
-                {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",","w"},
-                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
-                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
-                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
-                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
-                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
-                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
-                {"w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w"},
-
-            };
 
         public void DrawWorld()
         {
@@ -96,29 +105,17 @@ namespace Game.Windows
 
 
 
-            
-            for(int i = 0; i < Map.GetLength(1); i++)
+            for (int wall_counter = 0; wall_counter < map.wallsinmap.Count(); wall_counter++)
             {
-                for(int j = 0; j < Map.GetLength(0); j++)
-                {
-                    if (Map[j, i] == "w")
-                    {
-                        Wall sciana = new Wall(new Vector2(i*40,j*40), 40, 40);
-                        sciana.Body = new Rectangle();
-                        sciana.Body.Width = 40;
-                        sciana.Body.Height = 40;//czemu ustawienia z konstruktora nie dzialaja?
-                        gameArea.Children.Add(sciana.Body);
+                gameArea.Children.Add(map.wallsinmap[wall_counter].Body);
 
-                        Canvas.SetTop(sciana.Body, sciana.Position.Y);
-                        Canvas.SetLeft(sciana.Body, sciana.Position.X);
+                Canvas.SetTop(map.wallsinmap[wall_counter].Body, map.wallsinmap[wall_counter].Position.Y);
+                Canvas.SetLeft(map.wallsinmap[wall_counter].Body, map.wallsinmap[wall_counter].Position.X);
 
-                        sciana.Body.Fill = new SolidColorBrush(Colors.Blue);
-                        gameArea.DataContext = sciana.Body;
-                        Walls.Add(sciana);
-                        
-                    }
-                }
+                map.wallsinmap[wall_counter].Body.Fill = new SolidColorBrush(Colors.Blue);
+                gameArea.DataContext = map.wallsinmap[wall_counter].Body;
             }
+
         }
 
 
@@ -133,24 +130,29 @@ namespace Game.Windows
 
             Vector2 lastPosition = Vector2.Zero();
 
+
             if ((Keyboard.GetKeyStates(Key.D) & KeyStates.Down) > 0)
             {
-                if (!isCollidingWithWall(player,new Vector2(moveDistance,0)))
+
+                if (!isCollidingWithWall(player, new Vector2(moveDistance, 0)))
                 {
                     player.Position.X += moveDistance;
                     player.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
                     player.Face.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
                 }
-                else {
+                else
+                {
                     player.Position.X -= moveDistance;
-                    //player.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
-                    //player.Face.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
+                    player.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
+                    player.Face.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
                 }
-                
+
+
             }
 
             if ((Keyboard.GetKeyStates(Key.A) & KeyStates.Down) > 0)
             {
+
                 if (!isCollidingWithWall(player, new Vector2(-moveDistance, 0)))
                 {
                     player.Position.X -= moveDistance;
@@ -160,14 +162,18 @@ namespace Game.Windows
                 else
                 {
                     player.Position.X += moveDistance;
-                    //player.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
-                    //player.Face.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
+                    player.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
+                    player.Face.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
                 }
+
+
+
             }
 
             if ((Keyboard.GetKeyStates(Key.W) & KeyStates.Down) > 0)
             {
-                if (!isCollidingWithWall(player, new Vector2(0,moveDistance)))
+
+                if (!isCollidingWithWall(player, new Vector2(0, -moveDistance)))
                 {
                     player.Position.Y -= moveDistance;
                     player.RenderTransform = new RotateTransform(90, player.Width / 2, player.Height / 2);
@@ -176,29 +182,37 @@ namespace Game.Windows
                 else
                 {
                     player.Position.Y += moveDistance;
-                    //player.RenderTransform = new RotateTransform(-90, player.Width / 2, player.Height / 2);
-                    //player.Face.RenderTransform = new RotateTransform(-90, player.Width / 2, player.Height / 2);
+                    player.RenderTransform = new RotateTransform(-90, player.Width / 2, player.Height / 2);
+                    player.Face.RenderTransform = new RotateTransform(-90, player.Width / 2, player.Height / 2);
                 }
-                
-                
+
+
+
+
+
             }
+
 
             if ((Keyboard.GetKeyStates(Key.S) & KeyStates.Down) > 0)
             {
-                if (!isCollidingWithWall(player, new Vector2(0, -moveDistance)))
+
+                if (!isCollidingWithWall(player, new Vector2(0, moveDistance)))
                 {
                     player.Position.Y += moveDistance;
                     player.RenderTransform = new RotateTransform(-90, player.Width / 2, player.Height / 2);
                     player.Face.RenderTransform = new RotateTransform(-90, player.Width / 2, player.Height / 2);
                 }
-                else {
+                else
+                {
                     player.Position.Y -= moveDistance;
-                    //player.RenderTransform = new RotateTransform(90, player.Width / 2, player.Height / 2);
-                    //player.Face.RenderTransform = new RotateTransform(90, player.Width / 2, player.Height / 2);
+                    player.RenderTransform = new RotateTransform(90, player.Width / 2, player.Height / 2);
+                    player.Face.RenderTransform = new RotateTransform(90, player.Width / 2, player.Height / 2);
                 }
-                
+
+
             }
         }
+
 
 
 
@@ -214,7 +228,7 @@ namespace Game.Windows
 
         bool isCollidingWithWall(GameSprite Object, Vector2 v)
         {
-            foreach (Wall w in Walls)
+            foreach (Wall w in map.wallsinmap)
             {
                 Rect playerHB = new Rect(Canvas.GetLeft(Object.Body) + v.X, Canvas.GetTop(Object.Body) + v.Y, Object.Width, Object.Height);
                 Rect wallHB = new Rect(Canvas.GetLeft(w.Body), Canvas.GetTop(w.Body), w.Width, w.Height);
@@ -228,10 +242,12 @@ namespace Game.Windows
             return false;
         }
 
-        public bool isColliding(GameSprite o1,GameSprite o2)
+        public bool isColliding(GameSprite o1, GameSprite o2)
         {
-            if((o1.Position.X+o1.Width<=o2.Position.X+o2.Width)&&(o1.Position.X + o1.Width >= o2.Position.X)){
-                if ((o1.Position.Y + o1.Height <= o2.Position.Y + o2.Height)&& (o1.Position.Y + o1.Height >= o2.Position.Y)){
+            if ((o1.Position.X + o1.Width <= o2.Position.X + o2.Width) && (o1.Position.X + o1.Width >= o2.Position.X))
+            {
+                if ((o1.Position.Y + o1.Height <= o2.Position.Y + o2.Height) && (o1.Position.Y + o1.Height >= o2.Position.Y))
+                {
                     return true;
                 }
             }
@@ -239,7 +255,7 @@ namespace Game.Windows
         }
 
 
-       
+
 
         /*
         private bool SomethingIsHere()
@@ -338,9 +354,51 @@ namespace Game.Windows
             }
         }
 
+
         */
+        /*
+
+                private void kolizja(string kierunek)
+                {
+                    foreach(var x in Test.Children.OfType<Rectangle>())
+                    {
+                        if ((string)x.Tag == "kolizja")
+                        {
+                            Rect playerHB = new Rect(Canvas.GetLeft(Player), Canvas.GetTop(Player), Player.Width, Player.Height);
+                            Rect Kolidowanie = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);//hitboxy
+
+                            if (playerHB.IntersectsWith(Kolidowanie))
+                            {
+                                if (kierunek == "l")
+                                {
+                                    Canvas.SetLeft(Player, Canvas.GetLeft(Player) + playerSpeed);
+
+                                }
+                                else if(kierunek == "p")
+                                {
+                                    Canvas.SetLeft(Player, Canvas.GetLeft(Player) - playerSpeed);
+
+                                }
+                                else if (kierunek == "g")
+                                {
+                                    Canvas.SetTop(Player, Canvas.GetTop(Player) + playerSpeed);
+
+                                }
+                                else if (kierunek == "d")
+                                {
+                                    Canvas.SetTop(Player, Canvas.GetTop(Player) - playerSpeed);
+
+                                }
+
+                            }
+                        }   
+                    }
+                }
+
+                */
 
     }
-
-
 }
+
+
+

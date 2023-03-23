@@ -79,6 +79,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Creatures\GameSprite.cs" />
+    <Compile Include="Creatures\Map.cs" />
     <Compile Include="Creatures\Player.cs" />
     <Compile Include="Creatures\wall.cs" />
     <Compile Include="Shape2D.cs" />

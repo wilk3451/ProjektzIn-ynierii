@@ -22,7 +22,7 @@ using System.Windows.Media;
 
 
         }
-        public class Walls
+        public class wallinmap
         {
             private static List<Wall> walls = new List<Wall>();
 

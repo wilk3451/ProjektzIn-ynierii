@@ -1,4 +1,4 @@
-﻿<Window x:Class="Game.Windows.Window_GameScreen"
+<Window x:Class="Game.Windows.Window_GameScreen"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,18 +10,14 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         WindowState="Normal">
-    
-    
+      
     <Canvas x:Name="gameArea"
+
             Background="Gray"
             Focusable="True"
             Height="450"
             Width="800">
 
-        
-        
-
     </Canvas>
-    
-    
+
 </Window>
