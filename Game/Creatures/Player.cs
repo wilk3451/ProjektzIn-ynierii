@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace Game.Creatures
 {
@@ -23,6 +26,46 @@ namespace Game.Creatures
 
             Face = new System.Windows.Shapes.Rectangle();
         }
-        
+
+        public void Draw(Canvas gameArea)
+        {
+            // Body
+            Body = new Rectangle();
+            gameArea.Children.Add(Body);
+            Body.Width = this.Width;
+            Body.Height = this.Height;
+            Canvas.SetTop(Body, Position.Y);
+            Canvas.SetLeft(Body, Position.X);
+            Body.Fill = new SolidColorBrush(Colors.Black);
+            gameArea.DataContext = Body;
+
+            ImageBrush playerSprite = new ImageBrush();
+            playerSprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/player.png"));
+            Body.Fill = playerSprite;
+
+            // Face
+            /*
+            Face = new Rectangle();
+            gameArea.Children.Add(Face);
+            Face.Width = this.Width / 3;
+            Face.Height = this.Height;
+            Canvas.SetTop(Face, Position.Y);
+            Canvas.SetLeft(Face, Position.X);
+            Face.Fill = new SolidColorBrush(Colors.White);
+            gameArea.DataContext = Face;
+            */
+        }
+
+
+        public Vector2 CheckPlayerPosition()
+        {
+            return this.Position;
+        }
+
+        public bool IsDead()
+        {
+            if (Hp == 0) return true;
+            return false;
+        }
     }
 }

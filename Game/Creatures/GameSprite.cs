@@ -20,7 +20,7 @@ namespace Game.Creatures
         public System.Windows.Shapes.Rectangle Body { get; set; }
 
 
-        public int Speed { get; set; }
+        public float Speed { get; set; }
 
         public GameSprite(Vector2 Position, int Width, int Height)
         {

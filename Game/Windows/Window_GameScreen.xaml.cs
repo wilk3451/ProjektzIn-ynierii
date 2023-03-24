@@ -27,12 +27,13 @@ namespace Game.Windows
     {
 
         DispatcherTimer gameTimer = new DispatcherTimer();
+        DispatcherTimer gameTimer2 = new DispatcherTimer();
 
         public static Vector2 vector = new Vector2(100, 100); // polożenie gracza na początku gry
 
-        public Player player = new Player(vector, 20, 20);
+        public Player player = new Player(vector, 30, 30);
 
-
+        Enemy weakMob = new Enemy(new Vector2(300, 300), 40, 40, 1);
 
         public List<Wall> Walls = new List<Wall>();
 
@@ -71,39 +72,30 @@ namespace Game.Windows
             gameTimer.Tick += GameTimerEvent;
             gameTimer.Interval = TimeSpan.FromMilliseconds(10);
             gameTimer.Start();
+
+            gameTimer2.Tick += GameTimerEvent2;
+            gameTimer2.Interval = TimeSpan.FromMilliseconds(10);
+            gameTimer2.Start();
         }
 
         private void GameTimerEvent(object sender, EventArgs e)
         {
-            // wszystkie funkcje, które zmieniają stan gry
+            // wszystkie funkcje, które zmieniają stan gracza
             ControlPlayer();
-            UpadatePlayer();
+            UpdatePlayer();
         }
 
+        private void GameTimerEvent2(object sender, EventArgs e)
+        {
+            Task task = weakMob.WalkAsync(gameArea);
+        }
 
 
 
         public void DrawWorld()
         {
-            // Rysowanie głownego bohatera
-            // Body
-            player.Body = new Rectangle();
-            gameArea.Children.Add(player.Body);
-            player.Body.Width = 20;
-            player.Body.Height = 20;
-            player.Body.Fill = new SolidColorBrush(Colors.Violet);
-            gameArea.DataContext = player.Body;
-            // Face
-            player.Face = new Rectangle();
-            gameArea.Children.Add(player.Face);
-            player.Face.Width = 10;
-            player.Face.Height = 20;
-            Canvas.SetTop(player.Face, player.Position.Y);
-            Canvas.SetLeft(player.Face, player.Position.X);
-            player.Face.Fill = new SolidColorBrush(Colors.Black);
-            gameArea.DataContext = player.Face;
-
-
+            player.Draw(gameArea);
+            weakMob.Draw(gameArea);
 
             for (int wall_counter = 0; wall_counter < map.wallsinmap.Count(); wall_counter++)
             {
@@ -137,14 +129,14 @@ namespace Game.Windows
                 if (!isCollidingWithWall(player, new Vector2(moveDistance, 0)))
                 {
                     player.Position.X += moveDistance;
-                    player.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
-                    player.Face.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
+                    player.RenderTransform = new RotateTransform(0, player.Width / 2, player.Height / 2);
+                    player.Body.RenderTransform = new RotateTransform(0, player.Width / 2, player.Height / 2);
                 }
                 else
                 {
                     player.Position.X -= moveDistance;
-                    player.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
-                    player.Face.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
+                    player.RenderTransform = new RotateTransform(180, player.Width / 2, player.Height / 2);
+                    player.Body.RenderTransform = new RotateTransform(180, player.Width / 2, player.Height / 2);
                 }
 
 
@@ -156,14 +148,14 @@ namespace Game.Windows
                 if (!isCollidingWithWall(player, new Vector2(-moveDistance, 0)))
                 {
                     player.Position.X -= moveDistance;
-                    player.RenderTransform = new RotateTransform(0, player.Width / 2, player.Height / 2);
-                    player.Face.RenderTransform = new RotateTransform(0, player.Width / 2, player.Height / 2);
+                    player.RenderTransform = new RotateTransform(180, player.Width / 2, player.Height / 2);
+                    player.Body.RenderTransform = new RotateTransform(180, player.Width / 2, player.Height / 2);
                 }
                 else
                 {
                     player.Position.X += moveDistance;
-                    player.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
-                    player.Face.RenderTransform = new RotateTransform(-180, player.Width / 2, player.Height / 2);
+                    player.RenderTransform = new RotateTransform(0, player.Width / 2, player.Height / 2);
+                    player.Body.RenderTransform = new RotateTransform(0, player.Width / 2, player.Height / 2);
                 }
 
 
@@ -176,14 +168,14 @@ namespace Game.Windows
                 if (!isCollidingWithWall(player, new Vector2(0, -moveDistance)))
                 {
                     player.Position.Y -= moveDistance;
-                    player.RenderTransform = new RotateTransform(90, player.Width / 2, player.Height / 2);
-                    player.Face.RenderTransform = new RotateTransform(90, player.Width / 2, player.Height / 2);
+                    player.RenderTransform = new RotateTransform(-90, player.Width / 2, player.Height / 2);
+                    player.Body.RenderTransform = new RotateTransform(-90, player.Width / 2, player.Height / 2);
                 }
                 else
                 {
                     player.Position.Y += moveDistance;
-                    player.RenderTransform = new RotateTransform(-90, player.Width / 2, player.Height / 2);
-                    player.Face.RenderTransform = new RotateTransform(-90, player.Width / 2, player.Height / 2);
+                    player.RenderTransform = new RotateTransform(90, player.Width / 2, player.Height / 2);
+                    player.Body.RenderTransform = new RotateTransform(90, player.Width / 2, player.Height / 2);
                 }
 
 
@@ -199,14 +191,14 @@ namespace Game.Windows
                 if (!isCollidingWithWall(player, new Vector2(0, moveDistance)))
                 {
                     player.Position.Y += moveDistance;
-                    player.RenderTransform = new RotateTransform(-90, player.Width / 2, player.Height / 2);
-                    player.Face.RenderTransform = new RotateTransform(-90, player.Width / 2, player.Height / 2);
+                    player.RenderTransform = new RotateTransform(90, player.Width / 2, player.Height / 2);
+                    player.Body.RenderTransform = new RotateTransform(90, player.Width / 2, player.Height / 2);
                 }
                 else
                 {
                     player.Position.Y -= moveDistance;
-                    player.RenderTransform = new RotateTransform(90, player.Width / 2, player.Height / 2);
-                    player.Face.RenderTransform = new RotateTransform(90, player.Width / 2, player.Height / 2);
+                    player.RenderTransform = new RotateTransform(-90, player.Width / 2, player.Height / 2);
+                    player.Body.RenderTransform = new RotateTransform(-90, player.Width / 2, player.Height / 2);
                 }
 
 
@@ -218,7 +210,7 @@ namespace Game.Windows
 
         // Aktualizuje pozycję gracza na obiekcie Canvas (nasz ekran gry)
 
-        private void UpadatePlayer()
+        private void UpdatePlayer()
         {
             Canvas.SetLeft(player.Body, player.Position.X);
             Canvas.SetTop(player.Body, player.Position.Y);

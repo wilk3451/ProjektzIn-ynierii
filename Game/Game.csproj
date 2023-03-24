@@ -78,6 +78,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Creatures\Enemy.cs" />
     <Compile Include="Creatures\GameSprite.cs" />
     <Compile Include="Creatures\Map.cs" />
     <Compile Include="Creatures\Player.cs" />
@@ -162,6 +163,9 @@
   <ItemGroup>
     <Resource Include="Creature.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\enemy.png" />
+    <Resource Include="Resources\player.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
