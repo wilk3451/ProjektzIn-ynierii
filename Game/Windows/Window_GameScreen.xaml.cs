@@ -82,7 +82,7 @@ namespace Game.Windows
         {
             // wszystkie funkcje, które zmieniają stan gracza
             ControlPlayer();
-            UpdatePlayer();
+            player.UpdatePlayer();
         }
 
         private void GameTimerEvent2(object sender, EventArgs e)
@@ -129,16 +129,12 @@ namespace Game.Windows
                 if (!isCollidingWithWall(player, new Vector2(moveDistance, 0)))
                 {
                     player.Position.X += moveDistance;
-                    player.RenderTransform = new RotateTransform(0, player.Width / 2, player.Height / 2);
-                    player.Body.RenderTransform = new RotateTransform(0, player.Width / 2, player.Height / 2);
+                    player.Flip(0);
                 }
                 else
                 {
                     player.Position.X -= moveDistance;
-                    player.RenderTransform = new RotateTransform(180, player.Width / 2, player.Height / 2);
-                    player.Body.RenderTransform = new RotateTransform(180, player.Width / 2, player.Height / 2);
                 }
-
 
             }
 
@@ -148,18 +144,12 @@ namespace Game.Windows
                 if (!isCollidingWithWall(player, new Vector2(-moveDistance, 0)))
                 {
                     player.Position.X -= moveDistance;
-                    player.RenderTransform = new RotateTransform(180, player.Width / 2, player.Height / 2);
-                    player.Body.RenderTransform = new RotateTransform(180, player.Width / 2, player.Height / 2);
+                    player.Flip(180);
                 }
                 else
                 {
                     player.Position.X += moveDistance;
-                    player.RenderTransform = new RotateTransform(0, player.Width / 2, player.Height / 2);
-                    player.Body.RenderTransform = new RotateTransform(0, player.Width / 2, player.Height / 2);
                 }
-
-
-
             }
 
             if ((Keyboard.GetKeyStates(Key.W) & KeyStates.Down) > 0)
@@ -168,20 +158,12 @@ namespace Game.Windows
                 if (!isCollidingWithWall(player, new Vector2(0, -moveDistance)))
                 {
                     player.Position.Y -= moveDistance;
-                    player.RenderTransform = new RotateTransform(-90, player.Width / 2, player.Height / 2);
-                    player.Body.RenderTransform = new RotateTransform(-90, player.Width / 2, player.Height / 2);
+                    player.Flip(-90);
                 }
                 else
                 {
                     player.Position.Y += moveDistance;
-                    player.RenderTransform = new RotateTransform(90, player.Width / 2, player.Height / 2);
-                    player.Body.RenderTransform = new RotateTransform(90, player.Width / 2, player.Height / 2);
                 }
-
-
-
-
-
             }
 
 
@@ -191,32 +173,15 @@ namespace Game.Windows
                 if (!isCollidingWithWall(player, new Vector2(0, moveDistance)))
                 {
                     player.Position.Y += moveDistance;
-                    player.RenderTransform = new RotateTransform(90, player.Width / 2, player.Height / 2);
-                    player.Body.RenderTransform = new RotateTransform(90, player.Width / 2, player.Height / 2);
+                    player.Flip(90);
                 }
                 else
                 {
                     player.Position.Y -= moveDistance;
-                    player.RenderTransform = new RotateTransform(-90, player.Width / 2, player.Height / 2);
-                    player.Body.RenderTransform = new RotateTransform(-90, player.Width / 2, player.Height / 2);
                 }
-
-
             }
-        }
-
-
-
-
-        // Aktualizuje pozycję gracza na obiekcie Canvas (nasz ekran gry)
-
-        private void UpdatePlayer()
-        {
-            Canvas.SetLeft(player.Body, player.Position.X);
-            Canvas.SetTop(player.Body, player.Position.Y);
-            Canvas.SetLeft(player.Face, player.Position.X);
-            Canvas.SetTop(player.Face, player.Position.Y);
-        }
+        } 
+        
 
         bool isCollidingWithWall(GameSprite Object, Vector2 v)
         {
