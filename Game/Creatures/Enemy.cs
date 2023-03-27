@@ -11,7 +11,7 @@ using System.Windows.Threading;
 
 namespace Game.Creatures
 {
-    internal class Enemy : GameSprite
+    public class Enemy : GameSprite
     {
         public int Hp { get; private set; }
         public int CurrentHp { get; set; }
@@ -68,7 +68,7 @@ namespace Game.Creatures
 
             Vision = new System.Windows.Shapes.Rectangle();
 
-            Speed = (float)2.5;
+            Speed = (float)2.0;
             Level = level;
             SetStats(Level);
         }
@@ -183,8 +183,11 @@ namespace Game.Creatures
         {
             var tred = new DispatcherTimer { Interval = TimeSpan.FromSeconds(20) };
             tred.Start();
+            
+            
             if (!IsDead())
             {
+                
                 Position.X += Speed;
                 currentStep--;
                 if (currentStep < 1)
@@ -192,7 +195,7 @@ namespace Game.Creatures
                     currentStep = MoveStep;
                     Speed = -Speed;
                 }
-                /*
+                
                  if (currentStep == 1)
                  {
                      Flip(180);
@@ -201,9 +204,24 @@ namespace Game.Creatures
                  {
                      Flip(0);
                  }
-                 */
+                 
                 Flip(currentStep);
                 UpdateEnemy();
+                
+
+
+            }
+        }
+
+        public async Task Act(Canvas gameArea, Player player)
+        {
+            var tred = new DispatcherTimer { Interval = TimeSpan.FromSeconds(20) };
+            tred.Start();
+
+
+            if (!IsDead())
+            {
+                Chase(player);
             }
         }
 
@@ -218,13 +236,46 @@ namespace Game.Creatures
         }
 
 
-        public void Walk()
+        public void Chase(Player player)
         {
+            float enemyLeft = Position.X;
+            float enemyTop = Position.Y;
+            float playerLeft = player.Position.X;
+            float playerTop = player.Position.Y;
 
+            Vector2 distance = new Vector2(playerLeft - enemyLeft, playerTop - enemyTop);
+
+            if (distance.X == 0 && distance.Y == 0 || !CollisionCircles(player.HitBox, HitBox))
+            {
+                return;
+            }
+
+            if (distance.X > 0 && distance.Y > 0)
+            {
+                Position.X += Speed;
+                Position.Y += Speed;
+            }
+            else if (distance.X < 0 && distance.Y < 0)
+            {
+                Position.X -= Speed;
+                Position.Y -= Speed;
+            }
+            else if (distance.X > 0 && distance.Y < 0)
+            {
+                Position.X -= Speed;
+                Position.Y += Speed;
+            }
+            else if (distance.X < 0 && distance.Y > 0)
+            {
+                Position.X += Speed;
+                Position.Y -= Speed;
+            }
+            UpdateEnemy();
         }
 
-        public bool IsPlayerAround()
+        public bool IsPlayerAround(Player player)
         {
+            if (CollisionCircles(player.HitBox, VisionArea)) return true;
             return false;
         }
 
@@ -234,6 +285,12 @@ namespace Game.Creatures
             return false;
         }
 
+        public void MoveLeft()
+        {
+            Position.X = Speed;
+        }
+
+
         public Vector2 GetPosition() { return this.Position; }
 
         public Vector2 CheckEnemyPosition()
@@ -241,30 +298,26 @@ namespace Game.Creatures
             return this.Position;
         }
 
-        public void TrackPlayer(Player player)
+
+        bool Attacked = false;
+
+        public void NormalAttack(Player player, bool Attacked)
         {
-
-        }
-
-        bool isColliding = false;
-
-        public void NormalAttack(Player player)
-        {
-            if (isColliding == true)
+            if (CollisionCircles(player.HitBox, NormalAttackArea) && Attacked == false)
             {
                 int TrueDmg = Attack - player.Defence;
                 player.CurrentHp -= TrueDmg;
-                isColliding = false;
+                Attacked = true;
             }
         }
 
-        public void StrongAttack(Player player)
+        public void StrongAttack(Player player, bool Attacked)
         {
-            if (isColliding == true)
+            if (CollisionCircles(player.HitBox, StrongAttackArea) && Attacked == false)
             {
                 int TrueDmg = Attack*3 - player.Defence;
                 player.CurrentHp -= TrueDmg;
-                isColliding = false;
+                Attacked = true;
             }
         }
 
@@ -275,5 +328,25 @@ namespace Game.Creatures
         }
 
         // destruktor
+
+
+        public bool CollisionCircles(Ellipse o1, Ellipse o2)
+        {
+            double o1X = Canvas.GetLeft(o1) + o1.Width / 2;
+            double o1Y = Canvas.GetLeft(o1) + o1.Height / 2;
+            double o1Radius = o1.Height / 2;
+
+            double o2X = Canvas.GetLeft(o2) + o2.Width / 2;
+            double o2Y = Canvas.GetLeft(o2) + o2.Height / 2;
+            double o2Radius = o2.Height / 2;
+
+            double distanceBetweenCirclesSquared = (o2X - o1X) * (o2X - o1X) + (o2Y - o1Y) * (o2Y - o1Y);
+
+            if (distanceBetweenCirclesSquared > (o1Radius + o2Radius) * (o1Radius + o2Radius))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

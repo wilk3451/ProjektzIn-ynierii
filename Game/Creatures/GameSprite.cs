@@ -40,6 +40,22 @@ namespace Game.Creatures
         }
 
 
+        public class GameSpritesList
+        {
+            private static List<GameSprite> gameSprites = new List<GameSprite>();
+
+            public static void RegisterSprite(GameSprite sprite)
+            {
+                gameSprites.Add(sprite);
+            }
+
+            public static void RemoveSprite(GameSprite sprite)
+            {
+                gameSprites.Remove(sprite);
+            }
+        }
+
+
 
         public void DestroySelf()
         {
