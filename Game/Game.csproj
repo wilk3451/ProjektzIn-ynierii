@@ -83,6 +83,9 @@
     <Compile Include="Creatures\Map.cs" />
     <Compile Include="Creatures\Player.cs" />
     <Compile Include="Creatures\wall.cs" />
+    <Compile Include="Items\Item.cs" />
+    <Compile Include="Items\ItemsList.cs" />
+    <Compile Include="Items\Weapon.cs" />
     <Compile Include="Shape2D.cs" />
     <Compile Include="UserControls\UserControl_MainMenu.xaml.cs">
       <DependentUpon>UserControl_MainMenu.xaml</DependentUpon>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Game.Items;
 
 namespace Game.Creatures
 {
@@ -22,7 +24,11 @@ namespace Game.Creatures
         public System.Windows.Shapes.Ellipse StrongAttackArea { get; set; }
         public RotateTransform RenderTransform { get; internal set; }
 
+
         public List<Bullet> bullets;
+
+        public ObservableCollection<Item> Inventory { get; set; }
+
 
         public Player(Vector2 Position, int Width, int Height, int Speed,
                      int hp, int currentHp, int atk, int def,
@@ -41,8 +47,14 @@ namespace Game.Creatures
             this.NormalAttackArea = NormalAttackArea;
             this.StrongAttackArea = StrongAttackArea;
             this.RenderTransform = renderTransform;
+
             List<Bullet> bullets = new List<Bullet>();
+
+            Inventory = new ObservableCollection<Item>();
+            Inventory.Add(ItemsList.CreateItem(1));//temp item
+
         }
+        
 
         public Player(Vector2 Position, int Width, int Height) : base(Position, Width, Height)
         {
@@ -53,6 +65,9 @@ namespace Game.Creatures
             HitBox = new System.Windows.Shapes.Ellipse();
             NormalAttackArea = new System.Windows.Shapes.Ellipse();
             StrongAttackArea = new System.Windows.Shapes.Ellipse();
+            Inventory = new ObservableCollection<Item>();
+            Inventory.Add(ItemsList.CreateItem(1));//temp item
+            Inventory.Add(ItemsList.CreateItem(2));
 
             Speed = (float)2.5; // pozniej: setter dla statów i prędkości
 

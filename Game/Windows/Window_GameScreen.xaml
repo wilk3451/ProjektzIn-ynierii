@@ -10,14 +10,21 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         WindowState="Normal">
-      
-    <Canvas x:Name="gameArea"
+
+
+    <Grid>
+        <Canvas x:Name="gameArea"
 
             Background="Gray"
             Focusable="True"
             Height="450"
             Width="800">
 
-    </Canvas>
+
+
+
+        </Canvas>
+        
+    </Grid>
 
 </Window>

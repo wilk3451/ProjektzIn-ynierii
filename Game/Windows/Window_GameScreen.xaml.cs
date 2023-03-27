@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -14,7 +15,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using Game.Creatures;
+
 using static System.Net.Mime.MediaTypeNames;
+
+using Game.Items;
+
 
 namespace Game.Windows
 {
@@ -48,7 +53,7 @@ namespace Game.Windows
         public static Vector2 vector = new Vector2(100, 100); // polożenie gracza na początku gry
 
         public Player player = new Player(vector, 30, 30);
-
+        
         Enemy weakMob = new Enemy(new Vector2(300, 300), 40, 40, 1);
 
         public List<Bullet> bullets = new List<Bullet>();
@@ -71,6 +76,8 @@ namespace Game.Windows
 
             };
         public Map map = new Map(map_string);
+        
+        
 
 
 
@@ -79,6 +86,7 @@ namespace Game.Windows
 
         public Window_GameScreen()
         {
+
             InitializeComponent();
 
             gameArea.Focus();
@@ -204,6 +212,7 @@ namespace Game.Windows
             }
 
 
+
             if ((Keyboard.GetKeyStates(Key.E) & KeyStates.Down) > 0)
             {
                 Rectangle newBullet = new Rectangle
@@ -298,6 +307,15 @@ namespace Game.Windows
         }
 
 
+            if ((Keyboard.GetKeyStates(Key.F) & KeyStates.Down) > 0)
+            {
+                
+            }
+        } 
+
+        
+
+
         bool isCollidingWithWall(GameSprite Object, Vector2 v)
         {
             foreach (Wall w in map.wallsinmap)
@@ -324,6 +342,7 @@ namespace Game.Windows
                 }
             }
             return false;
+            
         }
 
 
