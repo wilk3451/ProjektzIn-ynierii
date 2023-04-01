@@ -22,6 +22,11 @@ namespace Game.Creatures
         int currentStep = 100;
         int MoveStep = 100;
 
+        public bool markedForDeletion = false;
+
+        public int kierunekX;
+        public int kierunekY;
+
         //------------------------------------------------------------------
         // Body jest od GameSprite
         public System.Windows.Shapes.Ellipse HitBox { get; set; }
@@ -79,17 +84,17 @@ namespace Game.Creatures
             Attack = 10;
             Defence = 10;
 
-            for (int i = 1; i < level; i++) 
-            { 
+            for (int i = 1; i < level; i++)
+            {
                 Hp += 20 * i;
                 Attack += 5 * i;
                 Defence += 2 * i;
             }
-           
+
             CurrentHp = Hp;
         }
 
-        public void Draw(Canvas gameArea)
+        public void Create(Canvas gameArea)
         {
             // Body
             Body = new Rectangle();
@@ -154,7 +159,7 @@ namespace Game.Creatures
             */
         }
 
-        public void UpdateEnemy()
+        public void Draw()
         {
             double OffsetAttack = Position.Y + Height / 2 - NormalAttackArea.Height / 2;
             double OffsetVision = Position.Y + Height / 2 - VisionArea.Height / 2;
@@ -179,6 +184,47 @@ namespace Game.Creatures
         }
 
 
+        public void Update(float speed)
+        {
+            Position.X += speed * kierunekX;
+            Position.Y += speed * kierunekY;
+        }
+
+        /*          
+                    // poruszanie
+                    Canvas.SetTop(x, Canvas.GetTop(x) + enemySpeed * kierunkiY[++licznikKierunkow]);
+                    Canvas.SetLeft(x, Canvas.GetLeft(x) + enemySpeed * kierunkiX[++licznikKierunkow]);
+                    if (Canvas.GetTop(x) > gameArea.Height || Canvas.GetTop(x) < 0 - gameArea.Height)
+                    {
+                        Canvas.SetTop(x, Canvas.GetTop(x) + enemySpeed * (0 - kierunkiY[licznikKierunkow]));
+                    }
+                    if (Canvas.GetLeft(x) < 0 - gameArea.Width || Canvas.GetLeft(x) > gameArea.Height)
+                    {
+                        Canvas.SetLeft(x, Canvas.GetLeft(x) + enemySpeed * (0 - kierunkiX[licznikKierunkow]));
+                    }
+                           
+            */
+
+
+        public Vector2 RandomSpawnPosition(Canvas gameArea, GameSprite toAvoid, Random rand)
+        {
+            int Top = rand.Next(30, (int)gameArea.Height - 30);
+            int Left = rand.Next(30, (int)gameArea.Width - 30);
+            while (Top > toAvoid.Position.Y && Top < toAvoid.Position.Y)
+            {
+                Top = rand.Next(30, (int)gameArea.Height - 30);
+            }
+            while (Left > toAvoid.Position.X && Left < toAvoid.Position.X)
+            {
+                Left = rand.Next(30, (int)gameArea.Width - 30);
+            }
+            return new Vector2(Top, Left);
+        }
+
+
+
+
+        /*
         public async Task WalkAsync(Canvas gameArea)
         {
             var tred = new DispatcherTimer { Interval = TimeSpan.FromSeconds(20) };
@@ -273,6 +319,8 @@ namespace Game.Creatures
             UpdateEnemy();
         }
 
+        */
+
         public bool IsPlayerAround(Player player)
         {
             if (CollisionCircles(player.HitBox, VisionArea)) return true;
@@ -315,7 +363,7 @@ namespace Game.Creatures
         {
             if (CollisionCircles(player.HitBox, StrongAttackArea) && Attacked == false)
             {
-                int TrueDmg = Attack*3 - player.Defence;
+                int TrueDmg = Attack * 3 - player.Defence;
                 player.CurrentHp -= TrueDmg;
                 Attacked = true;
             }
@@ -327,9 +375,23 @@ namespace Game.Creatures
             return false;
         }
 
+
+
         // destruktor
+        public void Delete(Canvas gameArea)
+        {
+            gameArea.Children.Remove(Body);
+            gameArea.Children.Remove(HitBox);
+            gameArea.Children.Remove(NormalAttackArea);
+            gameArea.Children.Remove(StrongAttackArea);
+            gameArea.Children.Remove(VisionArea);
+        }
 
 
+
+
+
+        /// WRONG
         public bool CollisionCircles(Ellipse o1, Ellipse o2)
         {
             double o1X = Canvas.GetLeft(o1) + o1.Width / 2;

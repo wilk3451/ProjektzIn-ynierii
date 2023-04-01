@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Game.Items;
+using Game.Windows;
 
 namespace Game.Creatures
 {
@@ -29,11 +33,14 @@ namespace Game.Creatures
 
         public ObservableCollection<Item> Inventory { get; set; }
 
+        public int Direction { get; set; }
+
 
         public Player(Vector2 Position, int Width, int Height, int Speed,
                      int hp, int currentHp, int atk, int def,
                      Ellipse HitBox, Ellipse NormalAttackArea, Ellipse StrongAttackArea,
-                     RotateTransform renderTransform) : base(Position, Width, Height)
+                     RotateTransform renderTransform,
+                     int Direction) : base(Position, Width, Height)
         {
             this.Position = Position;
             this.Width = Width;
@@ -47,6 +54,7 @@ namespace Game.Creatures
             this.NormalAttackArea = NormalAttackArea;
             this.StrongAttackArea = StrongAttackArea;
             this.RenderTransform = renderTransform;
+            this.Direction = Direction;
 
             List<Bullet> bullets = new List<Bullet>();
 
@@ -54,7 +62,7 @@ namespace Game.Creatures
             Inventory.Add(ItemsList.CreateItem(1));//temp item
 
         }
-        
+
 
         public Player(Vector2 Position, int Width, int Height) : base(Position, Width, Height)
         {
@@ -72,9 +80,11 @@ namespace Game.Creatures
             Speed = (float)2.5; // pozniej: setter dla statów i prędkości
 
             List<Bullet> bullets = new List<Bullet>();
+
+            Direction = 0;
         }
 
-        public void Draw(Canvas gameArea)
+        public void Create(Canvas gameArea)
         {
             // Body
             Body = new Rectangle();
@@ -119,7 +129,7 @@ namespace Game.Creatures
             gameArea.DataContext = StrongAttackArea;
         }
 
-        public void UpdatePlayer()
+        public void Draw()
         {
             double OffsetAttack = Position.Y + Height / 2 - NormalAttackArea.Height / 2;
 
@@ -136,6 +146,13 @@ namespace Game.Creatures
             Canvas.SetTop(StrongAttackArea, OffsetAttack);
         }
 
+        public void Update(Vector2 position, int angle)
+        {
+            Position.X += position.X;
+            Position.Y += position.Y;
+            Flip(angle);
+        }
+
         public void Flip(int angle)
         {
             Body.RenderTransform = new RotateTransform(angle, Width / 2, Height / 2);
@@ -144,8 +161,9 @@ namespace Game.Creatures
             StrongAttackArea.RenderTransform = new RotateTransform(angle, Width / 2, StrongAttackArea.Height / 2);
         }
 
-        
-        
+
+
+
 
 
         public Vector2 CheckPlayerPosition()
@@ -200,7 +218,7 @@ namespace Game.Creatures
             }
         }
 
-        
+
 
         public void HandleBullets(List<Bullet> bullets, Canvas gameArea)
         {
@@ -209,10 +227,10 @@ namespace Game.Creatures
             Bullet bullet = new Bullet(where, 4, 4);
             bullets.Add(bullet);
 
-            bullets.ForEach(singleBullet => 
+            bullets.ForEach(singleBullet =>
             {
-                singleBullet.Draw(gameArea, this);
-                singleBullet.Update(gameArea);
+                singleBullet.Create(gameArea, this);
+                singleBullet.Draw();
                 if (singleBullet.markedForDeletion) { bullets.Remove(singleBullet); }
             });
 
@@ -238,67 +256,6 @@ namespace Game.Creatures
                 return true;
             }
             return false;
-        }
-    }
-
-
-    public class Bullet : GameSprite
-    {
-        public System.Windows.Shapes.Ellipse BulletBody { get; set; }
-        // Body z GameSprite - Rectangle
-
-        public bool markedForDeletion = false;
-
-        public Bullet(Vector2 Position, int Width, int Height) : base(Position, Width, Height)
-        {
-            this.Position = Position;
-            this.Width = Width;
-            this.Height = Height;
-            BulletBody = new System.Windows.Shapes.Ellipse();
-        }
-
-        public void Draw(Canvas gameArea, Player player)
-        {
-            float positionX = player.Position.X + (player.Width / 2) - (Width / 2); // srodek gracza
-            float positionY = player.Position.Y + (player.Height / 2) - (Height / 2); // srodek gracza
-
-            //Body z GameSprite - rysowane dla sprawdzenia czy pocisk jest we właściwej pozycji
-            Body = new Rectangle();
-            gameArea.Children.Add(Body);
-            Body.Width = this.Width;
-            Body.Height = this.Height;
-            Canvas.SetTop(Body, positionY);
-            Canvas.SetLeft(Body, positionX);
-            Body.Stroke = new SolidColorBrush(Colors.White);
-            gameArea.DataContext = Body;
-
-            //Prawdziwy wygląd pocisku
-            BulletBody = new Ellipse();
-            gameArea.Children.Add(BulletBody);
-            BulletBody.Width = this.Width;
-            BulletBody.Height = this.Height;
-            Canvas.SetTop(BulletBody, positionY);
-            Canvas.SetLeft(BulletBody, positionX);
-            BulletBody.Stroke = new SolidColorBrush(Colors.White);
-            gameArea.DataContext = BulletBody;
-        }
-
-        public void Update(Canvas gameArea)
-        {
-            // wyznacz kierunek drogi..? tu w zaleznoscod etego gdzie patrzy grcaz
-            Position.X += Speed;
-
-            Canvas.SetLeft(Body, Position.X);
-            Canvas.SetTop(Body, Position.Y);
-            Canvas.SetLeft(BulletBody, Position.X);
-            Canvas.SetTop(BulletBody, Position.Y);
-
-            // jeżeli pocisk wyjdzie poza kanwas - musi zostać usunięty z listy pocisków
-            if (Position.X < 0 - gameArea.Width) {markedForDeletion = true;}
-            else if (Position.X > gameArea.Width) { markedForDeletion = true; }
-            else if (Position.Y < 0 - gameArea.Height) { markedForDeletion = true; }
-            else if (Position.Y > gameArea.Height) { markedForDeletion = true; }
-            else { markedForDeletion = false; }
         }
     }
 }
