@@ -28,13 +28,11 @@ namespace Game.Creatures
         public System.Windows.Shapes.Ellipse StrongAttackArea { get; set; }
         public RotateTransform RenderTransform { get; internal set; }
 
-
         public List<Bullet> bullets;
 
         public ObservableCollection<Item> Inventory { get; set; }
 
         public int Direction { get; set; }
-
 
         public Player(Vector2 Position, int Width, int Height, int Speed,
                      int hp, int currentHp, int atk, int def,
@@ -82,9 +80,10 @@ namespace Game.Creatures
             List<Bullet> bullets = new List<Bullet>();
 
             Direction = 0;
+            SetStats();
         }
 
-        public void Create(Canvas gameArea)
+        new public void Create(Canvas gameArea)
         {
             // Body
             Body = new Rectangle();
@@ -121,15 +120,15 @@ namespace Game.Creatures
 
             // Strong Attack Area
             gameArea.Children.Add(StrongAttackArea);
-            StrongAttackArea.Width = this.Width + 40;
-            StrongAttackArea.Height = this.Height + 40;
+            StrongAttackArea.Width = this.Width + 30;
+            StrongAttackArea.Height = this.Height + 30;
             Canvas.SetTop(StrongAttackArea, Position.Y - Height / 2);
             Canvas.SetLeft(StrongAttackArea, Position.X);
-            HitBox.Stroke = new SolidColorBrush(Colors.White);
+            //StrongAttackArea.Stroke = new SolidColorBrush(Colors.White);
             gameArea.DataContext = StrongAttackArea;
         }
 
-        public void Draw()
+        new public void Draw()
         {
             double OffsetAttack = Position.Y + Height / 2 - NormalAttackArea.Height / 2;
 
@@ -162,7 +161,13 @@ namespace Game.Creatures
         }
 
 
-
+        private void SetStats()
+        {
+            Hp = 100;
+            Attack = 200;
+            Defence = 10;
+            CurrentHp = Hp;
+        }
 
 
 
@@ -197,65 +202,71 @@ namespace Game.Creatures
             Stamina += Points;
         }
 
-        public async void NormalAttack(Enemy enemy)
+        public bool NormalAttack(Enemy enemy)
         {
-            if (CollisionCircles(enemy.HitBox, NormalAttackArea))
+            int AttackCost = 20;
+
+            if (CollisionCircles(enemy.HitBox, NormalAttackArea) && Stamina >= AttackCost)
             {
                 int TrueDmg = Attack - enemy.Defence;
                 enemy.CurrentHp -= TrueDmg;
+                Stamina -= AttackCost;
+                return true;
             }
-
-            //NormalAttackArea.Stroke = new SolidColorBrush(Colors.Red);
-            //NormalAttackArea.Stroke = new SolidColorBrush(Colors.White);
+            Stamina -= AttackCost;
+            return false;
         }
 
-        public void StrongAttack(Enemy enemy)
+
+        public bool StrongAttack(Enemy enemy)
         {
-            if (CollisionCircles(enemy.HitBox, StrongAttackArea))
+            int AttackCost = 80;
+            
+            if (CollisionCircles(enemy.HitBox, StrongAttackArea) && Stamina >= AttackCost)
             {
                 int TrueDmg = Attack * 3 - enemy.Defence;
                 enemy.CurrentHp -= TrueDmg;
+                Stamina -= AttackCost;
+                return true;
             }
+            Stamina -= AttackCost;
+            return false;
         }
 
 
-
-        public void HandleBullets(List<Bullet> bullets, Canvas gameArea)
+        public void RegenerateStamina()
         {
-            // dodaj nowy pocisk
-            Vector2 where = new Vector2(Position.X + (Width / 2) - (Width / 2), Position.X + (Width / 2) - (Width / 2));
-            Bullet bullet = new Bullet(where, 4, 4);
-            bullets.Add(bullet);
-
-            bullets.ForEach(singleBullet =>
-            {
-                singleBullet.Create(gameArea, this);
-                singleBullet.Draw();
-                if (singleBullet.markedForDeletion) { bullets.Remove(singleBullet); }
-            });
-
-            if (bullets.Count > 5) { bullets.RemoveAt(0); }
+            Stamina += 1;
         }
 
-        // destruktor
+
+        new public void Delete(Canvas gameArea)
+        {
+            gameArea.Children.Remove(Body);
+            gameArea.Children.Remove(HitBox);
+            gameArea.Children.Remove(NormalAttackArea);
+            gameArea.Children.Remove(StrongAttackArea);
+        }
+
+
 
         public bool CollisionCircles(Ellipse o1, Ellipse o2)
         {
             double o1X = Canvas.GetLeft(o1) + o1.Width / 2;
-            double o1Y = Canvas.GetLeft(o1) + o1.Height / 2;
+            double o1Y = Canvas.GetTop(o1) + o1.Height / 2;
             double o1Radius = o1.Height / 2;
 
             double o2X = Canvas.GetLeft(o2) + o2.Width / 2;
-            double o2Y = Canvas.GetLeft(o2) + o2.Height / 2;
+            double o2Y = Canvas.GetTop(o2) + o2.Height / 2;
             double o2Radius = o2.Height / 2;
 
             double distanceBetweenCirclesSquared = (o2X - o1X) * (o2X - o1X) + (o2Y - o1Y) * (o2Y - o1Y);
 
             if (distanceBetweenCirclesSquared > (o1Radius + o2Radius) * (o1Radius + o2Radius))
             {
-                return true;
+                return false;
             }
-            return false;
+            return true;
         }
     }
 }

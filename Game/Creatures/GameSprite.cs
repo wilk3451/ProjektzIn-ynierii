@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace Game.Creatures
 {
@@ -36,30 +39,35 @@ namespace Game.Creatures
             //SpriteImage = sprite;
 
             Body = new System.Windows.Shapes.Rectangle();
-            Speed = 5;
+            Speed = 0;
         }
 
-
-        public class GameSpritesList
+        public void Create(Canvas gameArea)
         {
-            private static List<GameSprite> gameSprites = new List<GameSprite>();
-
-            public static void RegisterSprite(GameSprite sprite)
-            {
-                gameSprites.Add(sprite);
-            }
-
-            public static void RemoveSprite(GameSprite sprite)
-            {
-                gameSprites.Remove(sprite);
-            }
+            Body = new Rectangle();
+            gameArea.Children.Add(Body);
+            Body.Width = this.Width;
+            Body.Height = this.Height;
+            Canvas.SetTop(Body, Position.X);
+            Canvas.SetLeft(Body, Position.Y);
+            gameArea.DataContext = Body;         
         }
 
-
-
-        public void DestroySelf()
+        public void Draw()
         {
-
+            Canvas.SetLeft(Body, Position.X);
+            Canvas.SetTop(Body, Position.Y);
         }
+
+        public void Update()
+        {
+           
+        }
+
+        public void Delete(Canvas gameArea)
+        {
+            gameArea.Children.Remove(Body);
+        }
+
     }
 }

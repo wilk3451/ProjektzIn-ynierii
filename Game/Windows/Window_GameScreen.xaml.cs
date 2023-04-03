@@ -39,7 +39,7 @@ namespace Game.Windows
         static int enemyCounter = 3;
         int directionTimer = 10;
         int TimerLimit = 30;
-        int[] kierunkiX = new int[] { 1, 0, -1, 1, 1 };
+        int[] kierunkiX = new int[] { 1, 1, -1, 1, 1 };
         int[] kierunkiY = new int[] { 1, -1, 1, -1, 1 };
         float enemySpeed = 1;
         public int lastSide = 0;
@@ -61,10 +61,10 @@ namespace Game.Windows
                 {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",","w"},
                 {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",","w"},
                 {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
-                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
-                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
-                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
-                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
                 {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
                 {"w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w"},
 
@@ -121,8 +121,9 @@ namespace Game.Windows
         private void GameTimerEvent(object sender, EventArgs e)
         {
             int moveDistance = (int)player.Speed;
-            directionTimer--;
+            //directionTimer--;
 
+            /*
             if (directionTimer < 0)
             {
                 for (int i = 0; i < enemyCounter; i++)
@@ -131,7 +132,7 @@ namespace Game.Windows
                     kierunkiY[i] = rand.Next(-1, 2);
                 }
                 directionTimer = TimerLimit;
-            }
+            }*/
 
 
             if ((Keyboard.GetKeyStates(Key.D) & KeyStates.Down) > 0)
@@ -194,77 +195,139 @@ namespace Game.Windows
                 bullets.Add(bullet);
             }
 
-            if (bullets.Count > -1)
+            if ((Keyboard.GetKeyStates(Key.R) & KeyStates.Down) > 0)
             {
-                foreach (var bullet in bullets)
+                foreach (Enemy enemy in enemies)
                 {
-                    // 20 - bullet speed
-                    // last side ma stary argument, wiec jak gracz w miedzyczasie sie obroci - poziski bd leciec w nowa strone
-                    bullet.Update(20, lastSide);
-
-                    // Jezeli pocisk wyjdzie poza obszar gry - usun z listy pociskow
-                    if (bullet.Position.X < 0 - gameArea.Width ||
-                        bullet.Position.X > gameArea.Width ||
-                        bullet.Position.Y < 0 - gameArea.Height ||
-                        bullet.Position.Y > gameArea.Height)
-                    {
-
-                        bullet.markedForDeletion = true;
-                    }
-
-                    bullet.Draw();
+                    if (player.NormalAttack(enemy)) enemy.ChangeState();
                 }
             }
+
+            if ((Keyboard.GetKeyStates(Key.T) & KeyStates.Down) > 0)
+            {
+                foreach (Enemy enemy in enemies)
+                {
+                    if (player.StrongAttack(enemy)) enemy.ChangeState();
+                }
+            }
+
+
+            foreach (var bullet in bullets)
+            {
+                // 20 - bullet speed
+                // last side ma stary argument, wiec jak gracz w miedzyczasie sie obroci - poziski bd leciec w nowa strone
+                bullet.Update(20, lastSide);
+
+                // Jezeli pocisk wyjdzie poza obszar gry - usun z listy pociskow
+                if (bullet.Position.X < 0 - gameArea.Width ||
+                    bullet.Position.X > gameArea.Width ||
+                    bullet.Position.Y < 0 - gameArea.Height ||
+                    bullet.Position.Y > gameArea.Height)
+                {
+                    bullet.markedForDeletion = true;
+                }
+                bullet.Draw();
+            }
+            
 
 
 
             /// ENEMIES
             int licznikKierunkow = 0;
 
+
             foreach (var enemy in enemies)
             {
+                enemySpeed = enemy.Speed;
+
                 enemy.Draw();
 
+                
                 if (licznikKierunkow > enemyCounter) { licznikKierunkow = 0; }
 
                 enemy.kierunekX = kierunkiY[++licznikKierunkow];
                 enemy.kierunekY = kierunkiX[++licznikKierunkow];
 
-                enemy.Update(enemySpeed);
+                Vector2 nowyKierunek = new Vector2(enemySpeed * enemy.kierunekX, enemySpeed * enemy.kierunekY);
+
+                enemy.Update(new Vector2(nowyKierunek.X, nowyKierunek.Y));
 
                 if (isColliding(player, enemy))
                 {
                     player.CurrentHp -= 20;
                 }
+                else
+                {
+                    enemy.ChangeStateBackToNormal();
+                }
+
+                
+                // 
+                if (enemy.kierunekX == 1 && isCollidingWithWall(enemy, new Vector2(enemySpeed + enemy.Width, 0)))
+                {
+                    enemy.Update(new Vector2(-enemySpeed*2, 0));
+                }
+               
+                if (enemy.kierunekX == -1 && isCollidingWithWall(enemy, new Vector2(-enemySpeed - enemy.Width, 0)))
+                {
+                    enemy.Update(new Vector2(enemySpeed*2, 0));
+                }
+                
+                if (enemy.kierunekY == 1 && isCollidingWithWall(enemy, new Vector2(0, enemySpeed + enemy.Height)))
+                {
+                    enemy.Update(new Vector2(0, -enemySpeed * 2));
+                }
+                
+                if (enemy.kierunekY == -1 && isCollidingWithWall(enemy, new Vector2(0, -enemySpeed - enemy.Height)))
+                {
+                    enemy.Update(new Vector2(0, enemySpeed * 2));
+                }
+
+
+
+                if (enemy.IsDead()) 
+                { 
+                    enemy.markedForDeletion = true; 
+                } 
+
+
+
+
+                //enemy.Update(nowyKierunek);
 
                 enemy.Draw();
                 player.Draw();
             }
 
-            foreach (var enemy in enemies)
-            {
-                foreach (var bullet in bullets)
+            if (bullets != null)
+            { 
+                foreach (var enemy in enemies)
                 {
-                    if (isColliding(bullet, enemy))
+                    foreach (var bullet in bullets)
                     {
-                        bullet.markedForDeletion = true;
-                        enemy.markedForDeletion = true;
-                    }
-                    else
-                    {
-                        bullet.markedForDeletion = false;
-                        enemy.markedForDeletion = false;
+                        if (isColliding(bullet, enemy))
+                        {
+                            bullet.markedForDeletion = true;
+                            enemy.markedForDeletion = true;
+                        }
+                        else
+                        {
+                            bullet.markedForDeletion = false;
+                            enemy.markedForDeletion = false;
+                        }
                     }
                 }
             }
 
-
-            for (int i = bullets.Count - 1; i >= 0; i--)
+            if (bullets != null)
             {
-                if (bullets[i].markedForDeletion)
+                for (int i = bullets.Count - 1; i >= 0; i--)
                 {
-                    bullets[i].Delete(gameArea);
-                    bullets.RemoveAt(i);
+                    if (bullets[i].markedForDeletion)
+                    {
+                        bullets[i].Delete(gameArea);
+                        bullets.RemoveAt(i);
+                    }
                 }
             }
 
@@ -277,6 +340,10 @@ namespace Game.Windows
                 }
             }
 
+
+
+
+            player.RegenerateStamina();
             player.Draw();
         }
         
@@ -311,6 +378,30 @@ namespace Game.Windows
             }
             return false;
 
+        }
+
+        public bool isCollidingX(GameSprite o1, GameSprite o2)
+        {
+            if ( o1.Position.X + o1.Width + o1.Speed > o2.Position.X &&
+                o1.Position.X + o1.Speed < o2.Position.X + o2.Width &&
+                o1.Position.Y + o1.Height > o2.Position.Y &&
+                o1.Position.Y < o2.Position.Y + o2.Height)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool isCollidingY(GameSprite o1, GameSprite o2)
+        {
+            if ( o1.Position.X + o1.Width > o2.Position.X &&
+                o1.Position.X < o2.Position.X + o2.Width &&
+                o1.Position.Y + o1.Height + o1.Speed > o2.Position.Y &&
+                o1.Position.Y + o1.Speed < o2.Position.Y + o2.Height)
+            {  
+                return true;     
+            }
+            return false;
         }
 
     }

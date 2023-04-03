@@ -53,7 +53,7 @@ namespace Game.Creatures
             gameArea.DataContext = BulletBody;
         }
 
-        public void Draw()
+        new public void Draw()
         {
             Canvas.SetLeft(Body, Position.X);
             Canvas.SetTop(Body, Position.Y);
@@ -85,7 +85,7 @@ namespace Game.Creatures
             }
         }
 
-        public void Delete(Canvas gameArea)
+        new public void Delete(Canvas gameArea)
         {
             gameArea.Children.Remove(Body);
             gameArea.Children.Remove(BulletBody);

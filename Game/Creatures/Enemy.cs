@@ -73,7 +73,7 @@ namespace Game.Creatures
 
             Vision = new System.Windows.Shapes.Rectangle();
 
-            Speed = (float)2.0;
+            Speed = (float)0.5;
             Level = level;
             SetStats(Level);
         }
@@ -94,7 +94,7 @@ namespace Game.Creatures
             CurrentHp = Hp;
         }
 
-        public void Create(Canvas gameArea)
+        new public void Create(Canvas gameArea)
         {
             // Body
             Body = new Rectangle();
@@ -159,7 +159,7 @@ namespace Game.Creatures
             */
         }
 
-        public void Draw()
+        new public void Draw()
         {
             double OffsetAttack = Position.Y + Height / 2 - NormalAttackArea.Height / 2;
             double OffsetVision = Position.Y + Height / 2 - VisionArea.Height / 2;
@@ -184,41 +184,29 @@ namespace Game.Creatures
         }
 
 
-        public void Update(float speed)
+        public void Update(Vector2 position)
         {
-            Position.X += speed * kierunekX;
-            Position.Y += speed * kierunekY;
+            Position.X += position.X * kierunekX;
+            Position.Y += position.Y * kierunekY;
         }
-
-        /*          
-                    // poruszanie
-                    Canvas.SetTop(x, Canvas.GetTop(x) + enemySpeed * kierunkiY[++licznikKierunkow]);
-                    Canvas.SetLeft(x, Canvas.GetLeft(x) + enemySpeed * kierunkiX[++licznikKierunkow]);
-                    if (Canvas.GetTop(x) > gameArea.Height || Canvas.GetTop(x) < 0 - gameArea.Height)
-                    {
-                        Canvas.SetTop(x, Canvas.GetTop(x) + enemySpeed * (0 - kierunkiY[licznikKierunkow]));
-                    }
-                    if (Canvas.GetLeft(x) < 0 - gameArea.Width || Canvas.GetLeft(x) > gameArea.Height)
-                    {
-                        Canvas.SetLeft(x, Canvas.GetLeft(x) + enemySpeed * (0 - kierunkiX[licznikKierunkow]));
-                    }
-                           
-            */
 
 
         public Vector2 RandomSpawnPosition(Canvas gameArea, GameSprite toAvoid, Random rand)
         {
-            int Top = rand.Next(30, (int)gameArea.Height - 30);
-            int Left = rand.Next(30, (int)gameArea.Width - 30);
+            int Top = rand.Next(100, (int)gameArea.Height - 100);
+            int Left = rand.Next(100, (int)gameArea.Width - 100);
+            
             while (Top > toAvoid.Position.Y && Top < toAvoid.Position.Y)
             {
-                Top = rand.Next(30, (int)gameArea.Height - 30);
+                Top = rand.Next(100, (int)gameArea.Height - 100);
             }
             while (Left > toAvoid.Position.X && Left < toAvoid.Position.X)
             {
-                Left = rand.Next(30, (int)gameArea.Width - 30);
+                Left = rand.Next(100, (int)gameArea.Width - 100);
             }
+            
             return new Vector2(Top, Left);
+            // potrzebne sprawdzenie kolizji w osobnych pętlach dla wszystkich list obiektów
         }
 
 
@@ -333,19 +321,17 @@ namespace Game.Creatures
             return false;
         }
 
-        public void MoveLeft()
+        public void ChangeState()
         {
-            Position.X = Speed;
+            Body.Fill = new SolidColorBrush(Colors.Red);        
         }
 
-
-        public Vector2 GetPosition() { return this.Position; }
-
-        public Vector2 CheckEnemyPosition()
+        public void ChangeStateBackToNormal()
         {
-            return this.Position;
+            ImageBrush enemySprite = new ImageBrush();
+            enemySprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/enemy.png"));
+            Body.Fill = enemySprite;
         }
-
 
         bool Attacked = false;
 
@@ -371,14 +357,13 @@ namespace Game.Creatures
 
         public bool IsDead()
         {
-            if (CurrentHp == 0) return true;
+            if (CurrentHp <= 0) return true;
             return false;
         }
 
 
-
         // destruktor
-        public void Delete(Canvas gameArea)
+        new public void Delete(Canvas gameArea)
         {
             gameArea.Children.Remove(Body);
             gameArea.Children.Remove(HitBox);
@@ -388,18 +373,15 @@ namespace Game.Creatures
         }
 
 
-
-
-
-        /// WRONG
+        
         public bool CollisionCircles(Ellipse o1, Ellipse o2)
         {
             double o1X = Canvas.GetLeft(o1) + o1.Width / 2;
-            double o1Y = Canvas.GetLeft(o1) + o1.Height / 2;
+            double o1Y = Canvas.GetTop(o1) + o1.Height / 2;
             double o1Radius = o1.Height / 2;
 
             double o2X = Canvas.GetLeft(o2) + o2.Width / 2;
-            double o2Y = Canvas.GetLeft(o2) + o2.Height / 2;
+            double o2Y = Canvas.GetTop(o2) + o2.Height / 2;
             double o2Radius = o2.Height / 2;
 
             double distanceBetweenCirclesSquared = (o2X - o1X) * (o2X - o1X) + (o2Y - o1Y) * (o2Y - o1Y);
@@ -410,5 +392,21 @@ namespace Game.Creatures
             }
             return false;
         }
+
+
+        public bool IsColliding(GameSprite o1, GameSprite o2)
+        {
+            if ((o1.Position.X + o1.Width <= o2.Position.X + o2.Width) && (o1.Position.X + o1.Width >= o2.Position.X))
+            {
+                if ((o1.Position.Y + o1.Height <= o2.Position.Y + o2.Height) && (o1.Position.Y + o1.Height >= o2.Position.Y))
+                {
+                    return true;
+                }
+            }
+            return false;
+
+        }
+
+
     }
 }
