@@ -52,24 +52,66 @@ namespace Game.Windows
 
         public List<Enemy> enemies = new List<Enemy>();
 
-        public List<Wall> Walls = new List<Wall>();
-
-        public static string[,] map_string = new string[,]
+        public List<String[,]> Maps = new List<String[,]> {
+            map_string1,map_string2
+        };
+        public int map_index = 1;
+        //public List<Wall> Walls = new List<Wall>();
+        
+        public static string[,] map_string1 = new string[,]
             {
-                {"w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w"},
-                {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",","w"},
-                {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",","w"},
-                {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",","w"},
-                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
-                {"w",",",",",",","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
-                {"w",",",",",",","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
-                {"w",",",",",",","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
-                {"w",",",",",",","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
-                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
-                {"w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w"},
+                {"w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w"},
+                {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","d",",","w"},
+                {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w","w","w","w","w","w","w"},
+                {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w","w","w",",",",","w","w","w","w","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",","w","w","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w"},
 
             };
-        public Map map = new Map(map_string);
+        public static string[,] map_string2 = new string[,]
+            {
+                {"w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w"},
+                {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w","w","w",",",",","w","w","w","w","w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w","w","w","w","w","w","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",","w","w","w","w","w","w","w","w","w",",",",",",",",",",",",",",",",",",",",",",","w",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w",",",",",",",",",",","w"},
+                {"w",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",",","w",",",",",",",",","d","w"},
+                {"w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w"},
+
+            };
+        
+        public Map map = new Map(map_string1);
 
 
 
@@ -104,16 +146,8 @@ namespace Game.Windows
                 enemies.Add(enemy);
             }
 
-            for (int wall_counter = 0; wall_counter < map.wallsinmap.Count(); wall_counter++)
-            {
-                gameArea.Children.Add(map.wallsinmap[wall_counter].Body);
-
-                Canvas.SetTop(map.wallsinmap[wall_counter].Body, map.wallsinmap[wall_counter].Position.Y);
-                Canvas.SetLeft(map.wallsinmap[wall_counter].Body, map.wallsinmap[wall_counter].Position.X);
-
-                map.wallsinmap[wall_counter].Body.Fill = new SolidColorBrush(Colors.Blue);
-                gameArea.DataContext = map.wallsinmap[wall_counter].Body;
-            }
+            updateWalls();
+            updateDoors();
 
         }
 
@@ -137,6 +171,17 @@ namespace Game.Windows
 
             if ((Keyboard.GetKeyStates(Key.D) & KeyStates.Down) > 0)
             {
+                if (isCollidingWithDoor(player, new Vector2(moveDistance, 0)))
+                {
+                    gameArea.Children.Clear();
+                    map.changeMap(Maps[map_index]);
+                    player.Create(gameArea);
+                    player.Position = new Vector2(100, 100);
+                    lastSide = 1;
+                    updateWalls();
+                    updateDoors();
+                    updateEnemies();
+                }
                 if (!isCollidingWithWall(player, new Vector2(moveDistance, 0)))
                 {
                     player.Update(new Vector2(moveDistance, 0), 0);
@@ -146,10 +191,24 @@ namespace Game.Windows
                 {
                     player.Update(new Vector2(-moveDistance, 0), 0);
                 }
+
+
             }
+            
 
             if ((Keyboard.GetKeyStates(Key.A) & KeyStates.Down) > 0)
             {
+                if (isCollidingWithDoor(player, new Vector2(-moveDistance, 0)))
+                {
+                    gameArea.Children.Clear();
+                    map.changeMap(Maps[map_index]);
+                    player.Create(gameArea);
+                    player.Position = new Vector2(100, 100);
+                    lastSide = 1;
+                    updateWalls();
+                    updateDoors();
+                    updateEnemies();
+                }
                 if (!isCollidingWithWall(player, new Vector2(-moveDistance, 0)))
                 {
                     player.Update(new Vector2(-moveDistance, 0), 180);
@@ -163,6 +222,17 @@ namespace Game.Windows
 
             if ((Keyboard.GetKeyStates(Key.W) & KeyStates.Down) > 0)
             {
+                if (isCollidingWithDoor(player, new Vector2(0, -moveDistance)))
+                {
+                    gameArea.Children.Clear();
+                    map.changeMap(Maps[map_index]);
+                    player.Create(gameArea);
+                    player.Position = new Vector2(100, 100);
+                    lastSide = 1;
+                    updateWalls();
+                    updateDoors();
+                    updateEnemies();
+                }
                 if (!isCollidingWithWall(player, new Vector2(0, -moveDistance)))
                 {
                     player.Update(new Vector2(0, -moveDistance), -90);
@@ -176,6 +246,17 @@ namespace Game.Windows
 
             if ((Keyboard.GetKeyStates(Key.S) & KeyStates.Down) > 0)
             {
+                if (isCollidingWithDoor(player, new Vector2(0, moveDistance)))
+                {
+                    gameArea.Children.Clear();
+                    map.changeMap(Maps[map_index]);
+                    player.Create(gameArea);
+                    player.Position = new Vector2(100,100);
+                    lastSide = 1;
+                    updateWalls();
+                    updateDoors();
+                    updateEnemies();
+                }
                 if (!isCollidingWithWall(player, new Vector2(0, moveDistance)))
                 {
                     player.Update(new Vector2(0, moveDistance), 90);
@@ -186,7 +267,7 @@ namespace Game.Windows
                     player.Update(new Vector2(0, -moveDistance), 90);
                 }
             }
-
+            
             if ((Keyboard.GetKeyStates(Key.E) & KeyStates.Down) > 0)
             {
                 Vector2 poz = new Vector2(player.Position.X, player.Position.Y); // nowy wektor, bo konstruktor Bullet z jakiegos powodu zmienial pozycje gracza
@@ -366,6 +447,21 @@ namespace Game.Windows
             }
             return false;
         }
+        public bool isCollidingWithDoor(GameSprite Object, Vector2 v)
+        {
+            foreach (NextLeveldoor w in map.doorsinmap)
+            {
+                Rect playerHB = new Rect(Canvas.GetLeft(Object.Body) + v.X, Canvas.GetTop(Object.Body) + v.Y, Object.Width, Object.Height);
+                Rect doorHB = new Rect(Canvas.GetLeft(w.Body), Canvas.GetTop(w.Body), w.Width, w.Height);
+
+                if (playerHB.IntersectsWith(doorHB))
+                {
+                    return true;
+                }
+
+            }
+            return false;
+        }
 
         public bool isColliding(GameSprite o1, GameSprite o2)
         {
@@ -403,8 +499,60 @@ namespace Game.Windows
             }
             return false;
         }
+        
+        public void updateWalls()
+        {
+            for (int wall_counter = 0; wall_counter < map.wallsinmap.Count(); wall_counter++)
+            {
+                gameArea.Children.Add(map.wallsinmap[wall_counter].Body);
+
+                Canvas.SetTop(map.wallsinmap[wall_counter].Body, map.wallsinmap[wall_counter].Position.Y);
+                Canvas.SetLeft(map.wallsinmap[wall_counter].Body, map.wallsinmap[wall_counter].Position.X);
+
+
+                map.wallsinmap[wall_counter].Body.Fill = new SolidColorBrush(Colors.Blue);
+
+
+                gameArea.DataContext = map.wallsinmap[wall_counter].Body;
+            }
+
+        }
+
+        public void updateDoors()
+        {
+            
+            for (int door_counter = 0; door_counter < map.doorsinmap.Count(); door_counter++)
+            {
+                gameArea.Children.Add(map.doorsinmap[door_counter].Body);
+
+                Canvas.SetTop(map.doorsinmap[door_counter].Body, map.doorsinmap[door_counter].Position.Y);
+                Canvas.SetLeft(map.doorsinmap[door_counter].Body, map.doorsinmap[door_counter].Position.X);
+
+                if (map.doorsinmap[door_counter].GetType() == typeof(NextLeveldoor))
+                {
+                    map.doorsinmap[door_counter].Body.Fill = new SolidColorBrush(Colors.Red);
+                }
+
+                gameArea.DataContext = map.doorsinmap[door_counter].Body;
+            }
+
+        }
+        public void updateEnemies()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                Vector2 poz = new Vector2(0, 0);
+                Enemy enemy = new Enemy(poz, 40, 40, 1);
+                enemy.Position = enemy.RandomSpawnPosition(gameArea, player, rand);
+                enemy.Create(gameArea);
+                enemy.Draw();
+                enemies.Add(enemy);
+            }
+        }
 
     }
+
+    
 
 }
 
