@@ -52,6 +52,7 @@ namespace Game.Items
     public class Coin : GameSprite
     {
         public bool czyUsunac = false;
+        
         public Coin(Vector2 Position, int Width, int Height) : base(Position, Width, Height)
         {
             this.Position = Position;
@@ -84,6 +85,8 @@ namespace Game.Items
 
     public class Emerald : GameSprite
     {
+        public bool czyUsunac = false;
+    
         public Emerald(Vector2 Position, int Width, int Height) : base(Position, Width, Height)
         {
             this.Position = Position;
@@ -116,6 +119,8 @@ namespace Game.Items
 
     public class Ruby : GameSprite
     {
+        public bool czyUsunac = false;
+    
         public Ruby(Vector2 Position, int Width, int Height) : base(Position, Width, Height)
         {
             this.Position = Position;
@@ -148,6 +153,8 @@ namespace Game.Items
 
     public class Diamond : GameSprite
     {
+        public bool czyUsunac = false;
+    
         public Diamond(Vector2 Position, int Width, int Height) : base(Position, Width, Height)
         {
             this.Position = Position;
