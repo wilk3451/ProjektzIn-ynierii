@@ -114,7 +114,32 @@ namespace Game.Windows
         public Map map = new Map(map_string1);
 
 
+        //Agnieszka
 
+        public static Vector2 skarb = new Vector2(270, 350);
+
+        public static Vector2 kasa = new Vector2(250, 370);
+        public static Vector2 kasa2 = new Vector2(290, 370);
+        public static Vector2 kasa3 = new Vector2(290, 330);
+        public static Vector2 kasa4 = new Vector2(250, 330);
+
+        public Treasure TC = new Treasure(skarb, 50, 20);
+
+        public Coin C = new Coin(kasa, 50, 20);
+        public Emerald E = new Emerald(kasa2, 50, 20);
+        public Ruby R = new Ruby(kasa3, 50, 20);
+        public Diamond D = new Diamond(kasa4, 50, 20);
+
+        public List<Coin> coins = new List<Coin>();
+        public List<Emerald> emeralds = new List<Emerald>();
+        public List<Ruby> rubys = new List<Ruby>();
+        public List<Diamond> diamonds = new List<Diamond>();
+
+        public int Score = 0;
+
+        public bool WasTouched = false, aaa = false;
+
+        //Agnieszka
 
 
         public Window_GameScreen()
@@ -135,6 +160,10 @@ namespace Game.Windows
         public void DrawWorld()
         {
             player.Create(gameArea);
+            
+            //Agnieszka
+            TC.Create(gameArea);
+            //Agnieszka
          
             for (int i = 0; i < 5; i++)
             {
@@ -154,6 +183,10 @@ namespace Game.Windows
 
         private void GameTimerEvent(object sender, EventArgs e)
         {
+            //Agnieszka
+            ///EarnMoney();
+            //Agnieszka
+        
             int moveDistance = (int)player.Speed;
             //directionTimer--;
 
@@ -290,6 +323,127 @@ namespace Game.Windows
                 {
                     if (player.StrongAttack(enemy)) enemy.ChangeState();
                 }
+            }
+            
+            //Agnieszka 
+            if ((Keyboard.GetKeyStates(Key.F) & KeyStates.Down) > 0)
+            {
+                if (isColliding(player, TC))
+                {
+                    TC.Delete(gameArea);
+
+                    C.Create(gameArea);             
+                    C.Draw();
+                    coins.Add(C);
+
+                    E.Create(gameArea);
+                    E.Draw();
+                    emeralds.Add(E);
+
+                    R.Create(gameArea);
+                    R.Draw();
+                    rubys.Add(R);
+
+                    D.Create(gameArea);
+                    D.Draw();
+                    diamonds.Add(D);
+                }
+
+                foreach (Coin C in coins)
+                {
+                    if (isColliding(player, C))
+                    {
+                        C.czyUsunac = true;
+                    }
+                    else { C.czyUsunac = false; }
+                }
+
+                foreach(Emerald E in emeralds)
+                {
+                    if(isColliding(player, E))
+                    {
+                         E.czyUsunac = true;
+                    }
+                    else { E.czyUsunac = false; }
+                }
+
+                foreach(Ruby R in rubys)
+                {
+                    if(isColliding(player, R))
+                    {
+                        R.czyUsunac = true;
+                    }
+                    else { R.czyUsunac = false; }
+                }
+
+                foreach(Diamond D in diamonds)
+                {
+                    if(isColliding(player, D))
+                    {
+                        D.czyUsunac = true;
+                    }
+                    else { D.czyUsunac = false; }
+                }
+
+                //if (coins != null)
+                //{
+                    //for (int i = coins.Count - 1; i >= 0; i--)
+                    //{
+                        //if(coins[i].czyUsunac)
+                        if (C.czyUsunac)
+                        {
+                            //coins[i].Delete(gameArea);
+                            C.Delete(gameArea);
+                            //coins.RemoveAt(i);
+                            coins.Clear();
+                        }
+                    //}
+                //}
+
+                //if (emeralds != null)
+                //{
+                    //for (int i = emeralds.Count - 1; i >= 0; i--)
+                    //{
+                        //if(emeralds[i].czyUsunac)
+                        if (E.czyUsunac)
+                        {
+                            //emeralds[i].Delete(gameArea);
+                            E.Delete(gameArea);
+                            //emeralds.RemoveAt(i);
+                            emeralds.Clear();
+                        }
+                    //}
+                //}
+
+                //if (rubys != null)
+                //{
+                    //for (int i = rubys.Count - 1; i >= 0; i--)
+                    //{
+                        //if(rubys[i].czyUsunac)
+                        if (R.czyUsunac)
+                        {
+                            //rubys[i].Delete(gameArea);
+                            R.Delete(gameArea);
+                            //rubys.RemoveAt(i);
+                            rubys.Clear();
+                        }
+                    //}
+                //}
+
+                //if (diamonds != null)
+                //{
+                    //for (int i = diamonds.Count - 1; i >= 0; i--)
+                    //{
+                        //if(diamonds[i].czyUsunac)
+                        if (D.czyUsunac)
+                        {
+                            //diamonds[i].Delete(gameArea);
+                            D.Delete(gameArea);
+                            //diamonds.RemoveAt(i);
+                            diamonds.Clear();
+                        }
+                    //}
+                //}
             }
 
 
@@ -549,6 +703,105 @@ namespace Game.Windows
                 enemies.Add(enemy);
             }
         }
+        
+        //Agnieszka
+        ///public void EarnMoney()
+        ///{
+           ///if (WasTouched == false)
+           ///{
+       
+        
+        /*foreach (Coin C in coins)
+        {
+            if (isColliding(player, C))
+            {
+                C.czyUsunac = true;
+            }
+            else { C.czyUsunac = false; }
+        }
+        
+        foreach (Emerald E in emeralds)
+        {
+            if (isColliding(player, E))
+            {
+                E.czyUsunac = true;
+            }
+            else { E.czyUsunac = false; }
+        }
+        
+        foreach (Ruby R in rubys)
+        {
+            if (isColliding(player, R))
+            {
+                R.czyUsunac = true;
+            }
+            else { R.czyUsunac = false; }
+        }
+        
+        foreach (Diamond D in diamonds)
+        {
+            if (isColliding(player, D))
+            {
+                D.czyUsunac = true;
+            }
+            else { D.czyUsunac = false; }
+        }
+
+
+        if (coins != null)
+        {
+            for (int i = coins.Count - 1; i >= 0; i--)
+            {
+                if (coins[i].czyUsunac)
+                {
+                    coins[i].Delete(gameArea);
+                    coins.RemoveAt(i);
+                }
+            }
+        }
+
+        if (emeralds != null)
+        {
+            for (int i = emeralds.Count - 1; i >= 0; i--)
+            {
+                if (emeralds[i].czyUsunac)
+                {
+                    emeralds[i].Delete(gameArea);
+                    emeralds.RemoveAt(i);
+                }
+            }
+        }
+
+        if (rubys != null)
+        {
+            for (int i = rubys.Count - 1; i >= 0; i--)
+            {
+                if (rubys[i].czyUsunac)
+                {
+                    rubys[i].Delete(gameArea);
+                    rubys.RemoveAt(i);
+                }
+            }
+        }
+
+        if (diamonds != null)
+        {
+            for (int i = diamonds.Count - 1; i >= 0; i--)
+            {
+                if (diamonds[i].czyUsunac)
+                {
+                    diamonds[i].Delete(gameArea);
+                    diamonds.RemoveAt(i);
+                }
+            }
+        }
+
+        if (coins == null && emeralds == null && rubys == null && diamonds == null)
+            WasTouched = true;*/
+            
+        ///}
+      ///}
+      //Agnieszka
 
     }
 
