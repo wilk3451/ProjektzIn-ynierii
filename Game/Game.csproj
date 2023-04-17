@@ -79,9 +79,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Creatures\Bullet.cs" />
+    <Compile Include="Creatures\Door.cs" />
     <Compile Include="Creatures\Enemy.cs" />
     <Compile Include="Creatures\GameSprite.cs" />
     <Compile Include="Creatures\Map.cs" />
+    <Compile Include="Creatures\MapsList.cs" />
     <Compile Include="Creatures\Player.cs" />
     <Compile Include="Creatures\wall.cs" />
     <Compile Include="Items\Item.cs" />

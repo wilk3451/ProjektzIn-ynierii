@@ -23,9 +23,9 @@ using System.Windows.Media;
 
         }
 
-        public class NextLeveldoor : Wall
+        public class NextLevel : Wall
         {
-        public NextLeveldoor(Vector2 Position, int Width, int Height) : base(Position, Width, Height)
+        public NextLevel(Vector2 Position, int Width, int Height) : base(Position, Width, Height)
         {
             this.Position = Position;
             this.Body.Width = this.Width = Width;

@@ -10,7 +10,7 @@ namespace Game.Creatures
     {
         public string[,] map;
         public List<Wall> wallsinmap;
-        public List<NextLeveldoor> doorsinmap;
+        public List<NextLevel> doorsinmap;
 
         int wall_counter = 0;
         int door_counter = 0;
@@ -20,7 +20,7 @@ namespace Game.Creatures
 
             
             wallsinmap = new List<Wall>();
-            doorsinmap = new List<NextLeveldoor>();
+            doorsinmap = new List<NextLevel>();
             for (int i = 0; i < map.GetLength(0); i++)
             {
 
@@ -47,7 +47,7 @@ namespace Game.Creatures
                     {
 
 
-                        NextLeveldoor door = new NextLeveldoor(new Vector2(j * 20, i * 20), 20, 20);
+                        NextLevel door = new NextLevel(new Vector2(j * 20, i * 20), 20, 20);
                         door.Body = new System.Windows.Shapes.Rectangle();
 
                         door.Body.Width = 20;
@@ -97,7 +97,7 @@ namespace Game.Creatures
                     {
 
 
-                        NextLeveldoor door = new NextLeveldoor(new Vector2(j * 20, i * 20), 20, 20);
+                        NextLevel door = new NextLevel(new Vector2(j * 20, i * 20), 20, 20);
                         door.Body = new System.Windows.Shapes.Rectangle();
 
                         door.Body.Width = 20;
