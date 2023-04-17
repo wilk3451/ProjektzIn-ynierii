@@ -114,7 +114,34 @@ namespace Game.Windows
         public Map map = new Map(map_string1);
 
 
+        //Agnieszka
 
+        Random random = new Random((int)DateTime.Now.Ticks);
+
+        public static Vector2 skarb = new Vector2(270, 350);
+
+        public static Vector2 kasa = new Vector2(250, 370);
+        public static Vector2 kasa2 = new Vector2(290, 370);
+        public static Vector2 kasa3 = new Vector2(290, 330);
+        public static Vector2 kasa4 = new Vector2(250, 330);
+
+        public Treasure TC = new Treasure(skarb, 50, 20);
+
+        public Coin C = new Coin(kasa, 10, 10);
+        public Emerald E = new Emerald(kasa2, 12, 12);
+        public Ruby R = new Ruby(kasa3, 14, 14);
+        public Diamond D = new Diamond(kasa4, 16, 16);
+
+        public List<Coin> coins = new List<Coin>();
+        public List<Emerald> emeralds = new List<Emerald>();
+        public List<Ruby> rubys = new List<Ruby>();
+        public List<Diamond> diamonds = new List<Diamond>();
+
+        public int Score = 0;
+
+        public bool WasTouched = false;
+
+        //Agnieszka
 
 
         public Window_GameScreen()
@@ -135,6 +162,10 @@ namespace Game.Windows
         public void DrawWorld()
         {
             player.Create(gameArea);
+            
+            //Agnieszka
+            TC.Create(gameArea);
+            //Agnieszka
          
             for (int i = 0; i < 5; i++)
             {
@@ -156,6 +187,10 @@ namespace Game.Windows
         {
             int moveDistance = (int)player.Speed;
             //directionTimer--;
+
+            //Agnieszka
+            EarnMoney();
+            //Agnieszka
 
             /*
             if (directionTimer < 0)
@@ -291,7 +326,37 @@ namespace Game.Windows
                     if (player.StrongAttack(enemy)) enemy.ChangeState();
                 }
             }
+            
+            //Agnieszka 
+            if ((Keyboard.GetKeyStates(Key.F) & KeyStates.Down) > 0)
+            {
+                if (WasTouched == false)
+                {
+                    if (isColliding(player, TC))
+                    {
+                        TC.Delete(gameArea);
 
+                        C.Create(gameArea);
+                        C.Draw();
+                        coins.Add(C);
+
+                        E.Create(gameArea);
+                        E.Draw();
+                        emeralds.Add(E);
+
+                        R.Create(gameArea);
+                        R.Draw();
+                        rubys.Add(R);
+
+                        D.Create(gameArea);
+                        D.Draw();
+                        diamonds.Add(D);
+
+                        WasTouched = true;
+                    }
+                }
+            }
+            //Agnieszka
 
             foreach (var bullet in bullets)
             {
@@ -547,6 +612,29 @@ namespace Game.Windows
                 enemy.Create(gameArea);
                 enemy.Draw();
                 enemies.Add(enemy);
+            }
+        }
+        
+        public void EarnMoney()
+        {
+            if(WasTouched == true)
+            {
+                if(isColliding(player, C))
+                {
+                    C.Delete(gameArea);
+                }
+                else if(isColliding(player, E))
+                {
+                    E.Delete(gameArea);
+                }
+                else if(isColliding(player, R))
+                {
+                    R.Delete(gameArea);
+                }
+                else if(isColliding(player, D))
+                {
+                    D.Delete(gameArea);
+                }
             }
         }
 
