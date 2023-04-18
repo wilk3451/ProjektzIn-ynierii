@@ -120,17 +120,19 @@ namespace Game.Windows
 
         public static Vector2 skarb = new Vector2(270, 350);
 
-        public static Vector2 kasa = new Vector2(250, 370);
+        /*public static Vector2 kasa = new Vector2(250, 370);
         public static Vector2 kasa2 = new Vector2(290, 370);
         public static Vector2 kasa3 = new Vector2(290, 330);
-        public static Vector2 kasa4 = new Vector2(250, 330);
+        public static Vector2 kasa4 = new Vector2(250, 330);*/
 
         public Treasure TC = new Treasure(skarb, 50, 20);
 
-        public Coin C = new Coin(kasa, 10, 10);
+        /*public Coin C = new Coin(kasa, 10, 10);
         public Emerald E = new Emerald(kasa2, 12, 12);
         public Ruby R = new Ruby(kasa3, 14, 14);
-        public Diamond D = new Diamond(kasa4, 16, 16);
+        public Diamond D = new Diamond(kasa4, 16, 16);*/
+
+        public int HowManyC, HowManyE, HowManyR, HowManyD;
 
         public List<Coin> coins = new List<Coin>();
         public List<Emerald> emeralds = new List<Emerald>();
@@ -335,22 +337,46 @@ namespace Game.Windows
                     if (isColliding(player, TC))
                     {
                         TC.Delete(gameArea);
+                        HowManyC = random.Next(1, 8);
+                        HowManyE = random.Next(1, 6);
+                        HowManyR = random.Next(1, 4);
+                        HowManyD = random.Next(0, 2);
 
-                        C.Create(gameArea);
-                        C.Draw();
-                        coins.Add(C);
+                        for (int i = 0; i <= HowManyC; i++)
+                        {
+                            Coin C = new Coin(skarb, 10, 10);
+                            C.Position = C.RandomSpawnPosition(gameArea, TC, rand);
+                            C.Create(gameArea);
+                            C.Draw();
+                            coins.Add(C);
+                        }
 
-                        E.Create(gameArea);
-                        E.Draw();
-                        emeralds.Add(E);
+                        for (int i = 0; i <= HowManyE; i++)
+                        {
+                            Emerald E = new Emerald(skarb, 12, 12);
+                            E.Position = E.RandomSpawnPosition(gameArea, TC, rand);
+                            E.Create(gameArea);
+                            E.Draw();
+                            emeralds.Add(E);
+                        }
 
-                        R.Create(gameArea);
-                        R.Draw();
-                        rubys.Add(R);
+                        for (int i = 0; i <= HowManyR; i++)
+                        {
+                            Ruby R = new Ruby(skarb, 14, 14);
+                            R.Position = R.RandomSpawnPosition(gameArea, TC, rand);
+                            R.Create(gameArea);
+                            R.Draw();
+                            rubys.Add(R);
+                        }
 
-                        D.Create(gameArea);
-                        D.Draw();
-                        diamonds.Add(D);
+                        for (int i = 0; i <= HowManyD; i++)
+                        {
+                            Diamond D = new Diamond(skarb, 16, 16);
+                            D.Position = D.RandomSpawnPosition(gameArea, TC, rand);
+                            D.Create(gameArea);
+                            D.Draw();
+                            diamonds.Add(D);
+                        }
 
                         WasTouched = true;
                     }
@@ -619,7 +645,107 @@ namespace Game.Windows
         {
             if(WasTouched == true)
             {
-                if(isColliding(player, C))
+                if(coins != null)
+                {
+                    foreach(var Coin in coins)
+                    {
+                        if (isColliding(player, Coin))
+                        {
+                            Coin.czyUsunac = true;
+                        }
+                        else
+                            Coin.czyUsunac = false;
+                    }
+                }
+
+                if (coins != null)
+                {
+                    for (int i = coins.Count - 1; i >= 0; i--)
+                    {
+                        if (coins[i].czyUsunac)
+                        {
+                            coins[i].Delete(gameArea);
+                            coins.RemoveAt(i);
+                        }
+                    }
+                }
+
+                if (emeralds != null)
+                {
+                    foreach (var Emerald in emeralds)
+                    {
+                        if (isColliding(player, Emerald))
+                        {
+                            Emerald.czyUsunac = true;
+                        }
+                        else
+                            Emerald.czyUsunac = false;
+                    }
+                }
+
+                if (emeralds != null)
+                {
+                    for (int i = emeralds.Count - 1; i >= 0; i--)
+                    {
+                        if (emeralds[i].czyUsunac)
+                        {
+                            emeralds[i].Delete(gameArea);
+                            emeralds.RemoveAt(i);
+                        }
+                    }
+                }
+
+                if (rubys != null)
+                {
+                    foreach (var Ruby in rubys)
+                    {
+                        if (isColliding(player, Ruby))
+                        {
+                            Ruby.czyUsunac = true;
+                        }
+                        else
+                            Ruby.czyUsunac = false;
+                    }
+                }
+
+                if (rubys != null)
+                {
+                    for (int i = rubys.Count - 1; i >= 0; i--)
+                    {
+                        if (rubys[i].czyUsunac)
+                        {
+                            rubys[i].Delete(gameArea);
+                            rubys.RemoveAt(i);
+                        }
+                    }
+                }
+
+                if (diamonds != null)
+                {
+                    foreach (var Diamond in diamonds)
+                    {
+                        if (isColliding(player, Diamond))
+                        {
+                            Diamond.czyUsunac = true;
+                        }
+                        else
+                            Diamond.czyUsunac = false;
+                    }
+                }
+
+                if (diamonds != null)
+                {
+                    for (int i = diamonds.Count - 1; i >= 0; i--)
+                    {
+                        if (diamonds[i].czyUsunac)
+                        {
+                            diamonds[i].Delete(gameArea);
+                            diamonds.RemoveAt(i);
+                        }
+                    }
+                }
+
+                /*if(isColliding(player, C))
                 {
                     C.Delete(gameArea);
                 }
@@ -634,7 +760,7 @@ namespace Game.Windows
                 else if(isColliding(player, D))
                 {
                     D.Delete(gameArea);
-                }
+                }*/
             }
         }
 
