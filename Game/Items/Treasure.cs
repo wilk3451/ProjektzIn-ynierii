@@ -80,6 +80,23 @@ namespace Game.Creatures
         {
             gameArea.Children.Remove(Body);
         }
+
+        public Vector2 RandomSpawnPosition(Canvas gameArea, GameSprite Chest, Random rand)
+        {
+            int Top = rand.Next((int)Chest.Position.X - 45, (int)Chest.Position.X + 45);
+            int Left = rand.Next((int)Chest.Position.Y - 45, (int)Chest.Position.Y + 45);
+
+            while (Top > Chest.Position.Y && Top < Chest.Position.Y)
+            {
+                Top = rand.Next((int)Chest.Position.X - 45, (int)Chest.Position.X + 45);
+            }
+            while (Left > Chest.Position.X && Left < Chest.Position.X)
+            {
+                Left = rand.Next((int)Chest.Position.Y - 45, (int)Chest.Position.Y + 45);
+            }
+
+            return new Vector2(Top, Left);
+        }
     }
 
     public class Emerald : GameSprite
@@ -112,6 +129,23 @@ namespace Game.Creatures
         public void Delete(Canvas gameArea)
         {
             gameArea.Children.Remove(Body);
+        }
+
+        public Vector2 RandomSpawnPosition(Canvas gameArea, GameSprite Chest, Random rand)
+        {
+            int Top = rand.Next((int)Chest.Position.X - 45, (int)Chest.Position.X + 45);
+            int Left = rand.Next((int)Chest.Position.Y - 45, (int)Chest.Position.Y + 45);
+
+            while (Top > Chest.Position.Y && Top < Chest.Position.Y)
+            {
+                Top = rand.Next((int)Chest.Position.X - 45, (int)Chest.Position.X + 45);
+            }
+            while (Left > Chest.Position.X && Left < Chest.Position.X)
+            {
+                Left = rand.Next((int)Chest.Position.Y - 45, (int)Chest.Position.Y + 45);
+            }
+
+            return new Vector2(Top, Left);
         }
     }
 
@@ -146,6 +180,23 @@ namespace Game.Creatures
         {
             gameArea.Children.Remove(Body);
         }
+
+        public Vector2 RandomSpawnPosition(Canvas gameArea, GameSprite Chest, Random rand)
+        {
+            int Top = rand.Next((int)Chest.Position.X - 45, (int)Chest.Position.X + 45);
+            int Left = rand.Next((int)Chest.Position.Y - 45, (int)Chest.Position.Y + 45);
+
+            while (Top > Chest.Position.Y && Top < Chest.Position.Y)
+            {
+                Top = rand.Next((int)Chest.Position.X - 45, (int)Chest.Position.X + 45);
+            }
+            while (Left > Chest.Position.X && Left < Chest.Position.X)
+            {
+                Left = rand.Next((int)Chest.Position.Y - 45, (int)Chest.Position.Y + 45);
+            }
+
+            return new Vector2(Top, Left);
+        }
     }
 
     public class Diamond : GameSprite
@@ -178,6 +229,23 @@ namespace Game.Creatures
         public void Delete(Canvas gameArea)
         {
             gameArea.Children.Remove(Body);
+        }
+
+        public Vector2 RandomSpawnPosition(Canvas gameArea, GameSprite Chest, Random rand)
+        {
+            int Top = rand.Next((int)Chest.Position.X - 45, (int)Chest.Position.X + 45);
+            int Left = rand.Next((int)Chest.Position.Y - 45, (int)Chest.Position.Y + 45);
+
+            while (Top > Chest.Position.Y && Top < Chest.Position.Y)
+            {
+                Top = rand.Next((int)Chest.Position.X - 45, (int)Chest.Position.X + 45);
+            }
+            while (Left > Chest.Position.X && Left < Chest.Position.X)
+            {
+                Left = rand.Next((int)Chest.Position.Y - 45, (int)Chest.Position.Y + 45);
+            }
+
+            return new Vector2(Top, Left);
         }
     }
 }
