@@ -42,6 +42,9 @@ namespace Game.Windows
         int[] kierunkiX = new int[] { 1, 1, -1, 1, 1 };
         int[] kierunkiY = new int[] { 1, -1, 1, -1, 1 };
         float enemySpeed = 1;
+
+        public bool is_in_room = false;
+
         public int lastSide = 0;
 
         public static Vector2 vector = new Vector2(100, 100); // polożenie gracza na początku gry
@@ -118,7 +121,7 @@ namespace Game.Windows
 
             if ((Keyboard.GetKeyStates(Key.D) & KeyStates.Down) > 0)
             {
-                if (isCollidingWithDoor(player, new Vector2(moveDistance, 0)))
+                if (isCollidingWithNxtLvlDoor(player, new Vector2(moveDistance, 0)))
                 {
                     gameArea.Children.Clear();
                     if (map_index < MapsList.length())
@@ -131,6 +134,30 @@ namespace Game.Windows
                     updateWalls();
                     updateDoors();
                     updateEnemies();
+                }
+                if (isCollidingWithDoor(player, new Vector2(moveDistance, 0)) != -1)
+                {
+                    int Room_index = isCollidingWithDoor(player, new Vector2(0, -moveDistance));
+
+
+                    gameArea.Children.Clear();
+                    if (is_in_room == false)
+                    {
+                        map.changeMap(RoomList.get(Room_index));
+                        is_in_room = true;
+                    }
+                    else
+                    {
+                        map.changeMap(MapsList.get(map_index - 1));
+                        is_in_room = false;
+                    }
+                    player.Create(gameArea);
+                    player.Position = new Vector2(100, 100);
+                    lastSide = 1;
+                    updateWalls();
+                    updateDoors();
+                    updateEnemies();
+
                 }
                 if (!isCollidingWithWall(player, new Vector2(moveDistance, 0)))
                 {
@@ -148,7 +175,7 @@ namespace Game.Windows
 
             if ((Keyboard.GetKeyStates(Key.A) & KeyStates.Down) > 0)
             {
-                if (isCollidingWithDoor(player, new Vector2(-moveDistance, 0)))
+                if (isCollidingWithNxtLvlDoor(player, new Vector2(-moveDistance, 0)))
                 {
                     gameArea.Children.Clear();
                     if (map_index < MapsList.length())
@@ -161,6 +188,30 @@ namespace Game.Windows
                     updateWalls();
                     updateDoors();
                     updateEnemies();
+                }
+                if (isCollidingWithDoor(player, new Vector2( -moveDistance,0)) != -1)
+                {
+                    int Room_index = isCollidingWithDoor(player, new Vector2(0, -moveDistance));
+
+
+                    gameArea.Children.Clear();
+                    if (is_in_room == false)
+                    {
+                        map.changeMap(RoomList.get(Room_index));
+                        is_in_room = true;
+                    }
+                    else
+                    {
+                        map.changeMap(MapsList.get(map_index - 1));
+                        is_in_room = false;
+                    }
+                    player.Create(gameArea);
+                    player.Position = new Vector2(100, 100);
+                    lastSide = 1;
+                    updateWalls();
+                    updateDoors();
+                    updateEnemies();
+
                 }
                 if (!isCollidingWithWall(player, new Vector2(-moveDistance, 0)))
                 {
@@ -175,7 +226,7 @@ namespace Game.Windows
 
             if ((Keyboard.GetKeyStates(Key.W) & KeyStates.Down) > 0)
             {
-                if (isCollidingWithDoor(player, new Vector2(0, -moveDistance)))
+                if (isCollidingWithNxtLvlDoor(player, new Vector2(0, -moveDistance)))
                 {
                     gameArea.Children.Clear();
                     if (map_index < MapsList.length())
@@ -188,6 +239,30 @@ namespace Game.Windows
                     updateWalls();
                     updateDoors();
                     updateEnemies();
+                }
+                if (isCollidingWithDoor(player, new Vector2(0, -moveDistance))!=-1) 
+                {
+                    int Room_index = isCollidingWithDoor(player, new Vector2(0, -moveDistance));
+                    
+
+                    gameArea.Children.Clear();
+                    if (is_in_room == false)
+                    {
+                        map.changeMap(RoomList.get(Room_index));
+                        is_in_room = true;
+                    }
+                    else
+                    {
+                        map.changeMap(MapsList.get(map_index-1));
+                        is_in_room = false;
+                    }
+                    player.Create(gameArea);
+                    player.Position = new Vector2(100, 100);
+                    lastSide = 1;
+                    updateWalls();
+                    updateDoors();
+                    updateEnemies();
+
                 }
                 if (!isCollidingWithWall(player, new Vector2(0, -moveDistance)))
                 {
@@ -202,7 +277,7 @@ namespace Game.Windows
 
             if ((Keyboard.GetKeyStates(Key.S) & KeyStates.Down) > 0)
             {
-                if (isCollidingWithDoor(player, new Vector2(0, moveDistance)))
+                if (isCollidingWithNxtLvlDoor(player, new Vector2(0, moveDistance)))
                 {
                     gameArea.Children.Clear();
                     if (map_index < MapsList.length())
@@ -217,6 +292,31 @@ namespace Game.Windows
                     updateEnemies();
 
                 }
+                if (isCollidingWithDoor(player, new Vector2(0, moveDistance)) != -1)
+                {
+                    int Room_index = isCollidingWithDoor(player, new Vector2(0, -moveDistance));
+
+
+                    gameArea.Children.Clear();
+                    if (is_in_room == false)
+                    {
+                        map.changeMap(RoomList.get(Room_index));
+                        is_in_room = true;
+                    }
+                    else
+                    {
+                        map.changeMap(MapsList.get(map_index - 1));
+                        is_in_room = false;
+                    }
+                    player.Create(gameArea);
+                    player.Position = new Vector2(100, 100);
+                    lastSide = 1;
+                    updateWalls();
+                    updateDoors();
+                    updateEnemies();
+
+                }
+
                 if (!isCollidingWithWall(player, new Vector2(0, moveDistance)))
                 {
                     player.Update(new Vector2(0, moveDistance), 90);
@@ -407,22 +507,38 @@ namespace Game.Windows
             }
             return false;
         }
-        public bool isCollidingWithDoor(GameSprite Object, Vector2 v)
+        public bool isCollidingWithNxtLvlDoor(GameSprite Object, Vector2 v)
         {
-            foreach (NextLevel w in map.doorsinmap)
+            Rect playerHB = new Rect(Canvas.GetLeft(Object.Body) + v.X, Canvas.GetTop(Object.Body) + v.Y, Object.Width, Object.Height);
+            foreach (NextLevel w in map.nextleveldoors)
             {
-                Rect playerHB = new Rect(Canvas.GetLeft(Object.Body) + v.X, Canvas.GetTop(Object.Body) + v.Y, Object.Width, Object.Height);
-                Rect doorHB = new Rect(Canvas.GetLeft(w.Body), Canvas.GetTop(w.Body), w.Width, w.Height);
+                
+                
 
-                if (playerHB.IntersectsWith(doorHB))
+                if (playerHB.IntersectsWith(new Rect(Canvas.GetLeft(w.Body), Canvas.GetTop(w.Body), w.Width, w.Height)))
                 {
                     return true;
                 }
 
             }
+            
             return false;
         }
 
+        public int isCollidingWithDoor(GameSprite Object, Vector2 v)
+        {
+            Rect playerHB = new Rect(Canvas.GetLeft(Object.Body) + v.X, Canvas.GetTop(Object.Body) + v.Y, Object.Width, Object.Height);
+            
+            foreach (Door w in map.doors)
+            {
+                if (playerHB.IntersectsWith(new Rect(Canvas.GetLeft(w.Body), Canvas.GetTop(w.Body), w.Width, w.Height)))
+                {
+                    return w.room_index;
+                }
+
+            }
+            return -1;
+        }
         public bool isColliding(GameSprite o1, GameSprite o2)
         {
             if ((o1.Position.X + o1.Width <= o2.Position.X + o2.Width) && (o1.Position.X + o1.Width >= o2.Position.X))
@@ -481,21 +597,33 @@ namespace Game.Windows
         public void updateDoors()
         {
             
-            for (int door_counter = 0; door_counter < map.doorsinmap.Count(); door_counter++)
+            for (int nxt_lvl_door_counter = 0; nxt_lvl_door_counter < map.nextleveldoors.Count(); nxt_lvl_door_counter++)
             {
-                gameArea.Children.Add(map.doorsinmap[door_counter].Body);
+                gameArea.Children.Add(map.nextleveldoors[nxt_lvl_door_counter].Body);
 
-                Canvas.SetTop(map.doorsinmap[door_counter].Body, map.doorsinmap[door_counter].Position.Y);
-                Canvas.SetLeft(map.doorsinmap[door_counter].Body, map.doorsinmap[door_counter].Position.X);
+                Canvas.SetTop(map.nextleveldoors[nxt_lvl_door_counter].Body, map.nextleveldoors[nxt_lvl_door_counter].Position.Y);
+                Canvas.SetLeft(map.nextleveldoors[nxt_lvl_door_counter].Body, map.nextleveldoors[nxt_lvl_door_counter].Position.X);
 
-                if (map.doorsinmap[door_counter].GetType() == typeof(NextLevel))
-                {
-                    map.doorsinmap[door_counter].Body.Fill = new SolidColorBrush(Colors.Red);
-                }
+                
+                map.nextleveldoors[nxt_lvl_door_counter].Body.Fill = new SolidColorBrush(Colors.Red);
+                
 
-                gameArea.DataContext = map.doorsinmap[door_counter].Body;
+                gameArea.DataContext = map.nextleveldoors[nxt_lvl_door_counter].Body;
             }
 
+            for (int door_counter = 0; door_counter < map.doors.Count();door_counter++)
+            {
+                gameArea.Children.Add(map.doors[door_counter].Body);
+
+                Canvas.SetTop(map.doors[door_counter].Body, map.doors[door_counter].Position.Y);
+                Canvas.SetLeft(map.doors[door_counter].Body, map.doors[door_counter].Position.X);
+
+                
+                map.doors[door_counter].Body.Fill = new SolidColorBrush(Colors.Brown);
+                
+
+                gameArea.DataContext = map.doors[door_counter].Body;
+            }
         }
         public void updateEnemies()
         {

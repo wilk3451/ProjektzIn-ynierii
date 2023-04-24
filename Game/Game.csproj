@@ -80,6 +80,7 @@
     </ApplicationDefinition>
     <Compile Include="Creatures\Bullet.cs" />
     <Compile Include="Creatures\Door.cs" />
+    <Compile Include="Creatures\RoomList.cs" />
     <Compile Include="Creatures\Enemy.cs" />
     <Compile Include="Creatures\GameSprite.cs" />
     <Compile Include="Creatures\Map.cs" />
