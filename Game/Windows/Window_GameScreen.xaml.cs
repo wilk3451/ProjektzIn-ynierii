@@ -119,6 +119,9 @@ namespace Game.Windows
         Random random = new Random((int)DateTime.Now.Ticks);
 
         public static Vector2 skarb = new Vector2(270, 350);
+        
+        public static Vector2 Punkty = new Vector2(25, 20);
+        public Wynik W = new Wynik(Punkty, 0, 0);
 
         /*public static Vector2 kasa = new Vector2(250, 370);
         public static Vector2 kasa2 = new Vector2(290, 370);
@@ -167,6 +170,7 @@ namespace Game.Windows
             
             //Agnieszka
             TC.Create(gameArea);
+            W.Create(gameArea);
             //Agnieszka
          
             for (int i = 0; i < 5; i++)
@@ -647,7 +651,7 @@ namespace Game.Windows
             {
                 if(coins != null)
                 {
-                    foreach(var Coin in coins)
+                    foreach(Coin Coin in coins)
                     {
                         if (isColliding(player, Coin))
                         {
@@ -666,13 +670,15 @@ namespace Game.Windows
                         {
                             coins[i].Delete(gameArea);
                             coins.RemoveAt(i);
+                            Score += 2;
+                            W.Suma(Score, gameArea);
                         }
                     }
                 }
 
                 if (emeralds != null)
                 {
-                    foreach (var Emerald in emeralds)
+                    foreach (Emerald Emerald in emeralds)
                     {
                         if (isColliding(player, Emerald))
                         {
@@ -691,13 +697,15 @@ namespace Game.Windows
                         {
                             emeralds[i].Delete(gameArea);
                             emeralds.RemoveAt(i);
+                            Score += 4;
+                            W.Suma(Score, gameArea);
                         }
                     }
                 }
 
                 if (rubys != null)
                 {
-                    foreach (var Ruby in rubys)
+                    foreach (Ruby Ruby in rubys)
                     {
                         if (isColliding(player, Ruby))
                         {
@@ -716,13 +724,15 @@ namespace Game.Windows
                         {
                             rubys[i].Delete(gameArea);
                             rubys.RemoveAt(i);
+                            Score += 6;
+                            W.Suma(Score, gameArea);
                         }
                     }
                 }
 
                 if (diamonds != null)
                 {
-                    foreach (var Diamond in diamonds)
+                    foreach (Diamond Diamond in diamonds)
                     {
                         if (isColliding(player, Diamond))
                         {
@@ -741,6 +751,8 @@ namespace Game.Windows
                         {
                             diamonds[i].Delete(gameArea);
                             diamonds.RemoveAt(i);
+                            Score += 8;
+                            W.Suma(Score, gameArea);
                         }
                     }
                 }
