@@ -248,4 +248,56 @@ namespace Game.Creatures
             return new Vector2(Top, Left);
         }
     }
+    
+    public class Wynik : GameSprite
+    {
+        public TextBlock wynik;
+
+        public Wynik(Vector2 Position, int Width, int Height) : base(Position, Width, Height)
+        {
+            wynik = new TextBlock();
+            this.Position = Position;
+            this.Width = Width;
+            this.Height = Height;
+            //this.Wynik = Wynik;
+            
+        }
+
+        public void Create(Canvas gameArea)
+        {
+            int pkt = 0;
+            //TextBlock Wynik = new TextBlock();
+            gameArea.Children.Add(wynik);
+            wynik.FontSize = 20;
+            wynik.FontWeight = FontWeights.Bold;
+            wynik.FontStyle = FontStyles.Italic;
+            wynik.Text = "Score: 0"; //+ Suma(pkt);
+            Canvas.SetLeft(wynik, Position.X);
+            Canvas.SetTop(wynik, Position.Y);
+        }
+
+        public void Suma(int pkt, Canvas gameArea)
+        {
+            string Pkt = pkt.ToString();
+            wynik.Text = "Score: " + Pkt;
+            /*TextBlock Wynik = new TextBlock();
+            Wynik.FontSize = 20;
+            Wynik.FontWeight = FontWeights.Bold;
+            Wynik.FontStyle = FontStyles.Italic;
+            Wynik.Text = "Score: " + Pkt;
+            gameArea.Children.Add(Wynik);
+            Canvas.SetLeft(Wynik, Position.X);
+            Canvas.SetTop(Wynik, Position.Y);*/
+        }
+
+        public void Delete(Canvas gameArea)
+        {
+            gameArea.Children.Remove(wynik);
+        }
+
+        public void Update()
+        {
+            //Zrobic zapis gry do pliku tekstowego
+        }
+    }
 }
