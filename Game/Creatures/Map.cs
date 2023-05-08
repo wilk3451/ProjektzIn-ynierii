@@ -10,9 +10,11 @@ namespace Game.Creatures
     {
         public string[,] map;
         public List<Wall> wallsinmap;
-        public List<NextLeveldoor> doorsinmap;
+        public List<NextLevel> nextleveldoors;
+        public List<Door> doors;
 
         int wall_counter = 0;
+        int nextleveldoors_counter = 0;
         int door_counter = 0;
         public Map(string[,] map)
         {
@@ -20,7 +22,8 @@ namespace Game.Creatures
 
             
             wallsinmap = new List<Wall>();
-            doorsinmap = new List<NextLeveldoor>();
+            nextleveldoors = new List<NextLevel>();
+            doors = new List<Door>();
             for (int i = 0; i < map.GetLength(0); i++)
             {
 
@@ -47,16 +50,26 @@ namespace Game.Creatures
                     {
 
 
-                        NextLeveldoor door = new NextLeveldoor(new Vector2(j * 20, i * 20), 20, 20);
-                        door.Body = new System.Windows.Shapes.Rectangle();
+                        NextLevel next_lvl_door = new NextLevel(new Vector2(j * 20, i * 20), 20, 20);
+                        next_lvl_door.Body = new System.Windows.Shapes.Rectangle();
 
+                        next_lvl_door.Body.Width = 20;
+                        next_lvl_door.Body.Height = 20;
+
+                        nextleveldoors.Add(next_lvl_door);
+
+                        nextleveldoors_counter++;
+
+                    }
+                    char temp = char.Parse(map[i, j]);
+                    if (Char.IsDigit(temp))
+                    {
+                        Door door = new Door(new Vector2(j * 20, i * 20), 20, 20, temp-'0');
                         door.Body.Width = 20;
                         door.Body.Height = 20;
 
-                        doorsinmap.Add(door);
-
+                        doors.Add(door);
                         door_counter++;
-
                     }
                 }
             }
@@ -67,10 +80,11 @@ namespace Game.Creatures
             this.map = map;
 
             wall_counter = 0;
-            door_counter = 0;
+            nextleveldoors_counter = 0;
 
             wallsinmap.Clear();
-            doorsinmap.Clear();
+            nextleveldoors.Clear();
+            doors.Clear();
             for (int i = 0; i < map.GetLength(0); i++)
             {
 
@@ -97,18 +111,30 @@ namespace Game.Creatures
                     {
 
 
-                        NextLeveldoor door = new NextLeveldoor(new Vector2(j * 20, i * 20), 20, 20);
+                        NextLevel door = new NextLevel(new Vector2(j * 20, i * 20), 20, 20);
                         door.Body = new System.Windows.Shapes.Rectangle();
 
                         door.Body.Width = 20;
                         door.Body.Height = 20;
 
-                        doorsinmap.Add(door);
-                        door_counter++;
+                        nextleveldoors.Add(door);
+                        nextleveldoors_counter++;
                         //wallsinmap.Add(door);
 
                         //wall_counter++;
 
+                    }
+                    char temp = char.Parse(map[i, j]);
+                    if (Char.IsDigit(temp))
+                    {
+                        Door door = new Door(new Vector2(j * 20, i * 20), 20, 20, temp - '0');
+                        door.Body = new System.Windows.Shapes.Rectangle();
+
+                        door.Body.Width = 20;
+                        door.Body.Height = 20;
+
+                        doors.Add(door);
+                        door_counter++;
                     }
                 }
             }
