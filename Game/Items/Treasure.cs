@@ -295,9 +295,15 @@ namespace Game.Creatures
             gameArea.Children.Remove(wynik);
         }
 
-        public void Update()
+        public void updateWynik(int Score, Vector2 Punkty, Canvas gameArea)
         {
             //Zrobic zapis gry do pliku tekstowego
+            ///Position.X = Punkty.X;
+            ///Position.Y = Punkty.Y;
+            Vector2 New = Punkty;
+            Wynik W2 = new Wynik(New, 0, 0);
+            W2.Create(Score, gameArea);
+            wynik.Text = "Score: " + Score.ToString();
         }
     }
 }

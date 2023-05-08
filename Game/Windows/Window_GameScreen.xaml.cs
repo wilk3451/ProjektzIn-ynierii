@@ -175,6 +175,7 @@ namespace Game.Windows
                     updateWalls();
                     updateDoors();
                     updateEnemies();
+                    W.updateWynik(Score, Punkty, gameArea);
                 }
                 if (isCollidingWithDoor(player, new Vector2(moveDistance, 0)) != -1)
                 {
