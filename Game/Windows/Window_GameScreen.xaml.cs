@@ -222,6 +222,7 @@ namespace Game.Windows
                     updateWalls();
                     updateDoors();
                     updateEnemies();
+                    W.updateWynik(Score, Punkty, gameArea);
                 }
                 if (!isCollidingWithWall(player, new Vector2(moveDistance, 0)))
                 {
