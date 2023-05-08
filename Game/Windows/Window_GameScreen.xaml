@@ -13,18 +13,20 @@
 
 
     <Grid>
+
         <Canvas x:Name="gameArea"
 
             Background="Gray"
             Focusable="True"
             Height="450"
             Width="800">
+            
 
 
 
 
         </Canvas>
-        
+
     </Grid>
 
 </Window>
