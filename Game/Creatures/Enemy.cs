@@ -22,6 +22,12 @@ namespace Game.Creatures
         int currentStep = 100;
         int MoveStep = 100;
 
+        Vector2 Velocity = new Vector2(1, 1);
+        double maxVelocity = 3;
+        bool chase = false;
+        bool attack = false;
+        bool run = false;
+
         public bool markedForDeletion = false;
 
         public int kierunekX;
@@ -184,10 +190,14 @@ namespace Game.Creatures
         }
 
 
-        public void Update(Vector2 position)
+        public void Update(Player player)
         {
-            Position.X += position.X * kierunekX;
-            Position.Y += position.Y * kierunekY;
+            //checkPlayerPosition
+            //Velocity.X = player.Position.X - Velocity.X;
+           // Velocity.Y = player.Position.Y - Velocity.Y;
+
+            Velocity = MoveTowards(this.Position, player.Position, 10);
+            moveBasedOnVelocity();
         }
 
 
@@ -195,7 +205,7 @@ namespace Game.Creatures
         {
             int Top = rand.Next(100, (int)gameArea.Height - 100);
             int Left = rand.Next(100, (int)gameArea.Width - 100);
-            
+
             while (Top > toAvoid.Position.Y && Top < toAvoid.Position.Y)
             {
                 Top = rand.Next(100, (int)gameArea.Height - 100);
@@ -204,14 +214,81 @@ namespace Game.Creatures
             {
                 Left = rand.Next(100, (int)gameArea.Width - 100);
             }
-            
+
             return new Vector2(Top, Left);
             // potrzebne sprawdzenie kolizji w osobnych pętlach dla wszystkich list obiektów
         }
 
 
 
+        public void truncate(Vector2 vector, double max)
+        {
+            double i;
+            i = max / Math.Sqrt((vector.X * vector.X) + (vector.Y * vector.Y));
+            if (i < 1.0) { i = 1.0; }
+            vector.X *= i;
+            vector.Y *= i;
+        }
 
+        public double getAngle(Vector2 vector)
+        {
+            return Math.Atan2(vector.Y, vector.X);
+        }
+
+        public void setAngle( Vector2 vector, int value)
+        {
+            var len = Math.Sqrt((vector.X * vector.X) + (vector.Y * vector.Y));
+            vector.X = Math.Cos(value) * len;
+            vector.Y = Math.Sin(value) * len;
+        }
+
+
+        public double distance(Vector2 aPos, Vector2 bPos)
+        {
+            return Math.Sqrt((aPos.X - bPos.X) * (aPos.X - bPos.X) + (aPos.Y - bPos.Y) * (aPos.Y - bPos.Y));
+        }
+
+
+        public void moveBasedOnVelocity()
+        {
+            truncate( Velocity, maxVelocity);
+            Position.X += Velocity.X;
+            Position.Y += Velocity.Y;
+
+            //rotation = 90 + (180 * getAngle(object)) / Math.PI;
+        }
+
+
+        public static Vector2 MoveTowards(Vector2 current, Vector2 target, double maxDistanceDelta)
+        {
+            Vector2 a = new Vector2(0,0);
+            a.X  = target.X - current.X;
+            a.Y = target.Y - current.Y;
+            double magnitude = a.Distance();
+            if (magnitude <= maxDistanceDelta || magnitude == 0f)
+            {
+                return target;
+            }
+            a.X = a.X / magnitude;
+            a.X = a.X * maxDistanceDelta;
+
+            a.X = a.X + current.X;
+
+            a.Y = a.Y / magnitude;
+            a.Y *= maxDistanceDelta;
+
+            a.Y = a.Y * current.Y;
+
+            return a;
+        }
+
+        /*
+        public void checkPLayerPosition(Player player)
+        {
+            Velocity.X = player.Position.X - Velocity.X;
+            Velocity.Y = player.Position.Y - Velocity.Y;
+        }
+        */
         /*
         public async Task WalkAsync(Canvas gameArea)
         {

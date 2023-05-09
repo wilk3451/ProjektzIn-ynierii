@@ -41,7 +41,7 @@ namespace Game.Windows
         int TimerLimit = 30;
         int[] kierunkiX = new int[] { 1, 1, -1, 1, 1 };
         int[] kierunkiY = new int[] { 1, -1, 1, -1, 1 };
-        float enemySpeed = 1;
+        double enemySpeed = 1;
         public int lastSide = 0;
 
         public static Vector2 vector = new Vector2(100, 100); // polożenie gracza na początku gry
@@ -420,14 +420,14 @@ namespace Game.Windows
                 enemy.Draw();
 
                 
-                if (licznikKierunkow > enemyCounter) { licznikKierunkow = 0; }
+               // if (licznikKierunkow > enemyCounter) { licznikKierunkow = 0; }
 
-                enemy.kierunekX = kierunkiY[++licznikKierunkow];
-                enemy.kierunekY = kierunkiX[++licznikKierunkow];
+                //enemy.kierunekX = kierunkiY[++licznikKierunkow];
+                //enemy.kierunekY = kierunkiX[++licznikKierunkow];
 
-                Vector2 nowyKierunek = new Vector2(enemySpeed * enemy.kierunekX, enemySpeed * enemy.kierunekY);
+               // Vector2 nowyKierunek = new Vector2(enemySpeed * enemy.kierunekX, enemySpeed * enemy.kierunekY);
 
-                enemy.Update(new Vector2(nowyKierunek.X, nowyKierunek.Y));
+                enemy.Update(player);
 
                 if (isColliding(player, enemy))
                 {
@@ -442,22 +442,22 @@ namespace Game.Windows
                 // 
                 if (enemy.kierunekX == 1 && isCollidingWithWall(enemy, new Vector2(enemySpeed + enemy.Width, 0)))
                 {
-                    enemy.Update(new Vector2(-enemySpeed*2, 0));
+                    enemy.Update(player);
                 }
                
                 if (enemy.kierunekX == -1 && isCollidingWithWall(enemy, new Vector2(-enemySpeed - enemy.Width, 0)))
                 {
-                    enemy.Update(new Vector2(enemySpeed*2, 0));
+                    enemy.Update(player);
                 }
                 
                 if (enemy.kierunekY == 1 && isCollidingWithWall(enemy, new Vector2(0, enemySpeed + enemy.Height)))
                 {
-                    enemy.Update(new Vector2(0, -enemySpeed * 2));
+                    enemy.Update(player);
                 }
                 
                 if (enemy.kierunekY == -1 && isCollidingWithWall(enemy, new Vector2(0, -enemySpeed - enemy.Height)))
                 {
-                    enemy.Update(new Vector2(0, enemySpeed * 2));
+                    enemy.Update(player);
                 }
 
 

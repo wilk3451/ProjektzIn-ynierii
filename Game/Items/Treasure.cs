@@ -263,7 +263,7 @@ namespace Game.Creatures
             
         }
 
-        public void Create(Canvas gameArea)
+        new public void Create(int Score, Canvas gameArea)
         {
             int pkt = 0;
             //TextBlock Wynik = new TextBlock();
