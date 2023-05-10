@@ -124,7 +124,9 @@ namespace Game.Creatures
                         //wall_counter++;
 
                     }
-                    char temp = char.Parse(map[i, j]);
+                    string temp2 = map[i, j];
+                    char[] temp1 = temp2.ToCharArray();
+                    char temp = temp1[0];
                     if (Char.IsDigit(temp))
                     {
                         Door door = new Door(new Vector2(j * 20, i * 20), 20, 20, temp - '0');

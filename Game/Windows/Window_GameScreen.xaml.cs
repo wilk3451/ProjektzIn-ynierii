@@ -70,8 +70,8 @@ namespace Game.Windows
 
         public static Vector2 skarb = new Vector2(270, 350);
         
-        public static Vector2 Punkty = new Vector2(25, 20);
-        public Wynik W = new Wynik(Punkty, 0, 0);
+        public static Vector2 Punkty = new Vector2(0,0);
+        public Wynik W = new Wynik(Punkty, 100, 30);
 
         /*public static Vector2 kasa = new Vector2(250, 370);
         public static Vector2 kasa2 = new Vector2(290, 370);
@@ -120,7 +120,7 @@ namespace Game.Windows
             
             //Agnieszka
             TC.Create(gameArea);
-            W.Create(gameArea);
+            //W.Create(gameArea);
             //Agnieszka
          
             for (int i = 0; i < 5; i++)
@@ -133,8 +133,7 @@ namespace Game.Windows
                 enemies.Add(enemy);
             }
 
-            updateWalls();
-            updateDoors();
+            updateWorld();
 
         }
 
@@ -172,10 +171,7 @@ namespace Game.Windows
                     player.Create(gameArea);
                     player.Position = new Vector2(100, 100);
                     lastSide = 1;
-                    updateWalls();
-                    updateDoors();
-                    updateEnemies();
-                    W.updateWynik(Score, Punkty, gameArea);
+                    updateWorld();
                 }
                 if (isCollidingWithDoor(player, new Vector2(moveDistance, 0)) != -1)
                 {
@@ -196,9 +192,7 @@ namespace Game.Windows
                     player.Create(gameArea);
                     player.Position = new Vector2(100, 100);
                     lastSide = 1;
-                    updateWalls();
-                    updateDoors();
-                    updateEnemies();
+                    updateWorld();
 
                 }
                 if (!isCollidingWithWall(player, new Vector2(moveDistance, 0)))
@@ -227,9 +221,7 @@ namespace Game.Windows
                     player.Create(gameArea);
                     player.Position = new Vector2(100, 100);
                     lastSide = 1;
-                    updateWalls();
-                    updateDoors();
-                    updateEnemies();
+                    updateWorld();
                 }
                 if (isCollidingWithDoor(player, new Vector2( -moveDistance,0)) != -1)
                 {
@@ -250,9 +242,7 @@ namespace Game.Windows
                     player.Create(gameArea);
                     player.Position = new Vector2(100, 100);
                     lastSide = 1;
-                    updateWalls();
-                    updateDoors();
-                    updateEnemies();
+                    updateWorld();
 
                 }
                 if (!isCollidingWithWall(player, new Vector2(-moveDistance, 0)))
@@ -278,9 +268,7 @@ namespace Game.Windows
                     player.Create(gameArea);
                     player.Position = new Vector2(100, 100);
                     lastSide = 1;
-                    updateWalls();
-                    updateDoors();
-                    updateEnemies();
+                    updateWorld();
                 }
                 if (isCollidingWithDoor(player, new Vector2(0, -moveDistance))!=-1) 
                 {
@@ -301,9 +289,7 @@ namespace Game.Windows
                     player.Create(gameArea);
                     player.Position = new Vector2(100, 100);
                     lastSide = 1;
-                    updateWalls();
-                    updateDoors();
-                    updateEnemies();
+                    updateWorld();
 
                 }
                 if (!isCollidingWithWall(player, new Vector2(0, -moveDistance)))
@@ -329,9 +315,7 @@ namespace Game.Windows
                     player.Create(gameArea);
                     player.Position = new Vector2(100,100);
                     lastSide = 1;
-                    updateWalls();
-                    updateDoors();
-                    updateEnemies();
+                    updateWorld();
 
                 }
                 if (isCollidingWithDoor(player, new Vector2(0, moveDistance)) != -1)
@@ -353,9 +337,7 @@ namespace Game.Windows
                     player.Create(gameArea);
                     player.Position = new Vector2(100, 100);
                     lastSide = 1;
-                    updateWalls();
-                    updateDoors();
-                    updateEnemies();
+                    updateWorld();
 
                 }
 
@@ -732,6 +714,58 @@ namespace Game.Windows
                 enemy.Draw();
                 enemies.Add(enemy);
             }
+        }
+        public void updateInterface()
+        {
+            
+            TextBlock score = new TextBlock();
+
+            score.FontSize = 22;
+            score.LineHeight = 30;
+            score.TextWrapping = TextWrapping.Wrap;
+            score.TextAlignment = TextAlignment.Center;
+            string temp_string = "score: " ;//XDDDD
+            score.Inlines.Add(new Run(temp_string));
+            score.Background = Brushes.AntiqueWhite;
+            gameArea.Children.Add(score);
+            Canvas.SetTop(score, W.Position.Y);
+            Canvas.SetLeft(score, W.Position.X);
+
+            TextBlock level = new TextBlock();
+
+            level.FontSize = 22;
+            level.LineHeight = 30;
+            level.TextWrapping= TextWrapping.Wrap;
+            level.TextAlignment = TextAlignment.Center;
+            temp_string = "level: " + map_index;
+            level.Inlines.Add(new Run(temp_string));
+            level.Background=Brushes.AntiqueWhite;
+            gameArea.Children.Add(level);
+            Canvas.SetTop(level, W.Position.Y+score.LineHeight);
+            Canvas.SetLeft(level, W.Position.X);
+
+            TextBlock hp = new TextBlock();
+
+            hp.FontSize = 22;
+            hp.LineHeight = 30;
+            hp.TextWrapping = TextWrapping.Wrap;
+            hp.TextAlignment = TextAlignment.Center;
+            temp_string = "hp: " + player.Hp;
+            hp.Inlines.Add(new Run(temp_string));
+            hp.Background = Brushes.AntiqueWhite;
+            gameArea.Children.Add(hp);
+            Canvas.SetTop(hp, W.Position.Y +level.LineHeight+score.LineHeight);
+            Canvas.SetLeft(hp, W.Position.X);
+
+
+
+        }
+        public void updateWorld()
+        {
+            updateDoors();
+            updateEnemies();
+            updateWalls();
+            updateInterface();
         }
         
         public void EarnMoney()
