@@ -449,6 +449,12 @@ namespace Game.Windows
 
             foreach (var enemy in enemies)
             {
+                // Karolina
+                if (enemy.Position.X < 0 || enemy.Position.X > 810) { enemy.markedForDeletion = true; }
+                if (enemy.Position.X < 0 || enemy.Position.X > 410) { enemy.markedForDeletion = true; }
+                //
+
+
                 enemySpeed = enemy.Speed;
 
                 enemy.Draw();
@@ -673,6 +679,11 @@ namespace Game.Windows
 
                 map.wallsinmap[wall_counter].Body.Fill = new SolidColorBrush(Colors.Blue);
 
+                // Karolina
+                ImageBrush wallSprite = new ImageBrush();
+                wallSprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/brick.png"));
+                map.wallsinmap[wall_counter].Body.Fill = wallSprite;
+                //
 
                 gameArea.DataContext = map.wallsinmap[wall_counter].Body;
             }
