@@ -12,10 +12,12 @@ namespace Game.Creatures
         public List<Wall> wallsinmap;
         public List<NextLevel> nextleveldoors;
         public List<Door> doors;
+        public List<Treasure> treasures;
 
         int wall_counter = 0;
         int nextleveldoors_counter = 0;
         int door_counter = 0;
+        int treasures_counter = 0;
         public Map(string[,] map)
         {
             this.map = map;
@@ -24,6 +26,7 @@ namespace Game.Creatures
             wallsinmap = new List<Wall>();
             nextleveldoors = new List<NextLevel>();
             doors = new List<Door>();
+            treasures = new List<Treasure>();
             for (int i = 0; i < map.GetLength(0); i++)
             {
 
@@ -61,6 +64,21 @@ namespace Game.Creatures
                         nextleveldoors_counter++;
 
                     }
+                    if (map[i, j] == "t")
+                    {
+
+
+                        Treasure treasure = new Treasure(new Vector2(j * 20, i * 20), 20, 20);
+                        treasure.Body = new System.Windows.Shapes.Rectangle();
+
+                        treasure.Body.Width = 20;
+                        treasure.Body.Height = 20;
+
+                        treasures.Add(treasure);
+
+                        treasures_counter++;
+
+                    }
                     char temp = char.Parse(map[i, j]);
                     if (Char.IsDigit(temp))
                     {
@@ -85,6 +103,7 @@ namespace Game.Creatures
             wallsinmap.Clear();
             nextleveldoors.Clear();
             doors.Clear();
+            treasures.Clear();
             for (int i = 0; i < map.GetLength(0); i++)
             {
 
@@ -122,6 +141,21 @@ namespace Game.Creatures
                         //wallsinmap.Add(door);
 
                         //wall_counter++;
+
+                    }
+                    if (map[i, j] == "t")
+                    {
+
+
+                        Treasure treasure = new Treasure(new Vector2(j * 20, i * 20), 40, 40);
+                        treasure.Body = new System.Windows.Shapes.Rectangle();
+
+                        treasure.Body.Width = 40;
+                        treasure.Body.Height = 40;
+
+                        treasures.Add(treasure);
+
+                        treasures_counter++;
 
                     }
                     string temp2 = map[i, j];

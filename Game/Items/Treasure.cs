@@ -21,19 +21,25 @@ namespace Game.Creatures
         public Treasure(Vector2 Position, int Width, int Height) : base(Position, Width, Height)
         {
             this.Position = Position;
-            this.Width = Width;
-            this.Height = Height;
+            this.Body.Width = this.Width = Width;
+            this.Body.Height = this.Height = Height;
+            this.Body.Fill = new SolidColorBrush(Colors.Brown);
+            
+
+            //gameArea.Children.Add(Body);
+
+
         }
 
         public void Create(Canvas gameArea)
         {
             Body = new Rectangle();
-            gameArea.Children.Add(Body);
-            Body.Width = this.Width;
-            Body.Height = this.Height;
+            //gameArea.Children.Add(Body);
+            //Body.Width = this.Width;
+            //Body.Height = this.Height;
             Canvas.SetTop(Body, Position.Y);
             Canvas.SetLeft(Body, Position.X);
-            Body.Fill = new SolidColorBrush(Colors.Brown);
+            //Body.Fill = new SolidColorBrush(Colors.Brown);
         }
 
         public void Draw()
@@ -284,7 +290,7 @@ namespace Game.Creatures
             Canvas.SetTop(wynik, Position.Y);
         }
 
-        public void Suma(int pkt, Canvas gameArea)
+        /*public void Suma(int pkt, Canvas gameArea)
         {
             string Pkt = pkt.ToString();
             wynik.Text = "Score: " + Pkt;
@@ -295,7 +301,7 @@ namespace Game.Creatures
             Wynik.Text = "Score: " + Pkt;
             gameArea.Children.Add(Wynik);
             Canvas.SetLeft(Wynik, Position.X);
-            Canvas.SetTop(Wynik, Position.Y);*/
+            Canvas.SetTop(Wynik, Position.Y);
         }
 
         public void Delete(Canvas gameArea)
@@ -312,6 +318,6 @@ namespace Game.Creatures
             Wynik W2 = new Wynik(New, 0, 0);
             W2.Create(Score, gameArea);
             wynik.Text = "Score: " + Score.ToString();
-        }
+        }*/
     }
 }
