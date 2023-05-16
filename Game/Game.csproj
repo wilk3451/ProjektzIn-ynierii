@@ -93,6 +93,7 @@
     <Compile Include="Items\Treasure.cs" />
     <Compile Include="Items\Weapon.cs" />
     <Compile Include="Shape2D.cs" />
+    <Compile Include="SoundPlayer.cs" />
     <Compile Include="UserControls\UserControl_MainMenu.xaml.cs">
       <DependentUpon>UserControl_MainMenu.xaml</DependentUpon>
     </Compile>

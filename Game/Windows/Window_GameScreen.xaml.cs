@@ -955,13 +955,14 @@ namespace Game.Windows
             }
         }
 
+        /*
         private void PlaySoundOne(object sender, RoutedEventArgs e)
         {
             SoundPlayer sound = new SoundPlayer("awesomeness.wav");
             sound.Play();
             //sound.PlayLooping(); 
         }
-
+        */
     }
 
     
