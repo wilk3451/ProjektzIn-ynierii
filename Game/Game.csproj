@@ -179,5 +179,23 @@
   <ItemGroup>
     <Resource Include="Resources\brick.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\coin.png" />
+    <Resource Include="Resources\diamond.png" />
+    <Resource Include="Resources\emerald.png" />
+    <Resource Include="Resources\ruby.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\treasure.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\skrzynia.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\drzwi.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\door.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

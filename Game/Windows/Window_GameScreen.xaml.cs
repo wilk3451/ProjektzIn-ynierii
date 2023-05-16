@@ -372,7 +372,7 @@ namespace Game.Windows
                 {
                     if (isCollidingWithTreasure(player, new Vector2(0,0)) is Treasure)
                     {
-                        Treasure killer = (isCollidingWithTreasure(player, new Vector2(0, 0)));
+                        killer = (isCollidingWithTreasure(player, new Vector2(0, 0)));
                         Vector2 temp=killer.Position;
                         
                         HowManyC = random.Next(1, 8);
@@ -382,7 +382,7 @@ namespace Game.Windows
 
                         for (int i = 0; i <= HowManyC; i++)
                         {
-                            Coin C = new Coin(temp, 20, 20);
+                            Coin C = new Coin(temp, 10, 10);
                             C.Position = C.RandomSpawnPosition(gameArea, killer, rand);
                             C.Create(gameArea);
                             C.Draw();
@@ -391,7 +391,7 @@ namespace Game.Windows
 
                         for (int i = 0; i <= HowManyE; i++)
                         {
-                            Emerald E = new Emerald(temp, 22, 22);
+                            Emerald E = new Emerald(temp, 15, 15);
                             E.Position = E.RandomSpawnPosition(gameArea, killer, rand);
                             E.Create(gameArea);
                             E.Draw();
@@ -400,7 +400,7 @@ namespace Game.Windows
 
                         for (int i = 0; i <= HowManyR; i++)
                         {
-                            Ruby R = new Ruby(temp, 24, 24);
+                            Ruby R = new Ruby(temp, 16, 16);
                             R.Position = R.RandomSpawnPosition(gameArea, killer, rand);
                             R.Create(gameArea);
                             R.Draw();
@@ -409,14 +409,16 @@ namespace Game.Windows
 
                         for (int i = 0; i <= HowManyD; i++)
                         {
-                            Diamond D = new Diamond(temp, 26, 26);
+                            Diamond D = new Diamond(temp, 20, 20);
                             D.Position = D.RandomSpawnPosition(gameArea, killer, rand);
                             D.Create(gameArea);
                             D.Draw();
                             diamonds.Add(D);
                         }
-
-                        gameArea.Children.Remove(killer.Body);
+                        //Karolina
+                        killer.Delete(gameArea);
+                        //
+                        //gameArea.Children.Remove(killer.Body);
                         WasTouched = true;
                     }
                 }
@@ -700,9 +702,12 @@ namespace Game.Windows
                 Canvas.SetTop(map.nextleveldoors[nxt_lvl_door_counter].Body, map.nextleveldoors[nxt_lvl_door_counter].Position.Y);
                 Canvas.SetLeft(map.nextleveldoors[nxt_lvl_door_counter].Body, map.nextleveldoors[nxt_lvl_door_counter].Position.X);
 
-                
-                map.nextleveldoors[nxt_lvl_door_counter].Body.Fill = new SolidColorBrush(Colors.Red);
-                
+
+                //map.nextleveldoors[nxt_lvl_door_counter].Body.Fill = new SolidColorBrush(Colors.Red);
+                ImageBrush Sprite = new ImageBrush();
+                Sprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/door.png"));
+                map.nextleveldoors[nxt_lvl_door_counter].Body.Fill = Sprite;
+
 
                 gameArea.DataContext = map.nextleveldoors[nxt_lvl_door_counter].Body;
             }
@@ -714,9 +719,12 @@ namespace Game.Windows
                 Canvas.SetTop(map.doors[door_counter].Body, map.doors[door_counter].Position.Y);
                 Canvas.SetLeft(map.doors[door_counter].Body, map.doors[door_counter].Position.X);
 
-                
-                map.doors[door_counter].Body.Fill = new SolidColorBrush(Colors.Brown);
-                
+
+                //map.doors[door_counter].Body.Fill = new SolidColorBrush(Colors.Brown);
+                ImageBrush Sprite = new ImageBrush();
+                Sprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/door.png"));
+                map.doors[door_counter].Body.Fill = Sprite;
+
 
                 gameArea.DataContext = map.doors[door_counter].Body;
             }
@@ -727,8 +735,11 @@ namespace Game.Windows
                 Canvas.SetTop(map.treasures[treasureCounter].Body, map.treasures[treasureCounter].Position.Y);
                 Canvas.SetLeft(map.treasures[treasureCounter].Body, map.treasures[treasureCounter].Position.X);
 
-
-                map.treasures[treasureCounter].Body.Fill = new SolidColorBrush(Colors.Brown);
+                //
+                //map.treasures[treasureCounter].Body.Fill = new SolidColorBrush(Colors.Brown);
+                ImageBrush Sprite = new ImageBrush();
+                Sprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/treasure.png"));
+                map.treasures[treasureCounter].Body.Fill = Sprite;
 
 
                 gameArea.DataContext = map.treasures[treasureCounter].Body;

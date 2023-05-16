@@ -27,6 +27,11 @@ namespace Game.Creatures
             nextleveldoors = new List<NextLevel>();
             doors = new List<Door>();
             treasures = new List<Treasure>();
+
+            //K
+            int mlply = 20;
+            //
+
             for (int i = 0; i < map.GetLength(0); i++)
             {
 
@@ -38,7 +43,7 @@ namespace Game.Creatures
                     {
 
 
-                        Wall sciana = new Wall(new Vector2(j * 20, i * 20), 20, 20);
+                        Wall sciana = new Wall(new Vector2(j * mlply, i * mlply), 20, 20);
                         sciana.Body = new System.Windows.Shapes.Rectangle();
 
                         sciana.Body.Width = 20;
@@ -53,7 +58,7 @@ namespace Game.Creatures
                     {
 
 
-                        NextLevel next_lvl_door = new NextLevel(new Vector2(j * 20, i * 20), 20, 20);
+                        NextLevel next_lvl_door = new NextLevel(new Vector2(j * mlply, i * mlply), 20, 20);
                         next_lvl_door.Body = new System.Windows.Shapes.Rectangle();
 
                         next_lvl_door.Body.Width = 20;
@@ -68,7 +73,7 @@ namespace Game.Creatures
                     {
 
 
-                        Treasure treasure = new Treasure(new Vector2(j * 20, i * 20), 20, 20);
+                        Treasure treasure = new Treasure(new Vector2(j * mlply, i * mlply), 20, 20);
                         treasure.Body = new System.Windows.Shapes.Rectangle();
 
                         treasure.Body.Width = 20;
@@ -82,7 +87,7 @@ namespace Game.Creatures
                     char temp = char.Parse(map[i, j]);
                     if (Char.IsDigit(temp))
                     {
-                        Door door = new Door(new Vector2(j * 20, i * 20), 20, 20, temp-'0');
+                        Door door = new Door(new Vector2(j * mlply, i * mlply), 20, 20, temp-'0');
                         door.Body.Width = 20;
                         door.Body.Height = 20;
 
@@ -104,6 +109,10 @@ namespace Game.Creatures
             nextleveldoors.Clear();
             doors.Clear();
             treasures.Clear();
+
+            //K
+            int mlply = 20;
+            //
             for (int i = 0; i < map.GetLength(0); i++)
             {
 
@@ -115,7 +124,7 @@ namespace Game.Creatures
                     {
 
 
-                        Wall sciana = new Wall(new Vector2(j * 20, i * 20), 20, 20);
+                        Wall sciana = new Wall(new Vector2(j * mlply, i * mlply), 20, 20);
                         sciana.Body = new System.Windows.Shapes.Rectangle();
 
                         sciana.Body.Width = 20;
@@ -130,7 +139,7 @@ namespace Game.Creatures
                     {
 
 
-                        NextLevel door = new NextLevel(new Vector2(j * 20, i * 20), 20, 20);
+                        NextLevel door = new NextLevel(new Vector2(j * mlply, i * mlply), 20, 20);
                         door.Body = new System.Windows.Shapes.Rectangle();
 
                         door.Body.Width = 20;
@@ -147,11 +156,13 @@ namespace Game.Creatures
                     {
 
 
-                        Treasure treasure = new Treasure(new Vector2(j * 20, i * 20), 40, 40);
-                        treasure.Body = new System.Windows.Shapes.Rectangle();
+                        Treasure treasure = new Treasure(new Vector2(j * mlply, i * mlply), 60, 60);
+                        
+                        //treasure.Body = new System.Windows.Shapes.Rectangle();
+                     
 
-                        treasure.Body.Width = 40;
-                        treasure.Body.Height = 40;
+                        treasure.Body.Width = 60;
+                        treasure.Body.Height = 60;
 
                         treasures.Add(treasure);
 
@@ -163,7 +174,7 @@ namespace Game.Creatures
                     char temp = temp1[0];
                     if (Char.IsDigit(temp))
                     {
-                        Door door = new Door(new Vector2(j * 20, i * 20), 20, 20, temp - '0');
+                        Door door = new Door(new Vector2(j * mlply, i * mlply), 20, 20, temp - '0');
                         door.Body = new System.Windows.Shapes.Rectangle();
 
                         door.Body.Width = 20;

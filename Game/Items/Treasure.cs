@@ -23,23 +23,44 @@ namespace Game.Creatures
             this.Position = Position;
             this.Body.Width = this.Width = Width;
             this.Body.Height = this.Height = Height;
-            this.Body.Fill = new SolidColorBrush(Colors.Brown);
-            
+            //this.Body.Fill = new SolidColorBrush(Colors.Brown);
 
-            //gameArea.Children.Add(Body);
+            //Karolina
+            ImageBrush enemySprite = new ImageBrush();
+            enemySprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/enemy.png"));
+            Body.Fill = enemySprite;
+            //
+            
 
 
         }
 
         public void Create(Canvas gameArea)
         {
-            Body = new Rectangle();
+
+            //Body = new Rectangle();
             //gameArea.Children.Add(Body);
             //Body.Width = this.Width;
             //Body.Height = this.Height;
+            //Canvas.SetTop(Body, Position.Y);
+            //Canvas.SetLeft(Body, Position.X);
+            //Body.Fill = new SolidColorBrush(Colors.Brown);
+
+            //Karolina
+            Body = new Rectangle();
+            gameArea.Children.Add(Body);
+            Body.Width = this.Width;
+            Body.Height = this.Height;
             Canvas.SetTop(Body, Position.Y);
             Canvas.SetLeft(Body, Position.X);
-            //Body.Fill = new SolidColorBrush(Colors.Brown);
+            Body.Fill = new SolidColorBrush(Colors.DarkRed);
+            Body.Stroke = new SolidColorBrush(Colors.White);
+            gameArea.DataContext = Body;
+
+            ImageBrush enemySprite = new ImageBrush();
+            enemySprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/enemy.png"));
+            Body.Fill = enemySprite;
+            //
         }
 
         public void Draw()
@@ -73,7 +94,10 @@ namespace Game.Creatures
             Body.Height = this.Height;
             Canvas.SetTop(Body, Position.Y);
             Canvas.SetLeft(Body, Position.X);
-            Body.Fill = new SolidColorBrush(Colors.Yellow);
+            //Body.Fill = new SolidColorBrush(Colors.Yellow);
+            ImageBrush enemySprite = new ImageBrush();
+            enemySprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/coin.png"));
+            Body.Fill = enemySprite;
         }
 
         public void Draw()
@@ -89,16 +113,20 @@ namespace Game.Creatures
 
         public Vector2 RandomSpawnPosition(Canvas gameArea, GameSprite Chest, Random rand)
         {
-            int Top = rand.Next((int)Chest.Position.X - 45, (int)Chest.Position.X + 45);
-            int Left = rand.Next((int)Chest.Position.Y - 45, (int)Chest.Position.Y + 45);
+            //K - zmienna zamiast tego przesuniecia o 45 ponizej
+            int positionChanger = 40;
+            //
+            
+            int Top = rand.Next((int)Chest.Position.X - positionChanger, (int)Chest.Position.X + positionChanger);
+            int Left = rand.Next((int)Chest.Position.Y - positionChanger, (int)Chest.Position.Y + positionChanger);
 
             while (Top > Chest.Position.Y && Top < Chest.Position.Y)
             {
-                Top = rand.Next((int)Chest.Position.X - 45, (int)Chest.Position.X + 45);
+                Top = rand.Next((int)Chest.Position.X - positionChanger, (int)Chest.Position.X + positionChanger);
             }
             while (Left > Chest.Position.X && Left < Chest.Position.X)
             {
-                Left = rand.Next((int)Chest.Position.Y - 45, (int)Chest.Position.Y + 45);
+                Left = rand.Next((int)Chest.Position.Y - positionChanger, (int)Chest.Position.Y + positionChanger);
             }
 
             return new Vector2(Top, Left);
@@ -123,7 +151,10 @@ namespace Game.Creatures
             Body.Height = this.Height;
             Canvas.SetTop(Body, Position.Y);
             Canvas.SetLeft(Body, Position.X);
-            Body.Fill = new SolidColorBrush(Colors.Green);
+            //Body.Fill = new SolidColorBrush(Colors.Green);
+            ImageBrush enemySprite = new ImageBrush();
+            enemySprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/emerald.png"));
+            Body.Fill = enemySprite;
         }
 
         public void Draw()
@@ -173,7 +204,10 @@ namespace Game.Creatures
             Body.Height = this.Height;
             Canvas.SetTop(Body, Position.Y);
             Canvas.SetLeft(Body, Position.X);
-            Body.Fill = new SolidColorBrush(Colors.Red);
+            //Body.Fill = new SolidColorBrush(Colors.Red);
+            ImageBrush enemySprite = new ImageBrush();
+            enemySprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/ruby.png"));
+            Body.Fill = enemySprite;
         }
 
         public void Draw()
@@ -223,7 +257,10 @@ namespace Game.Creatures
             Body.Height = this.Height;
             Canvas.SetTop(Body, Position.Y);
             Canvas.SetLeft(Body, Position.X);
-            Body.Fill = new SolidColorBrush(Colors.Blue);
+            //Body.Fill = new SolidColorBrush(Colors.Blue);
+            ImageBrush enemySprite = new ImageBrush();
+            enemySprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/diamond.png"));
+            Body.Fill = enemySprite;
         }
 
         public void Draw()
