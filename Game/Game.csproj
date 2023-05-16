@@ -197,5 +197,10 @@
   <ItemGroup>
     <Resource Include="Resources\door.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Sound\awesomeness.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

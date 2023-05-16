@@ -61,6 +61,15 @@ namespace Game.Properties {
         }
         
         /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.IO.UnmanagedMemoryStream podobny do zasobu System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream awesomeness {
+            get {
+                return ResourceManager.GetStream("awesomeness", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap brick {

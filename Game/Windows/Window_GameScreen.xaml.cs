@@ -19,7 +19,7 @@ using Game.Creatures;
 using static System.Net.Mime.MediaTypeNames;
 
 using Game.Items;
-
+using System.Media;
 
 namespace Game.Windows
 {
@@ -142,6 +142,17 @@ namespace Game.Windows
         {
             int moveDistance = (int)player.Speed;
             //directionTimer--;
+
+            //K
+            //SoundPlayer sound = new SoundPlayer("Properties.Resources.awesomeness");
+            //sound.Play();
+            //sound.PlayLooping(); 
+
+            MediaPlayer playMedia = new MediaPlayer(); 
+            var uri = new Uri("pack://siteoforigin:,,,/Sound/awesomeness.wav"); 
+            playMedia.Open(uri);
+            playMedia.Play();
+            //
 
             //Agnieszka
             EarnMoney();
@@ -942,6 +953,13 @@ namespace Game.Windows
                     D.Delete(gameArea);
                 }*/
             }
+        }
+
+        private void PlaySoundOne(object sender, RoutedEventArgs e)
+        {
+            SoundPlayer sound = new SoundPlayer("awesomeness.wav");
+            sound.Play();
+            //sound.PlayLooping(); 
         }
 
     }
