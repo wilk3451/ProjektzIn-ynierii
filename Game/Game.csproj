@@ -88,8 +88,10 @@
     <Compile Include="Creatures\MapsList.cs" />
     <Compile Include="Creatures\Player.cs" />
     <Compile Include="Creatures\wall.cs" />
+    <Compile Include="Items\Inventory.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\ItemsList.cs" />
+    <Compile Include="Items\Potion.cs" />
     <Compile Include="Items\Treasure.cs" />
     <Compile Include="Items\Weapon.cs" />
     <Compile Include="Shape2D.cs" />
@@ -199,6 +201,7 @@
     <Resource Include="Resources\door.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\GreenPotion.png" />
     <Content Include="Sound\awesomeness.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

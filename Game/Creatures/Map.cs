@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Game.Items;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,11 +14,13 @@ namespace Game.Creatures
         public List<NextLevel> nextleveldoors;
         public List<Door> doors;
         public List<Treasure> treasures;
+        public List<Potion> potions;
 
         int wall_counter = 0;
         int nextleveldoors_counter = 0;
         int door_counter = 0;
         int treasures_counter = 0;
+        int potions_counter = 0;
         public Map(string[,] map)
         {
             this.map = map;
@@ -27,6 +30,7 @@ namespace Game.Creatures
             nextleveldoors = new List<NextLevel>();
             doors = new List<Door>();
             treasures = new List<Treasure>();
+            potions = new List<Potion>();
 
             //K
             int mlply = 20;
@@ -94,6 +98,41 @@ namespace Game.Creatures
                         doors.Add(door);
                         door_counter++;
                     }
+
+                    //K - start
+                    if (map[i, j] == "p")
+                    {
+                        Potion potion;
+                        Random random = new Random();
+                        int Type = random.Next(0, 4);
+                        int width = 20, height = 30;
+
+                        if (Type == 0)
+                        { 
+                            potion = new Potion(new Vector2(j * mlply, i * mlply), width, height, TypeOfPotion.HealthRegeneration);
+                            potions.Add(potion);
+                            potions_counter++;
+                        }
+                        else if (Type == 1)
+                        { 
+                            potion = new Potion(new Vector2(j * mlply, i * mlply), width, height, TypeOfPotion.StaminaRegenerationBoost);
+                            potions.Add(potion);
+                            potions_counter++;
+                        }
+                        else if (Type == 2) 
+                        { 
+                            potion = new Potion(new Vector2(j * mlply, i * mlply), width, height, TypeOfPotion.HigherAttackValue);
+                            potions.Add(potion);
+                            potions_counter++;
+                        }
+                        else if (Type == 3) 
+                        { 
+                            potion = new Potion(new Vector2(j * mlply, i * mlply), width, height, TypeOfPotion.HigherDefenceValue);
+                            potions.Add(potion);
+                            potions_counter++;
+                        }
+                    }
+                    // - end
                 }
             }
         }
@@ -109,6 +148,7 @@ namespace Game.Creatures
             nextleveldoors.Clear();
             doors.Clear();
             treasures.Clear();
+            potions.Clear();
 
             //K
             int mlply = 20;
@@ -183,6 +223,42 @@ namespace Game.Creatures
                         doors.Add(door);
                         door_counter++;
                     }
+
+
+                    //K - start
+                    if (map[i, j] == "p")
+                    {
+                        Potion potion;
+                        Random random = new Random();
+                        int Type = random.Next(0, 4);
+                        int width = 20, height = 30;
+
+                        if (Type == 0)
+                        {
+                            potion = new Potion(new Vector2(j * mlply, i * mlply), width, height, TypeOfPotion.HealthRegeneration);
+                            potions.Add(potion);
+                            potions_counter++;
+                        }
+                        else if (Type == 1)
+                        {
+                            potion = new Potion(new Vector2(j * mlply, i * mlply), width, height, TypeOfPotion.StaminaRegenerationBoost);
+                            potions.Add(potion);
+                            potions_counter++;
+                        }
+                        else if (Type == 2)
+                        {
+                            potion = new Potion(new Vector2(j * mlply, i * mlply), width, height, TypeOfPotion.HigherAttackValue);
+                            potions.Add(potion);
+                            potions_counter++;
+                        }
+                        else if (Type == 3)
+                        {
+                            potion = new Potion(new Vector2(j * mlply, i * mlply), width, height, TypeOfPotion.HigherDefenceValue);
+                            potions.Add(potion);
+                            potions_counter++;
+                        }
+                    }
+                    // - end
                 }
             }
         }

@@ -8,8 +8,8 @@ namespace Game
 {
     public class Vector2
     {
-        public float X { get; set; }
-        public float Y { get; set; }
+        public double X { get; set; }
+        public double Y { get; set; }
 
         public Vector2()
         {
@@ -17,7 +17,7 @@ namespace Game
             Y = Zero().Y;
         }
 
-        public Vector2(float X, float Y)
+        public Vector2(double X, double Y)
         {
             this.X = X;
             this.Y = Y;

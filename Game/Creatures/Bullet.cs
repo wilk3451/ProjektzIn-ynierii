@@ -28,8 +28,8 @@ namespace Game.Creatures
 
         public void Create(Canvas gameArea, Player player)
         {
-            float positionX = player.Position.X + (player.Width / 2) - (Width / 2); // srodek gracza
-            float positionY = player.Position.Y + (player.Height / 2) - (Height / 2); // srodek gracza
+            double positionX = player.Position.X + (player.Width / 2) - (Width / 2); // srodek gracza
+            double positionY = player.Position.Y + (player.Height / 2) - (Height / 2); // srodek gracza
 
             //Body z GameSprite - rysowane dla sprawdzenia czy pocisk jest we właściwej pozycji
             Body = new Rectangle();

@@ -436,6 +436,23 @@ namespace Game.Windows
             }
             //Agnieszka
 
+
+            // Karolina - start
+
+            if ((Keyboard.GetKeyStates(Key.F) & KeyStates.Down) > 0)
+            {
+                //for (int i  = )
+            }
+
+
+
+
+                // Karolina - end
+
+
+
+
+
             foreach (var bullet in bullets)
             {
                 // 20 - bullet speed
@@ -756,8 +773,29 @@ namespace Game.Windows
                 gameArea.DataContext = map.treasures[treasureCounter].Body;
             }
         }
-        
-        public void updateEnemies()
+
+        // Karolina - start
+        public void updatePotions()
+        {
+            for (int potionsCounter = 0; potionsCounter < map.nextleveldoors.Count(); potionsCounter++)
+            {
+                gameArea.Children.Add(map.potions[potionsCounter].Body);
+
+                Canvas.SetTop(map.potions[potionsCounter].Body, map.potions[potionsCounter].Position.Y);
+                Canvas.SetLeft(map.potions[potionsCounter].Body, map.potions[potionsCounter].Position.X);
+
+                ImageBrush Sprite = new ImageBrush();
+                Sprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/GreenPotion.png"));
+                map.potions[potionsCounter].Body.Fill = Sprite;
+
+
+                gameArea.DataContext = map.potions[potionsCounter].Body;
+            }
+        }
+
+        // Karolina - end
+
+    public void updateEnemies()
         {
             for (int i = 0; i < 5; i++)
             {
@@ -817,6 +855,7 @@ namespace Game.Windows
         public void updateWorld()
         {
             updateDoors();
+            updatePotions();
             updateEnemies();
             updateWalls();
             updateInterface();
@@ -963,6 +1002,24 @@ namespace Game.Windows
             //sound.PlayLooping(); 
         }
         */
+
+
+
+
+        // Karolina - start
+
+
+
+
+
+
+
+
+        // Karolina - end
+
+
+
+
     }
 
     

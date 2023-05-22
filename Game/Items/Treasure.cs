@@ -57,9 +57,9 @@ namespace Game.Creatures
             Body.Stroke = new SolidColorBrush(Colors.White);
             gameArea.DataContext = Body;
 
-            ImageBrush enemySprite = new ImageBrush();
-            enemySprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/enemy.png"));
-            Body.Fill = enemySprite;
+            ImageBrush sprite = new ImageBrush();
+            sprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/skrzynia.png"));
+            Body.Fill = sprite;
             //
         }
 
@@ -95,9 +95,9 @@ namespace Game.Creatures
             Canvas.SetTop(Body, Position.Y);
             Canvas.SetLeft(Body, Position.X);
             //Body.Fill = new SolidColorBrush(Colors.Yellow);
-            ImageBrush enemySprite = new ImageBrush();
-            enemySprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/coin.png"));
-            Body.Fill = enemySprite;
+            ImageBrush sprite = new ImageBrush();
+            sprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/coin.png"));
+            Body.Fill = sprite;
         }
 
         public void Draw()
@@ -152,9 +152,9 @@ namespace Game.Creatures
             Canvas.SetTop(Body, Position.Y);
             Canvas.SetLeft(Body, Position.X);
             //Body.Fill = new SolidColorBrush(Colors.Green);
-            ImageBrush enemySprite = new ImageBrush();
-            enemySprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/emerald.png"));
-            Body.Fill = enemySprite;
+            ImageBrush sprite = new ImageBrush();
+            sprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/emerald.png"));
+            Body.Fill = sprite;
         }
 
         public void Draw()
@@ -205,9 +205,9 @@ namespace Game.Creatures
             Canvas.SetTop(Body, Position.Y);
             Canvas.SetLeft(Body, Position.X);
             //Body.Fill = new SolidColorBrush(Colors.Red);
-            ImageBrush enemySprite = new ImageBrush();
-            enemySprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/ruby.png"));
-            Body.Fill = enemySprite;
+            ImageBrush sprite = new ImageBrush();
+            sprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/ruby.png"));
+            Body.Fill = sprite;
         }
 
         public void Draw()
@@ -258,9 +258,9 @@ namespace Game.Creatures
             Canvas.SetTop(Body, Position.Y);
             Canvas.SetLeft(Body, Position.X);
             //Body.Fill = new SolidColorBrush(Colors.Blue);
-            ImageBrush enemySprite = new ImageBrush();
-            enemySprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/diamond.png"));
-            Body.Fill = enemySprite;
+            ImageBrush sprite = new ImageBrush();
+            sprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/diamond.png"));
+            Body.Fill = sprite;
         }
 
         public void Draw()
