@@ -99,6 +99,24 @@ namespace Game.Windows
         //Agnieszka
 
 
+        //K - s
+        public Inventory inventory = new Inventory();
+        Window inventoryWindow = new Window();
+        //K
+
+        public void DrawInventory(Inventory inventory, Window inventoryWindow)
+        {
+            inventoryWindow.Width = 200;
+            inventoryWindow.Height = 200;
+            //inventoryWindow.Background.
+            inventoryWindow.Focusable = true;
+            inventoryWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            inventoryWindow.WindowState = WindowState.Normal;
+            inventoryWindow.WindowStyle = WindowStyle.SingleBorderWindow;
+            inventoryWindow.ResizeMode = ResizeMode.NoResize;
+        }
+
+
         public Window_GameScreen()
         {
             InitializeComponent();
@@ -106,6 +124,7 @@ namespace Game.Windows
             gameArea.Focus();
 
             DrawWorld();
+            DrawInventory(inventory, inventoryWindow);
 
             gameTimer.Tick += GameTimerEvent;
             gameTimer.Interval = TimeSpan.FromMilliseconds(10);
@@ -433,27 +452,41 @@ namespace Game.Windows
                         WasTouched = true;
                     }
                 }
+
+
+                // Karolina - start
+ 
+                for (int i = map.potions.Count() - 1; i >= 0; i--)
+                {
+                    // w warunku spr kolizji z eliksirem!
+                    if (map.potions[i] != null && map.potions[i].interactable == true)
+                    {
+                        inventory.AddPotion(map.potions[i]); // spr klonowanie
+                        map.potions[i].Delete(gameArea);
+                        map.potions.RemoveAt(i);
+                    }
+                }
+                
+                // Karolina - end
+
+
             }
             //Agnieszka
 
 
-            // Karolina - start
-
-            if ((Keyboard.GetKeyStates(Key.F) & KeyStates.Down) > 0)
+            // Karolina - start 
+            if ((Keyboard.GetKeyStates(Key.I) & KeyStates.Down) > 0)
             {
-                //for (int i  = )
+                // pause the game
+                // open inventory window
+                inventoryWindow.Show();
             }
 
+            // Karolina - stop
 
 
 
-                // Karolina - end
-
-
-
-
-
-            foreach (var bullet in bullets)
+                foreach (var bullet in bullets)
             {
                 // 20 - bullet speed
                 // last side ma stary argument, wiec jak gracz w miedzyczasie sie obroci - poziski bd leciec w nowa strone
@@ -777,7 +810,7 @@ namespace Game.Windows
         // Karolina - start
         public void updatePotions()
         {
-            for (int potionsCounter = 0; potionsCounter < map.nextleveldoors.Count(); potionsCounter++)
+            for (int potionsCounter = 0; potionsCounter < map.potions.Count(); potionsCounter++)
             {
                 gameArea.Children.Add(map.potions[potionsCounter].Body);
 
@@ -785,7 +818,23 @@ namespace Game.Windows
                 Canvas.SetLeft(map.potions[potionsCounter].Body, map.potions[potionsCounter].Position.X);
 
                 ImageBrush Sprite = new ImageBrush();
-                Sprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/GreenPotion.png"));
+                if (map.potions[potionsCounter].type == TypeOfPotion.HealthRegeneration)
+                {
+                    Sprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/GreenPotion.png"));
+                }
+                else if (map.potions[potionsCounter].type == TypeOfPotion.StaminaRegenerationBoost)
+                {
+                    Sprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/GreenPotion.png"));
+                }
+                else if (map.potions[potionsCounter].type == TypeOfPotion.HigherAttackValue)
+                {
+                    Sprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/GreenPotion.png"));
+                }
+                else if (map.potions[potionsCounter].type == TypeOfPotion.HigherDefenceValue)
+                {
+                    Sprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/GreenPotion.png"));
+                }
+
                 map.potions[potionsCounter].Body.Fill = Sprite;
 
 
