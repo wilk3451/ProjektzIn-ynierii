@@ -868,9 +868,9 @@ namespace Game.Windows
             string temp_string = "score: " + Score;//XDDDD
             score.Inlines.Add(new Run(temp_string));
             score.Background = Brushes.AntiqueWhite;
-            gameArea.Children.Add(score);
+            Interface.Children.Add(score);
             Canvas.SetTop(score, W.Position.Y);
-            Canvas.SetLeft(score, W.Position.X);
+            Canvas.SetLeft(score, W.Position.X + 100);
 
             TextBlock level = new TextBlock();
 
@@ -881,9 +881,9 @@ namespace Game.Windows
             temp_string = "level: " + map_index;
             level.Inlines.Add(new Run(temp_string));
             level.Background=Brushes.AntiqueWhite;
-            gameArea.Children.Add(level);
+            Interface.Children.Add(level);
             Canvas.SetTop(level, W.Position.Y+score.LineHeight);
-            Canvas.SetLeft(level, W.Position.X);
+            Canvas.SetLeft(level, W.Position.X + 100);
 
             TextBlock hp = new TextBlock();
 
@@ -894,9 +894,9 @@ namespace Game.Windows
             temp_string = "hp: " + player.Hp;
             hp.Inlines.Add(new Run(temp_string));
             hp.Background = Brushes.AntiqueWhite;
-            gameArea.Children.Add(hp);
+            Interface.Children.Add(hp);
             Canvas.SetTop(hp, W.Position.Y +level.LineHeight+score.LineHeight);
-            Canvas.SetLeft(hp, W.Position.X);
+            Canvas.SetLeft(hp, W.Position.X + 100);
 
 
 
