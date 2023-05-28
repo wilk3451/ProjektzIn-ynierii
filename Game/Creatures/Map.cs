@@ -32,8 +32,12 @@ namespace Game.Creatures
             treasures = new List<Treasure>();
             potions = new List<Potion>();
 
+
+
             //K
-            int mlply = 20;
+            int mlply1 = 560 / map.GetLength(0);
+            int mlply2 = 1240 / map.GetLength(1);
+            int przes = 16;
             //
 
             for (int i = 0; i < map.GetLength(0); i++)
@@ -47,11 +51,11 @@ namespace Game.Creatures
                     {
 
 
-                        Wall sciana = new Wall(new Vector2(j * mlply, i * mlply), 20, 20);
+                        Wall sciana = new Wall(new Vector2(j * mlply2 + przes, i * mlply1), mlply2, mlply2);
                         sciana.Body = new System.Windows.Shapes.Rectangle();
 
-                        sciana.Body.Width = 20;
-                        sciana.Body.Height = 20;
+                        sciana.Body.Width = mlply2;
+                        sciana.Body.Height = mlply1;
 
                         wallsinmap.Add(sciana);
                         
@@ -62,11 +66,11 @@ namespace Game.Creatures
                     {
 
 
-                        NextLevel next_lvl_door = new NextLevel(new Vector2(j * mlply, i * mlply), 20, 20);
+                        NextLevel next_lvl_door = new NextLevel(new Vector2(j * mlply2 + przes, i * mlply1), mlply2, mlply2);
                         next_lvl_door.Body = new System.Windows.Shapes.Rectangle();
 
-                        next_lvl_door.Body.Width = 20;
-                        next_lvl_door.Body.Height = 20;
+                        next_lvl_door.Body.Width = mlply2;
+                        next_lvl_door.Body.Height = mlply1;
 
                         nextleveldoors.Add(next_lvl_door);
 
@@ -77,7 +81,7 @@ namespace Game.Creatures
                     {
 
 
-                        Treasure treasure = new Treasure(new Vector2(j * mlply, i * mlply), 20, 20);
+                        Treasure treasure = new Treasure(new Vector2(j * mlply2 + przes, i * mlply1), mlply2, mlply2);
                         treasure.Body = new System.Windows.Shapes.Rectangle();
 
                         treasure.Body.Width = 20;
@@ -91,9 +95,9 @@ namespace Game.Creatures
                     char temp = char.Parse(map[i, j]);
                     if (Char.IsDigit(temp))
                     {
-                        Door door = new Door(new Vector2(j * mlply, i * mlply), 20, 20, temp-'0');
-                        door.Body.Width = 20;
-                        door.Body.Height = 20;
+                        Door door = new Door(new Vector2(j * mlply2 + przes, i * mlply1), mlply2, mlply2, temp-'0');
+                        door.Body.Width = mlply2;
+                        door.Body.Height = mlply1;
 
                         doors.Add(door);
                         door_counter++;
@@ -105,29 +109,29 @@ namespace Game.Creatures
                         Potion potion;
                         Random random = new Random();
                         int Type = random.Next(0, 4);
-                        int width = 20, height = 30;
+                        int width = 40, height = 50;
 
                         if (Type == 0)
                         { 
-                            potion = new Potion(new Vector2(j * mlply, i * mlply), width, height, TypeOfPotion.HealthRegeneration);
+                            potion = new Potion(new Vector2(j * mlply2 + przes, i * mlply1), width, height, TypeOfPotion.HealthRegeneration);
                             potions.Add(potion);
                             potions_counter++;
                         }
                         else if (Type == 1)
                         { 
-                            potion = new Potion(new Vector2(j * mlply, i * mlply), width, height, TypeOfPotion.StaminaRegenerationBoost);
+                            potion = new Potion(new Vector2(j * mlply2 + przes, i * mlply1), width, height, TypeOfPotion.StaminaRegenerationBoost);
                             potions.Add(potion);
                             potions_counter++;
                         }
                         else if (Type == 2) 
                         { 
-                            potion = new Potion(new Vector2(j * mlply, i * mlply), width, height, TypeOfPotion.HigherAttackValue);
+                            potion = new Potion(new Vector2(j * mlply2 + przes, i * mlply1), width, height, TypeOfPotion.HigherAttackValue);
                             potions.Add(potion);
                             potions_counter++;
                         }
                         else if (Type == 3) 
                         { 
-                            potion = new Potion(new Vector2(j * mlply, i * mlply), width, height, TypeOfPotion.HigherDefenceValue);
+                            potion = new Potion(new Vector2(j * mlply2 + przes, i * mlply1), width, height, TypeOfPotion.HigherDefenceValue);
                             potions.Add(potion);
                             potions_counter++;
                         }
@@ -151,7 +155,11 @@ namespace Game.Creatures
             potions.Clear();
 
             //K
-            int mlply = 20;
+            //K
+            int mlply1 = 560 / map.GetLength(0);
+            int mlply2 = 1240 / map.GetLength(1);
+            int przes = 16;
+            //
             //
             for (int i = 0; i < map.GetLength(0); i++)
             {
@@ -164,11 +172,11 @@ namespace Game.Creatures
                     {
 
 
-                        Wall sciana = new Wall(new Vector2(j * mlply, i * mlply), 20, 20);
+                        Wall sciana = new Wall(new Vector2(j * mlply2, i * mlply1), mlply2, mlply2);
                         sciana.Body = new System.Windows.Shapes.Rectangle();
 
-                        sciana.Body.Width = 20;
-                        sciana.Body.Height = 20;
+                        sciana.Body.Width = mlply2;
+                        sciana.Body.Height = mlply1;
 
                         wallsinmap.Add(sciana);
 
@@ -179,11 +187,11 @@ namespace Game.Creatures
                     {
 
 
-                        NextLevel door = new NextLevel(new Vector2(j * mlply, i * mlply), 20, 20);
+                        NextLevel door = new NextLevel(new Vector2(j * mlply2, i * mlply1), mlply2, mlply2);
                         door.Body = new System.Windows.Shapes.Rectangle();
 
-                        door.Body.Width = 20;
-                        door.Body.Height = 20;
+                        door.Body.Width = mlply2;
+                        door.Body.Height = mlply1;
 
                         nextleveldoors.Add(door);
                         nextleveldoors_counter++;
@@ -196,7 +204,7 @@ namespace Game.Creatures
                     {
 
 
-                        Treasure treasure = new Treasure(new Vector2(j * mlply, i * mlply), 60, 60);
+                        Treasure treasure = new Treasure(new Vector2(j * mlply2, i * mlply1), 60, 60);
                         
                         //treasure.Body = new System.Windows.Shapes.Rectangle();
                      
@@ -214,11 +222,11 @@ namespace Game.Creatures
                     char temp = temp1[0];
                     if (Char.IsDigit(temp))
                     {
-                        Door door = new Door(new Vector2(j * mlply, i * mlply), 20, 20, temp - '0');
+                        Door door = new Door(new Vector2(j * mlply2, i * mlply1), mlply2, mlply2, temp - '0');
                         door.Body = new System.Windows.Shapes.Rectangle();
 
-                        door.Body.Width = 20;
-                        door.Body.Height = 20;
+                        door.Body.Width = mlply2;
+                        door.Body.Height = mlply1;
 
                         doors.Add(door);
                         door_counter++;
@@ -231,29 +239,29 @@ namespace Game.Creatures
                         Potion potion;
                         Random random = new Random();
                         int Type = random.Next(0, 4);
-                        int width = 20, height = 30;
+                        int width = 40, height = 40;
 
                         if (Type == 0)
                         {
-                            potion = new Potion(new Vector2(j * mlply, i * mlply), width, height, TypeOfPotion.HealthRegeneration);
+                            potion = new Potion(new Vector2(j * mlply2 + przes, i * mlply1), width, height, TypeOfPotion.HealthRegeneration);
                             potions.Add(potion);
                             potions_counter++;
                         }
                         else if (Type == 1)
                         {
-                            potion = new Potion(new Vector2(j * mlply, i * mlply), width, height, TypeOfPotion.StaminaRegenerationBoost);
+                            potion = new Potion(new Vector2(j * mlply2 + przes, i * mlply1), width, height, TypeOfPotion.StaminaRegenerationBoost);
                             potions.Add(potion);
                             potions_counter++;
                         }
                         else if (Type == 2)
                         {
-                            potion = new Potion(new Vector2(j * mlply, i * mlply), width, height, TypeOfPotion.HigherAttackValue);
+                            potion = new Potion(new Vector2(j * mlply2 + przes, i * mlply1), width, height, TypeOfPotion.HigherAttackValue);
                             potions.Add(potion);
                             potions_counter++;
                         }
                         else if (Type == 3)
                         {
-                            potion = new Potion(new Vector2(j * mlply, i * mlply), width, height, TypeOfPotion.HigherDefenceValue);
+                            potion = new Potion(new Vector2(j * mlply2 + przes, i * mlply1), width, height, TypeOfPotion.HigherDefenceValue);
                             potions.Add(potion);
                             potions_counter++;
                         }

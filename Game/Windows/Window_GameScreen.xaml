@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Game.Windows"
         mc:Ignorable="d"
-        Title="Window_GameScreen" Height="480" Width="810"
+        Title="Window_GameScreen" Height="720" Width="1280"
         WindowStyle="SingleBorderWindow"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -13,19 +13,43 @@
 
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="289*"/>
+            <ColumnDefinition Width="351*"/>
+        </Grid.ColumnDefinitions>
+
+        <Canvas x:Name="Interface"
+                
+            Background="#2b2e33"
+            Focusable="False"
+            Width="1280" Margin="0,0,0,555"
+            Panel.ZIndex="1" Grid.ColumnSpan="2"/>
 
         <Canvas x:Name="gameArea"
 
             Background="Gray"
             Focusable="True"
-            Height="450"
-            Width="800">
-            
+            Height="580"
+            Width="1280" Margin="0,124,0,0" Grid.ColumnSpan="2"/>
 
+        <Canvas x:Name="LeftWall"
+                
+            Background="#2b2e33"
+            Focusable="False" Margin="0,0,554,0"
+            Panel.ZIndex="1"/>
 
+        <Canvas x:Name="BottomWall"
+                
+            Background="#2b2e33"
+            Focusable="False"
+            Width="1280" Margin="0,664,0,0"
+            Panel.ZIndex="1" Grid.ColumnSpan="2"/>
 
-
-        </Canvas>
+        <Canvas x:Name="RightWall"
+                
+            Background="#2b2e33"
+            Focusable="False" Margin="678,0,0,0"
+            Panel.ZIndex="1" Grid.Column="1"/>
 
     </Grid>
 
