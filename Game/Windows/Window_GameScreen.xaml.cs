@@ -39,13 +39,15 @@ namespace Game.Windows
         static int enemyCounter = 3;
         int directionTimer = 10;
         int TimerLimit = 30;
-        int[] kierunkiX = new int[] { 1, 1, -1, 1, 1 };
-        int[] kierunkiY = new int[] { 1, -1, 1, -1, 1 };
+        //int[] kierunkiX = new int[] { 1, 1, -1, 1, 1 };
+        //int[] kierunkiY = new int[] { 1, -1, 1, -1, 1 };
         float enemySpeed = 1;
 
         public bool is_in_room = false;
 
         public int lastSide = 0;
+        public int BulletlastSide = 0;
+        public int licznikKierunkow=0;
 
         public static Vector2 respawnLocation = new Vector2(100, 100); // polożenie gracza na początku gry
 
@@ -78,7 +80,7 @@ namespace Game.Windows
         public static Vector2 kasa3 = new Vector2(290, 330);
         public static Vector2 kasa4 = new Vector2(250, 330);*/
 
-        public Treasure killer = new Treasure(skarb, 50, 20);
+        //public Treasure killer = new Treasure(skarb, 50, 20);
 
         /*public Coin C = new Coin(kasa, 10, 10);
         public Emerald E = new Emerald(kasa2, 12, 12);
@@ -138,11 +140,11 @@ namespace Game.Windows
             player.Create(gameArea);
             
             //Agnieszka
-            killer.Create(gameArea);
+            //killer.Create(gameArea);
             //W.Create(gameArea);
             //Agnieszka
          
-            for (int i = 0; i < 5; i++)
+            /*for (int i = 0; i < 5; i++)
             {
                 Vector2 poz = new Vector2(0, 0);
                 Enemy enemy = new Enemy(poz, 40, 40, 1);
@@ -150,12 +152,44 @@ namespace Game.Windows
                 enemy.Create(gameArea);
                 enemy.Draw();
                 enemies.Add(enemy);
-            }
+            }*/
 
             updateWorld();
 
         }
-
+        void NxtLvl()
+        {
+            gameArea.Children.Clear();
+            enemies.Clear();
+            if (map_index < MapsList.length())
+            {
+                map.changeMap(MapsList.get(map_index++));
+            }
+            player.Create(gameArea);
+            player.Position = new Vector2(100, 100);
+            lastSide = 1;
+            updateWorld();
+        }
+        void NxtRoom(int Room_index)
+        {
+            gameArea.Children.Clear();
+            if (is_in_room == false)
+            {
+                map.changeMap(RoomList.get(Room_index));
+                player.Position = RoomList.getRoomPosition(Room_index);
+                is_in_room = true;
+            }
+            else
+            {
+                map.changeMap(MapsList.get(map_index - 1));
+                player.Position = RoomList.getReturnPosition(Room_index);
+                is_in_room = false;
+            }
+            player.Create(gameArea);
+            //player.Position = new Vector2(100, 100);
+            lastSide = 1;
+            updateWorld();
+        }
 
         private void GameTimerEvent(object sender, EventArgs e)
         {
@@ -167,10 +201,10 @@ namespace Game.Windows
             //sound.Play();
             //sound.PlayLooping(); 
 
-            MediaPlayer playMedia = new MediaPlayer(); 
-            var uri = new Uri("pack://siteoforigin:,,,/Sound/awesomeness.wav"); 
-            playMedia.Open(uri);
-            playMedia.Play();
+            MediaPlayer playMedia = new MediaPlayer();
+            var uri = new Uri("pack://siteoforigin:,,,/Sound/awesomeness.wav");
+            //playMedia.Open(uri);
+            //playMedia.Play();
             //
 
             //Agnieszka
@@ -188,38 +222,7 @@ namespace Game.Windows
                 directionTimer = TimerLimit;
             }*/
 
-            void NxtLvl()
-            {
-                gameArea.Children.Clear();
-                if (map_index < MapsList.length())
-                {
-                    map.changeMap(MapsList.get(map_index++));
-                }
-                player.Create(gameArea);
-                player.Position = new Vector2(100, 100);
-                lastSide = 1;
-                updateWorld();
-            }
-            void NxtRoom(int Room_index)
-            {
-                gameArea.Children.Clear();
-                if (is_in_room == false)
-                {
-                    map.changeMap(RoomList.get(Room_index));
-                    player.Position = RoomList.getRoomPosition(Room_index);
-                    is_in_room = true;
-                }
-                else
-                {
-                    map.changeMap(MapsList.get(map_index - 1));
-                    player.Position = RoomList.getReturnPosition(Room_index);
-                    is_in_room = false;
-                }
-                player.Create(gameArea);
-                //player.Position = new Vector2(100, 100);
-                lastSide = 1;
-                updateWorld();
-            }
+            
 
             if ((Keyboard.GetKeyStates(Key.D) & KeyStates.Down) > 0)
             {
@@ -374,9 +377,11 @@ namespace Game.Windows
             if ((Keyboard.GetKeyStates(Key.E) & KeyStates.Down) > 0)
             {
                 Vector2 poz = new Vector2(player.Position.X, player.Position.Y); // nowy wektor, bo konstruktor Bullet z jakiegos powodu zmienial pozycje gracza
-                Bullet bullet = new Bullet(poz, 6, 6);
-                bullet.Create(gameArea, player);
+                BulletlastSide = lastSide;
+                Bullet bullet = new Bullet(poz, 6, 6, BulletlastSide);
+                bullet.Create(gameArea, poz);
                 bullets.Add(bullet);
+                
             }
 
             if ((Keyboard.GetKeyStates(Key.R) & KeyStates.Down) > 0)
@@ -398,12 +403,12 @@ namespace Game.Windows
             //Agnieszka 
             if ((Keyboard.GetKeyStates(Key.F) & KeyStates.Down) > 0)
             {
-                if (WasTouched == false)
-                {
-                    if (isCollidingWithTreasure(player, new Vector2(0,0)) is Treasure)
+                
+                    if (isCollidingWithTreasure(player, new Vector2(0,0))>=0)
                     {
-                        killer = (isCollidingWithTreasure(player, new Vector2(0, 0)));
-                        Vector2 temp=killer.Position;
+                        //killer = (isCollidingWithTreasure(player, new Vector2(0, 0)));
+                        int index= (isCollidingWithTreasure(player, new Vector2(0, 0)));
+                        Vector2 temp= map.treasures[index].Position;
                         
                         HowManyC = random.Next(1, 8);
                         HowManyE = random.Next(1, 6);
@@ -413,7 +418,7 @@ namespace Game.Windows
                         for (int i = 0; i <= HowManyC; i++)
                         {
                             Coin C = new Coin(temp, 10, 10);
-                            C.Position = C.RandomSpawnPosition(gameArea, killer, rand);
+                            C.Position = C.RandomSpawnPosition(gameArea, map.treasures[index], rand);
                             C.Create(gameArea);
                             C.Draw();
                             coins.Add(C);
@@ -422,7 +427,7 @@ namespace Game.Windows
                         for (int i = 0; i <= HowManyE; i++)
                         {
                             Emerald E = new Emerald(temp, 15, 15);
-                            E.Position = E.RandomSpawnPosition(gameArea, killer, rand);
+                            E.Position = E.RandomSpawnPosition(gameArea, map.treasures[index], rand);
                             E.Create(gameArea);
                             E.Draw();
                             emeralds.Add(E);
@@ -431,7 +436,7 @@ namespace Game.Windows
                         for (int i = 0; i <= HowManyR; i++)
                         {
                             Ruby R = new Ruby(temp, 16, 16);
-                            R.Position = R.RandomSpawnPosition(gameArea, killer, rand);
+                            R.Position = R.RandomSpawnPosition(gameArea, map.treasures[index], rand);
                             R.Create(gameArea);
                             R.Draw();
                             rubys.Add(R);
@@ -440,17 +445,19 @@ namespace Game.Windows
                         for (int i = 0; i <= HowManyD; i++)
                         {
                             Diamond D = new Diamond(temp, 20, 20);
-                            D.Position = D.RandomSpawnPosition(gameArea, killer, rand);
+                            D.Position = D.RandomSpawnPosition(gameArea, map.treasures[index], rand);
                             D.Create(gameArea);
                             D.Draw();
                             diamonds.Add(D);
                         }
                         //Karolina
-                        killer.Delete(gameArea);
+
+                        map.treasures[index].Delete(gameArea);
+                        map.treasures.RemoveAt(index);
                         //
                         //gameArea.Children.Remove(killer.Body);
                         WasTouched = true;
-                    }
+                    
                 }
 
 
@@ -486,29 +493,34 @@ namespace Game.Windows
 
 
 
-                foreach (var bullet in bullets)
+                for(int i=0;i<bullets.Count;i++)
             {
                 // 20 - bullet speed
                 // last side ma stary argument, wiec jak gracz w miedzyczasie sie obroci - poziski bd leciec w nowa strone
-                bullet.Update(20, lastSide);
+                bullets[i].Update(20);
 
                 // Jezeli pocisk wyjdzie poza obszar gry - usun z listy pociskow
-                if (bullet.Position.X < 0 - gameArea.Width ||
-                    bullet.Position.X > gameArea.Width ||
-                    bullet.Position.Y < 0 - gameArea.Height ||
-                    bullet.Position.Y > gameArea.Height)
+                if (isCollidingWithWall(bullets[i], new Vector2(0, 0)))
                 {
-                    bullet.markedForDeletion = true;
+                    bullets[i].markedForDeletion = true;
+                    gameArea.Children.Remove(bullets[i].Body);
+                    gameArea.Children.Remove(bullets[i].BulletBody);
+                    
+                    bullets.RemoveAt(i);
+                    //updateWorld();
                 }
-                bullet.Draw();
+                else
+                {
+                    bullets[i].Draw();
+                }
             }
             
 
 
 
             /// ENEMIES
-            int licznikKierunkow = 0;
-
+            licznikKierunkow = 0;
+            
 
             foreach (var enemy in enemies)
             {
@@ -525,12 +537,17 @@ namespace Game.Windows
                 
                 if (licznikKierunkow > enemyCounter) { licznikKierunkow = 0; }
 
-                enemy.kierunekX = kierunkiY[++licznikKierunkow];
-                enemy.kierunekY = kierunkiX[++licznikKierunkow];
+                //enemy.kierunekX = kierunkiY[++licznikKierunkow];
+                //enemy.kierunekY = kierunkiX[++licznikKierunkow];
 
                 Vector2 nowyKierunek = new Vector2(enemySpeed * enemy.kierunekX, enemySpeed * enemy.kierunekY);
-
-                enemy.Update(new Vector2(nowyKierunek.X, nowyKierunek.Y));
+                /*if (!isCollidingWithWall(enemy, nowyKierunek))
+                {
+                    enemy.Update(new Vector2(nowyKierunek.X, nowyKierunek.Y));
+                }
+                else {
+                    enemy.Update(new Vector2(-nowyKierunek.X, -nowyKierunek.Y));
+                }*/
 
                 if (isColliding(player, enemy))
                 {
@@ -541,28 +558,71 @@ namespace Game.Windows
                     enemy.ChangeStateBackToNormal();
                 }
 
-                
-                // 
-                if (enemy.kierunekX == 1 && isCollidingWithWall(enemy, new Vector2(enemySpeed + enemy.Width, 0)))
+
+                /*
+               if (enemy.kierunekX == 1 && !isCollidingWithWall(enemy, new Vector2(enemySpeed + enemy.Width, 0)))
+               {
+                   enemy.Update(new Vector2(-enemySpeed*2, 0));
+               }
+
+               if (enemy.kierunekX == -1 && !isCollidingWithWall(enemy, new Vector2(-enemySpeed - enemy.Width, 0)))
+               {
+                   enemy.Update(new Vector2(enemySpeed*2, 0));
+               }
+
+               if (enemy.kierunekY == 1 && !isCollidingWithWall(enemy, new Vector2(0, enemySpeed + enemy.Height)))
+               {
+                   enemy.Update(new Vector2(0, -enemySpeed * 2));
+               }
+
+               if (enemy.kierunekY == -1 && !isCollidingWithWall(enemy, new Vector2(0, -enemySpeed - enemy.Height)))
+               {
+                   enemy.Update(new Vector2(0, enemySpeed * 2));
+               }*/
+
+                if (enemy.kierunekX == 1 && !isCollidingWithWall(enemy, new Vector2(enemySpeed, 0)))
                 {
-                    enemy.Update(new Vector2(-enemySpeed*2, 0));
+                    enemy.Update(new Vector2(enemySpeed, 0));
                 }
-               
-                if (enemy.kierunekX == -1 && isCollidingWithWall(enemy, new Vector2(-enemySpeed - enemy.Width, 0)))
+                else if(enemy.kierunekX == 1)
                 {
-                    enemy.Update(new Vector2(enemySpeed*2, 0));
-                }
-                
-                if (enemy.kierunekY == 1 && isCollidingWithWall(enemy, new Vector2(0, enemySpeed + enemy.Height)))
-                {
-                    enemy.Update(new Vector2(0, -enemySpeed * 2));
-                }
-                
-                if (enemy.kierunekY == -1 && isCollidingWithWall(enemy, new Vector2(0, -enemySpeed - enemy.Height)))
-                {
-                    enemy.Update(new Vector2(0, enemySpeed * 2));
+                    enemy.kierunekX = -enemy.kierunekX;
+                    enemy.Update(new Vector2(-enemySpeed, 20));
+                    enemy.Flip(90);
                 }
 
+                if (enemy.kierunekX == -1 && !isCollidingWithWall(enemy, new Vector2(-enemySpeed, 0)))
+                {
+                    enemy.Update(new Vector2(-enemySpeed, 0));
+                }
+                else if (enemy.kierunekX == -1)
+                {
+                    enemy.kierunekX = -enemy.kierunekX;
+                    enemy.Update(new Vector2(enemySpeed, 20));
+                    enemy.Flip(90);
+                }
+
+                if (enemy.kierunekY == 1 && !isCollidingWithWall(enemy, new Vector2(0, enemySpeed)))
+                {
+                    enemy.Update(new Vector2(0,enemySpeed));
+                }
+                else if(enemy.kierunekY == 1)
+                {
+                    enemy.kierunekY = -enemy.kierunekY;
+                    enemy.Update(new Vector2(30, -enemySpeed));
+                    enemy.Flip(90);
+                }
+
+                if (enemy.kierunekY == -1 && !isCollidingWithWall(enemy, new Vector2(0, -enemySpeed )))
+                {
+                    enemy.Update(new Vector2(0, -enemySpeed));
+                }
+                else if(enemy.kierunekY == -1)
+                {
+                    enemy.kierunekY = -enemy.kierunekY;
+                    enemy.Update(new Vector2(30, enemySpeed));
+                    enemy.Flip(90);
+                }//przez te else znikaja*/
 
 
                 if (enemy.IsDead()) 
@@ -570,7 +630,7 @@ namespace Game.Windows
                     enemy.markedForDeletion = true; 
                 } 
 
-
+                
 
 
                 //enemy.Update(nowyKierunek);
@@ -611,24 +671,25 @@ namespace Game.Windows
                 }
             }
 
-            for (int i = enemies.Count - 1; i >= 0; i--)
+            /*for (int i = enemies.Count - 1; i >= 0; i--)
             {
                 if (enemies[i].markedForDeletion)
                 {
                     enemies[i].Delete(gameArea);
                     enemies.RemoveAt(i);
                 }
-            }
+            }*/
 
 
 
 
             player.RegenerateStamina();
             player.Draw();
+            
         }
         
 
-
+        
 
 
         public bool isCollidingWithWall(GameSprite Object, Vector2 v)
@@ -646,20 +707,20 @@ namespace Game.Windows
             }
             return false;
         }
-        public Treasure isCollidingWithTreasure(GameSprite Object, Vector2 v)
+        public int isCollidingWithTreasure(GameSprite Object, Vector2 v)//ref
         {
-            foreach (Treasure t in map.treasures)
+            for(int i=0;i<map.treasures.Count;i++)
             {
                 Rect playerHB = new Rect(Canvas.GetLeft(Object.Body) + v.X, Canvas.GetTop(Object.Body) + v.Y, Object.Width, Object.Height);
-                Rect treasureHB = new Rect(Canvas.GetLeft(t.Body), Canvas.GetTop(t.Body), t.Width, t.Height);
+                Rect treasureHB = new Rect(Canvas.GetLeft(map.treasures[i].Body), Canvas.GetTop(map.treasures[i].Body), map.treasures[i].Width, map.treasures[i].Height);
 
                 if (playerHB.IntersectsWith(treasureHB))
                 {
-                    return t;
+                    return i;
                 }
 
             }
-            return null;
+            return -1;
         }
         public bool isCollidingWithNxtLvlDoor(GameSprite Object, Vector2 v)
         {
@@ -695,12 +756,17 @@ namespace Game.Windows
         }
         public bool isColliding(GameSprite o1, GameSprite o2)
         {
-            if ((o1.Position.X + o1.Width <= o2.Position.X + o2.Width) && (o1.Position.X + o1.Width >= o2.Position.X))
+            /*if ((o1.Position.X + o1.Width <= o2.Position.X + o2.Width) && (o1.Position.X + o1.Width >= o2.Position.X))
             {
                 if ((o1.Position.Y + o1.Height <= o2.Position.Y + o2.Height) && (o1.Position.Y + o1.Height >= o2.Position.Y))
                 {
                     return true;
                 }
+            }*/
+            Rect o1HB = new Rect(Canvas.GetLeft(o1.Body) , Canvas.GetTop(o1.Body) , o1.Width, o1.Height);
+            Rect o2HB = new Rect(Canvas.GetLeft(o2.Body) , Canvas.GetTop(o2.Body) , o2.Width, o2.Height);
+            if (o1HB.IntersectsWith(o2HB)) {
+                return true;
             }
             return false;
 
@@ -732,6 +798,8 @@ namespace Game.Windows
         
         public void updateWalls()
         {
+            ImageBrush wallSprite = new ImageBrush();
+            wallSprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/brick.png"));
             for (int wall_counter = 0; wall_counter < map.wallsinmap.Count(); wall_counter++)
             {
                 gameArea.Children.Add(map.wallsinmap[wall_counter].Body);
@@ -740,11 +808,10 @@ namespace Game.Windows
                 Canvas.SetLeft(map.wallsinmap[wall_counter].Body, map.wallsinmap[wall_counter].Position.X);
 
 
-                map.wallsinmap[wall_counter].Body.Fill = new SolidColorBrush(Colors.Blue);
+                //map.wallsinmap[wall_counter].Body.Fill = new SolidColorBrush(Colors.Blue);
 
                 // Karolina
-                ImageBrush wallSprite = new ImageBrush();
-                wallSprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/brick.png"));
+                
                 map.wallsinmap[wall_counter].Body.Fill = wallSprite;
                 //
 
@@ -755,7 +822,8 @@ namespace Game.Windows
 
         public void updateDoors()
         {
-            
+            ImageBrush Sprite = new ImageBrush();
+            Sprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/door.png"));
             for (int nxt_lvl_door_counter = 0; nxt_lvl_door_counter < map.nextleveldoors.Count(); nxt_lvl_door_counter++)
             {
                 gameArea.Children.Add(map.nextleveldoors[nxt_lvl_door_counter].Body);
@@ -765,8 +833,7 @@ namespace Game.Windows
 
 
                 //map.nextleveldoors[nxt_lvl_door_counter].Body.Fill = new SolidColorBrush(Colors.Red);
-                ImageBrush Sprite = new ImageBrush();
-                Sprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/door.png"));
+                
                 map.nextleveldoors[nxt_lvl_door_counter].Body.Fill = Sprite;
 
 
@@ -782,13 +849,14 @@ namespace Game.Windows
 
 
                 //map.doors[door_counter].Body.Fill = new SolidColorBrush(Colors.Brown);
-                ImageBrush Sprite = new ImageBrush();
-                Sprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/door.png"));
+                
                 map.doors[door_counter].Body.Fill = Sprite;
 
 
                 gameArea.DataContext = map.doors[door_counter].Body;
             }
+            ImageBrush TSprite = new ImageBrush();
+            TSprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/treasure.png"));
             for (int treasureCounter = 0; treasureCounter < map.treasures.Count(); treasureCounter++)
             {
                 gameArea.Children.Add(map.treasures[treasureCounter].Body);
@@ -798,9 +866,8 @@ namespace Game.Windows
 
                 //
                 //map.treasures[treasureCounter].Body.Fill = new SolidColorBrush(Colors.Brown);
-                ImageBrush Sprite = new ImageBrush();
-                Sprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/treasure.png"));
-                map.treasures[treasureCounter].Body.Fill = Sprite;
+                
+                map.treasures[treasureCounter].Body.Fill = TSprite;
 
 
                 gameArea.DataContext = map.treasures[treasureCounter].Body;
@@ -913,8 +980,7 @@ namespace Game.Windows
         
         public void EarnMoney()
         {
-            if(WasTouched == true)
-            {
+            
                 if(coins != null)
                 {
                     foreach(Coin Coin in coins)
@@ -1040,7 +1106,7 @@ namespace Game.Windows
                 {
                     D.Delete(gameArea);
                 }*/
-            }
+            
         }
 
         /*

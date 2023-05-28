@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -24,8 +25,8 @@ namespace Game.Creatures
 
         public bool markedForDeletion = false;
 
-        public int kierunekX;
-        public int kierunekY;
+        public int kierunekX=1;
+        public int kierunekY=1;
 
         //------------------------------------------------------------------
         // Body jest od GameSprite
@@ -259,15 +260,7 @@ namespace Game.Creatures
             }
         }
 
-        public void Flip(int angle)
-        {
-            Body.RenderTransform = new RotateTransform(angle, Width / 2, Height / 2);
-            HitBox.RenderTransform = new RotateTransform(angle, Width / 2, Height / 2);
-            NormalAttackArea.RenderTransform = new RotateTransform(angle, Width / 2, NormalAttackArea.Height / 2);
-            StrongAttackArea.RenderTransform = new RotateTransform(angle, Width / 2, StrongAttackArea.Height / 2);
-            VisionArea.RenderTransform = new RotateTransform(angle, Width / 2, VisionArea.Height / 2);
-            //Vision.RenderTransform = new RotateTransform(angle, Width / 2, Vision.Height / 2);
-        }
+        
 
 
         public void Chase(Player player)
@@ -313,6 +306,16 @@ namespace Game.Creatures
         {
             if (CollisionCircles(player.HitBox, VisionArea)) return true;
             return false;
+        }
+
+        public void Flip(int angle)
+        {
+            Body.RenderTransform = new RotateTransform(angle, Width / 2, Height / 2);
+            HitBox.RenderTransform = new RotateTransform(angle, Width / 2, Height / 2);
+            NormalAttackArea.RenderTransform = new RotateTransform(angle, Width / 2, NormalAttackArea.Height / 2);
+            StrongAttackArea.RenderTransform = new RotateTransform(angle, Width / 2, StrongAttackArea.Height / 2);
+            VisionArea.RenderTransform = new RotateTransform(angle, Width / 2, VisionArea.Height / 2);
+            //Vision.RenderTransform = new RotateTransform(angle, Width / 2, Vision.Height / 2);
         }
 
         public bool IsUnderAttack()
@@ -396,14 +399,13 @@ namespace Game.Creatures
 
         public bool IsColliding(GameSprite o1, GameSprite o2)
         {
-            if ((o1.Position.X + o1.Width <= o2.Position.X + o2.Width) && (o1.Position.X + o1.Width >= o2.Position.X))
-            {
-                if ((o1.Position.Y + o1.Height <= o2.Position.Y + o2.Height) && (o1.Position.Y + o1.Height >= o2.Position.Y))
-                {
-                    return true;
-                }
+            Rect o1HB = new Rect(Canvas.GetLeft(o1.Body) , Canvas.GetTop(o1.Body) , o1.Width, o1.Height);
+            Rect o2HB = new Rect(Canvas.GetLeft(o2.Body) , Canvas.GetTop(o2.Body) , o2.Width, o2.Height);
+            if (o1HB.IntersectsWith(o2HB)) {
+                return true;
             }
             return false;
+                
 
         }
 

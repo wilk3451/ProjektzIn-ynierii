@@ -17,7 +17,7 @@ namespace Game.Creatures
         // Body z GameSprite - Rectangle
 
         public bool markedForDeletion = false;
-
+        public int lastSide;
         public Bullet(Vector2 Position, int Width, int Height) : base(Position, Width, Height)
         {
             this.Position = Position;
@@ -25,11 +25,46 @@ namespace Game.Creatures
             this.Height = Height;
             BulletBody = new System.Windows.Shapes.Ellipse();
         }
+        public Bullet(Vector2 Position, int Width, int Height,int ls) : base(Position, Width, Height)
+        {
+            this.Position = Position;
+            this.Width = Width;
+            this.Height = Height;
+            this.lastSide = ls;
+            BulletBody = new System.Windows.Shapes.Ellipse();
+        }
 
         public void Create(Canvas gameArea, Player player)
         {
             double positionX = player.Position.X + (player.Width / 2) - (Width / 2); // srodek gracza
             double positionY = player.Position.Y + (player.Height / 2) - (Height / 2); // srodek gracza
+
+            //Body z GameSprite - rysowane dla sprawdzenia czy pocisk jest we właściwej pozycji
+            Body = new Rectangle();
+            gameArea.Children.Add(Body);
+            Body.Width = this.Width;
+            Body.Height = this.Height;
+            Canvas.SetTop(Body, positionY);
+            Canvas.SetLeft(Body, positionX);
+            Body.Stroke = new SolidColorBrush(Colors.White);
+            gameArea.DataContext = Body;
+
+            //Prawdziwy wygląd pocisku
+            BulletBody = new Ellipse();
+            gameArea.Children.Add(BulletBody);
+            BulletBody.Width = this.Width;
+            BulletBody.Height = this.Height;
+            Canvas.SetTop(BulletBody, positionY);
+            Canvas.SetLeft(BulletBody, positionX);
+            BulletBody.Stroke = new SolidColorBrush(Colors.White);
+            BulletBody.Fill = new SolidColorBrush(Colors.Red);
+            gameArea.DataContext = BulletBody;
+        }
+
+        public void Create(Canvas gameArea, Vector2 position)
+        {
+            double positionX = position.X ; // srodek gracza
+            double positionY = position.Y ; // srodek gracza
 
             //Body z GameSprite - rysowane dla sprawdzenia czy pocisk jest we właściwej pozycji
             Body = new Rectangle();
@@ -79,6 +114,30 @@ namespace Game.Creatures
                 Position.Y -= speed;
             }
             else if (lastSide == 3)
+            {
+                Position.X += 0;
+                Position.Y += speed;
+            }
+        }
+
+        public void Update(float speed)
+        {
+            if (this.lastSide == 0)
+            {
+                Position.X += speed;
+                Position.Y += 0;
+            }
+            else if (this.lastSide == 1)
+            {
+                Position.X -= speed;
+                Position.Y += 0;
+            }
+            else if (this.lastSide== 2)
+            {
+                Position.X += 0;
+                Position.Y -= speed;
+            }
+            else if (this.lastSide == 3)
             {
                 Position.X += 0;
                 Position.Y += speed;
