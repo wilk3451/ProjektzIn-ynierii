@@ -458,15 +458,14 @@ namespace Game.Windows
                         //gameArea.Children.Remove(killer.Body);
                         WasTouched = true;
                     
-                }
-
+                    }
 
                 // Karolina - start
  
                 for (int i = map.potions.Count() - 1; i >= 0; i--)
                 {
                     // w warunku spr kolizji z eliksirem!
-                    if (map.potions[i] != null && map.potions[i].interactable == true)
+                    if (map.potions[i] != null && isColliding(player, map.potions[i]) && map.potions[i].interactable == true)
                     {
                         inventory.AddPotion(map.potions[i]); // spr klonowanie
                         map.potions[i].Delete(gameArea);
@@ -1003,8 +1002,9 @@ namespace Game.Windows
                             coins[i].Delete(gameArea);
                             coins.RemoveAt(i);
                             Score += 2;
-                            //W.Suma(Score, gameArea);
-                        }
+                        //W.Suma(Score, gameArea);
+                        updateInterface();
+                    }
                     }
                 }
 
@@ -1030,8 +1030,9 @@ namespace Game.Windows
                             emeralds[i].Delete(gameArea);
                             emeralds.RemoveAt(i);
                             Score += 4;
-                            //W.Suma(Score, gameArea);
-                        }
+                        //W.Suma(Score, gameArea);
+                        updateInterface();
+                    }
                     }
                 }
 
@@ -1057,8 +1058,9 @@ namespace Game.Windows
                             rubys[i].Delete(gameArea);
                             rubys.RemoveAt(i);
                             Score += 6;
-                            //W.Suma(Score, gameArea);
-                        }
+                        //W.Suma(Score, gameArea);
+                        updateInterface();
+                    }
                     }
                 }
 
@@ -1084,8 +1086,9 @@ namespace Game.Windows
                             diamonds[i].Delete(gameArea);
                             diamonds.RemoveAt(i);
                             Score += 8;
-                           // W.Suma(Score, gameArea);
-                        }
+                        // W.Suma(Score, gameArea);
+                        updateInterface();
+                    }
                     }
                 }
                 //updateInterface();

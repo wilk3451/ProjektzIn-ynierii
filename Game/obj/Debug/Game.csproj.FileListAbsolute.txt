@@ -77,3 +77,4 @@ C:\Users\jerem\OneDrive\Dokumenty\GitHub\ProjektzInzynierii\Game\bin\Debug\Sound
 C:\Users\jerem\OneDrive\Dokumenty\GitHub\ProjektzInzynierii\Game\obj\Debug\Windows\InventoryWindow.g.cs
 C:\Users\jerem\OneDrive\Dokumenty\GitHub\ProjektzInzynierii\Game\obj\Debug\Game_Content.g.cs
 C:\Users\jerem\OneDrive\Dokumenty\GitHub\ProjektzInzynierii\Game\obj\Debug\Windows\InventoryWindow.baml
+C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\Game.csproj.SuggestedBindingRedirects.cache

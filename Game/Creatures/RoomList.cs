@@ -74,10 +74,10 @@ namespace Game.Creatures
             _ReturnFromRoomPosition = new List<Vector2>();
             _RoomList.Add(room_string1);
             _GoToRoomPosition.Add(new Vector2(320, 341));
-            _ReturnFromRoomPosition.Add(new Vector2(320, 21));
+            _ReturnFromRoomPosition.Add(new Vector2(320, 50));
 
             _RoomList.Add(room_string2);
-            _GoToRoomPosition.Add(new Vector2(21, 100));
+            _GoToRoomPosition.Add(new Vector2(50, 100));
             _ReturnFromRoomPosition.Add(new Vector2(739, 100));
         }
 
