@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace Game.Items
 {
@@ -56,6 +59,17 @@ namespace Game.Items
 
             // Add Buttons to the Canvas' Children collection
             inventory.Children.Add(closeInventory);
+
+            if (potionList != null)
+            {
+                foreach (Potion potion in potionList)
+                {
+                    Canvas.SetLeft(potion.Body, 100);
+                    Canvas.SetTop(potion.Body, 100);
+                    inventory.DataContext = potion.Body;
+                    inventory.Children.Add(potion.Body);
+                }
+            }
         }
 
         
