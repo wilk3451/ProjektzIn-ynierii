@@ -19,6 +19,7 @@ namespace Game.Creatures
         public int Attack { get; private set; }
         public int Defence { get; private set; }
         public int Level { get; set; }
+        public Vector2 Lastpos { get; set; }
 
         int currentStep = 100;
         int MoveStep = 100;
@@ -74,7 +75,7 @@ namespace Game.Creatures
 
             Vision = new System.Windows.Shapes.Rectangle();
 
-            Speed = (float)0.5;
+            Speed = (float)1;
             Level = level;
             SetStats(Level);
         }
