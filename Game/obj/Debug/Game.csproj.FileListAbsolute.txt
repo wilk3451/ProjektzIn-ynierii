@@ -43,7 +43,6 @@ C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\Windows\Window_MainMe
 C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\App.baml
 C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\Windows\Window_GameScreen.g.cs
 C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\Windows\Window_GameScreen.baml
-C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\Game.csproj.SuggestedBindingRedirects.cache
 C:\Users\jerem\OneDrive\Dokumenty\GitHub\ProjektzInzynierii\Game\bin\Debug\Game.exe.config
 C:\Users\jerem\OneDrive\Dokumenty\GitHub\ProjektzInzynierii\Game\bin\Debug\Game.exe
 C:\Users\jerem\OneDrive\Dokumenty\GitHub\ProjektzInzynierii\Game\bin\Debug\Game.pdb

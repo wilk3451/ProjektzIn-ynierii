@@ -1088,7 +1088,7 @@ namespace Game.Windows
                         }
                     }
                 }
-                updateInterface();
+                //updateInterface();
 
                 /*if(isColliding(player, C))
                 {

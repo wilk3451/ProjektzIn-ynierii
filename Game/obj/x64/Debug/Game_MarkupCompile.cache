@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\jerem\OneDrive\Dokumenty\GitHub\ProjektzInzynierii\Game\obj\x64\Debug\
+C:\Users\PC\Source\Repos\ProjektzInzynierii\Game\obj\x64\Debug\
 Game
 none
 false
 DEBUG;TRACE
-C:\Users\jerem\OneDrive\Dokumenty\GitHub\ProjektzInzynierii\Game\App.xaml
-6794777660
-
-202117506258
-13-1505183044
-MainWindow.xaml;UserControls\UserControl_MainMenu.xaml;UserControls\UserControl_SelectCharacter.xaml;Windows\Window_GameScreen.xaml;Windows\Window_MainMenu_About.xaml;Windows\Window_MainMenu_Settings.xaml;
+C:\Users\PC\Source\Repos\ProjektzInzynierii\Game\App.xaml
+7187960643
+11274760503
+291830213942
+141183416626
+MainWindow.xaml;UserControls\UserControl_MainMenu.xaml;UserControls\UserControl_SelectCharacter.xaml;Windows\InventoryWindow.xaml;Windows\Window_GameScreen.xaml;Windows\Window_MainMenu_About.xaml;Windows\Window_MainMenu_Settings.xaml;
 
 True
 
