@@ -20,6 +20,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 using Game.Items;
 using System.Media;
+using System.Threading;
 
 namespace Game.Windows
 {
@@ -103,8 +104,12 @@ namespace Game.Windows
 
         //K - s
         public Inventory inventory = new Inventory();
+        public float lastSpeed; // przechowuje predkosc wrogow na czas uzywania inventory
         //K
 
+        bool playMusic = true;
+        //MediaPlayer playMedia = new MediaPlayer();
+        Thread thread = new Thread(PlayMusic);
 
 
         public Window_GameScreen()
@@ -119,6 +124,9 @@ namespace Game.Windows
             gameTimer.Tick += GameTimerEvent;
             gameTimer.Interval = TimeSpan.FromMilliseconds(10);
             gameTimer.Start();
+
+            //thread.IsBackground = true;
+            //thread.Start();
         }
 
         
@@ -179,6 +187,15 @@ namespace Game.Windows
             updateWorld();
         }
 
+        private static void PlayMusic()
+        {
+            MediaPlayer playMedia = new MediaPlayer();
+            var uri = new Uri("pack://siteoforigin:,,,/Sound/awesomeness.wav");
+            playMedia.Open(uri);
+            playMedia.Play();
+        }
+
+
         private void GameTimerEvent(object sender, EventArgs e)
         {
             int moveDistance = (int)player.Speed;
@@ -188,12 +205,6 @@ namespace Game.Windows
             //SoundPlayer sound = new SoundPlayer("Properties.Resources.awesomeness");
             //sound.Play();
             //sound.PlayLooping(); 
-
-            MediaPlayer playMedia = new MediaPlayer();
-            var uri = new Uri("pack://siteoforigin:,,,/Sound/awesomeness.wav");
-            //playMedia.Open(uri);
-            //playMedia.Play();
-            //
 
             //Agnieszka
             EarnMoney();
@@ -458,6 +469,8 @@ namespace Game.Windows
                         inventory.AddPotion(map.potions[i]); // spr klonowanie
                         map.potions[i].Delete(gameArea);
                         map.potions.RemoveAt(i);
+
+                        inventory.DrawInventory(Inventory); // add proper update() later
                     }
                 }
                 
@@ -471,18 +484,18 @@ namespace Game.Windows
             // Karolina - start 
             if ((Keyboard.GetKeyStates(Key.I) & KeyStates.Down) > 0)
             {
-                // pause the game
-                PauseTheGame();
                 // open inventory window
                 //inventoryWindow.Show();
                 
                 if (Inventory.Visibility == Visibility.Visible)
                 {
                     Inventory.Visibility = Visibility.Hidden;
+                    lastSpeed = PauseTheGame();
                 }
                 else
                 {
                     Inventory.Visibility = Visibility.Visible;
+                    UnpauseTheGame(lastSpeed);
                 }
 
             }
@@ -1195,25 +1208,33 @@ namespace Game.Windows
         private void button_Close(object sender, RoutedEventArgs e)
         {
             Inventory.Visibility = Visibility.Hidden;
+            UnpauseTheGame(lastSpeed);
         }
 
 
         public float PauseTheGame()
         {
+            /*
             float lastSpeed = enemies[0].Speed;
             foreach( Enemy enemy in enemies)
             {
                 enemy.Speed = 0;
             }
             return lastSpeed;
+            */
+            //gameTimer.Stop();
+            return 0;
         }
 
-        public void UnpauseTheGame(int lastSpeed)
+        public void UnpauseTheGame(float lastSpeed)
         {
+            /*
             foreach (Enemy enemy in enemies)
             {
                 enemy.Speed = lastSpeed;
             }
+            */
+            //gameTimer.Start();
         }
 
 
