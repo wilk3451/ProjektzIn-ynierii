@@ -103,9 +103,6 @@
       <DependentUpon>UserControl_SelectCharacter.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vector2.cs" />
-    <Compile Include="Windows\InventoryWindow.xaml.cs">
-      <DependentUpon>InventoryWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Windows\Window_GameScreen.xaml.cs">
       <DependentUpon>Window_GameScreen.xaml</DependentUpon>
     </Compile>
@@ -132,10 +129,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\UserControl_SelectCharacter.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\InventoryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

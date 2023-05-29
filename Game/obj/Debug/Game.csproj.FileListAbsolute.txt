@@ -43,7 +43,6 @@ C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\Windows\Window_MainMe
 C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\App.baml
 C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\Windows\Window_GameScreen.g.cs
 C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\Windows\Window_GameScreen.baml
-C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\Game.csproj.SuggestedBindingRedirects.cache
 C:\Users\jerem\OneDrive\Dokumenty\GitHub\ProjektzInzynierii\Game\bin\Debug\Game.exe.config
 C:\Users\jerem\OneDrive\Dokumenty\GitHub\ProjektzInzynierii\Game\bin\Debug\Game.exe
 C:\Users\jerem\OneDrive\Dokumenty\GitHub\ProjektzInzynierii\Game\bin\Debug\Game.pdb
@@ -72,9 +71,8 @@ C:\Users\jerem\OneDrive\Dokumenty\GitHub\ProjektzInzynierii\Game\obj\Debug\Game.
 C:\Users\jerem\OneDrive\Dokumenty\GitHub\ProjektzInzynierii\Game\obj\Debug\Game.pdb
 C:\Users\PC\source\repos\ProjektzInzynierii\Game\bin\Debug\Sound\awesomeness.wav
 C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\Game_Content.g.cs
-C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\Windows\InventoryWindow.g.cs
-C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\Windows\InventoryWindow.baml
 C:\Users\jerem\OneDrive\Dokumenty\GitHub\ProjektzInzynierii\Game\bin\Debug\Sound\awesomeness.wav
 C:\Users\jerem\OneDrive\Dokumenty\GitHub\ProjektzInzynierii\Game\obj\Debug\Windows\InventoryWindow.g.cs
 C:\Users\jerem\OneDrive\Dokumenty\GitHub\ProjektzInzynierii\Game\obj\Debug\Game_Content.g.cs
 C:\Users\jerem\OneDrive\Dokumenty\GitHub\ProjektzInzynierii\Game\obj\Debug\Windows\InventoryWindow.baml
+C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\Game.csproj.SuggestedBindingRedirects.cache

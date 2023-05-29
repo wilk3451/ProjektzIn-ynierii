@@ -103,20 +103,8 @@ namespace Game.Windows
 
         //K - s
         public Inventory inventory = new Inventory();
-        Window inventoryWindow = new Window();
         //K
 
-        public void DrawInventory(Inventory inventory, Window inventoryWindow)
-        {
-            inventoryWindow.Width = 200;
-            inventoryWindow.Height = 200;
-            //inventoryWindow.Background.
-            inventoryWindow.Focusable = true;
-            inventoryWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            inventoryWindow.WindowState = WindowState.Normal;
-            inventoryWindow.WindowStyle = WindowStyle.SingleBorderWindow;
-            inventoryWindow.ResizeMode = ResizeMode.NoResize;
-        }
 
 
         public Window_GameScreen()
@@ -126,7 +114,7 @@ namespace Game.Windows
             gameArea.Focus();
 
             DrawWorld();
-            DrawInventory(inventory, inventoryWindow);
+            inventory.DrawInventory(Inventory);
 
             gameTimer.Tick += GameTimerEvent;
             gameTimer.Interval = TimeSpan.FromMilliseconds(10);
@@ -458,15 +446,14 @@ namespace Game.Windows
                         //gameArea.Children.Remove(killer.Body);
                         WasTouched = true;
                     
-                }
-
+                    }
 
                 // Karolina - start
  
                 for (int i = map.potions.Count() - 1; i >= 0; i--)
                 {
                     // w warunku spr kolizji z eliksirem!
-                    if (map.potions[i] != null && map.potions[i].interactable == true)
+                    if (map.potions[i] != null && isColliding(player, map.potions[i]) && map.potions[i].interactable == true)
                     {
                         inventory.AddPotion(map.potions[i]); // spr klonowanie
                         map.potions[i].Delete(gameArea);
@@ -485,9 +472,22 @@ namespace Game.Windows
             if ((Keyboard.GetKeyStates(Key.I) & KeyStates.Down) > 0)
             {
                 // pause the game
+                PauseTheGame();
                 // open inventory window
-                inventoryWindow.Show();
+                //inventoryWindow.Show();
+                
+                if (Inventory.Visibility == Visibility.Visible)
+                {
+                    Inventory.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    Inventory.Visibility = Visibility.Visible;
+                }
+
             }
+
+            
 
             // Karolina - stop
 
@@ -943,7 +943,7 @@ namespace Game.Windows
 
         // Karolina - end
 
-    public void updateEnemies()
+        public void updateEnemies()
         {
             for (int i = 0; i < 5; i++)
             {
@@ -1035,8 +1035,9 @@ namespace Game.Windows
                             coins[i].Delete(gameArea);
                             coins.RemoveAt(i);
                             Score += 2;
-                            //W.Suma(Score, gameArea);
-                        }
+                        //W.Suma(Score, gameArea);
+                        updateInterface();
+                    }
                     }
                 }
 
@@ -1062,8 +1063,9 @@ namespace Game.Windows
                             emeralds[i].Delete(gameArea);
                             emeralds.RemoveAt(i);
                             Score += 4;
-                            //W.Suma(Score, gameArea);
-                        }
+                        //W.Suma(Score, gameArea);
+                        updateInterface();
+                    }
                     }
                 }
 
@@ -1089,8 +1091,9 @@ namespace Game.Windows
                             rubys[i].Delete(gameArea);
                             rubys.RemoveAt(i);
                             Score += 6;
-                            //W.Suma(Score, gameArea);
-                        }
+                        //W.Suma(Score, gameArea);
+                        updateInterface();
+                    }
                     }
                 }
 
@@ -1116,11 +1119,12 @@ namespace Game.Windows
                             diamonds[i].Delete(gameArea);
                             diamonds.RemoveAt(i);
                             Score += 8;
-                           // W.Suma(Score, gameArea);
-                        }
+                        // W.Suma(Score, gameArea);
+                        updateInterface();
+                    }
                     }
                 }
-                updateInterface();
+                //updateInterface();
 
                 /*if(isColliding(player, C))
                 {
@@ -1153,11 +1157,31 @@ namespace Game.Windows
 
 
 
-        // Karolina - start
+        // Karolina - start - maj
+
+        private void button_Close(object sender, RoutedEventArgs e)
+        {
+            Inventory.Visibility = Visibility.Hidden;
+        }
 
 
+        public float PauseTheGame()
+        {
+            float lastSpeed = enemies[0].Speed;
+            foreach( Enemy enemy in enemies)
+            {
+                enemy.Speed = 0;
+            }
+            return lastSpeed;
+        }
 
-
+        public void UnpauseTheGame(int lastSpeed)
+        {
+            foreach (Enemy enemy in enemies)
+            {
+                enemy.Speed = lastSpeed;
+            }
+        }
 
 
 
