@@ -39,8 +39,8 @@ namespace Game.Windows
         static int enemyCounter = 3;
         int directionTimer = 10;
         int TimerLimit = 30;
-        //int[] kierunkiX = new int[] { 1, 1, -1, 1, 1 };
-        //int[] kierunkiY = new int[] { 1, -1, 1, -1, 1 };
+        int[] kierunkiX = new int[] { 1, 1, -1, -1, 1 };
+        int[] kierunkiY = new int[] { 1, -1, 1, -1, 1};
         float enemySpeed = 1;
 
         public bool is_in_room = false;
@@ -520,25 +520,28 @@ namespace Game.Windows
 
             /// ENEMIES
             licznikKierunkow = 0;
-            
 
+            Random r = new Random();
             foreach (var enemy in enemies)
             {
                 // Karolina
+                int rInt = r.Next(0, 3);
+                int rInt2 = r.Next(0, 3);
                 if (enemy.Position.X < 0 || enemy.Position.X > 810) { enemy.markedForDeletion = true; }
                 if (enemy.Position.X < 0 || enemy.Position.X > 410) { enemy.markedForDeletion = true; }
                 //
-
+                Vector2 Lastpos = new Vector2(enemy.Position.X, enemy.Position.Y);
+                enemy.Draw();
 
                 enemySpeed = enemy.Speed;
 
-                enemy.Draw();
+                
 
                 
                 if (licznikKierunkow > enemyCounter) { licznikKierunkow = 0; }
 
-                //enemy.kierunekX = kierunkiY[++licznikKierunkow];
-                //enemy.kierunekY = kierunkiX[++licznikKierunkow];
+                enemy.kierunekX = kierunkiY[rInt];
+                enemy.kierunekY = kierunkiX[rInt2];
 
                 Vector2 nowyKierunek = new Vector2(enemySpeed * enemy.kierunekX, enemySpeed * enemy.kierunekY);
                 /*if (!isCollidingWithWall(enemy, nowyKierunek))
@@ -579,14 +582,43 @@ namespace Game.Windows
                {
                    enemy.Update(new Vector2(0, enemySpeed * 2));
                }*/
+                if (isCollidingWithWall(enemy, new Vector2(enemy.kierunekX * enemySpeed, enemy.kierunekY * enemySpeed)))
+                {
+                    
+                        enemy.kierunekX = enemy.kierunekX*(-1);
+                        enemy.kierunekY =1;
+                        enemy.Position=Lastpos;
+                    
 
+                }
+                else
+                {
+                    Lastpos = enemy.Position;
+                    if (enemy.kierunekX == 1)
+                    {
+                        enemy.Update(new Vector2(enemySpeed, 0));
+                    }
+                    if (enemy.kierunekX == -1)
+                    {
+                        enemy.Update(new Vector2(-enemySpeed, 0));
+                    }
+                    if (enemy.kierunekY == 1)
+                    {
+                        enemy.Update(new Vector2(0, enemySpeed));
+                    }
+                    if (enemy.kierunekY == -1)
+                    {
+                        enemy.Update(new Vector2(0, -enemySpeed));
+                    }
+                }
+                /*
                 if (enemy.kierunekX == 1 && !isCollidingWithWall(enemy, new Vector2(enemySpeed, 0)))
                 {
                     enemy.Update(new Vector2(enemySpeed, 0));
                 }
                 else if(enemy.kierunekX == 1)
                 {
-                    enemy.kierunekX = -enemy.kierunekX;
+                    enemy.kierunekX = -1;
                     enemy.Update(new Vector2(-enemySpeed, 20));
                     enemy.Flip(90);
                 }
@@ -597,7 +629,7 @@ namespace Game.Windows
                 }
                 else if (enemy.kierunekX == -1)
                 {
-                    enemy.kierunekX = -enemy.kierunekX;
+                    enemy.kierunekX =1;
                     enemy.Update(new Vector2(enemySpeed, 20));
                     enemy.Flip(90);
                 }
@@ -608,33 +640,33 @@ namespace Game.Windows
                 }
                 else if(enemy.kierunekY == 1)
                 {
-                    enemy.kierunekY = -enemy.kierunekY;
+                    enemy.kierunekY = -1;
                     enemy.Update(new Vector2(30, -enemySpeed));
                     enemy.Flip(90);
                 }
 
                 if (enemy.kierunekY == -1 && !isCollidingWithWall(enemy, new Vector2(0, -enemySpeed )))
                 {
-                    enemy.Update(new Vector2(0, -enemySpeed));
+                    enemy.Update(new Vector2(0, enemySpeed));
                 }
                 else if(enemy.kierunekY == -1)
                 {
-                    enemy.kierunekY = -enemy.kierunekY;
-                    enemy.Update(new Vector2(30, enemySpeed));
+                    enemy.kierunekY = -1;
+                    enemy.Update(new Vector2(30, -enemySpeed));
                     enemy.Flip(90);
-                }//przez te else znikaja*/
-
+                }//przez te else znikaja
+                */
 
                 if (enemy.IsDead()) 
                 { 
                     enemy.markedForDeletion = true; 
-                } 
+                }
 
-                
+
 
 
                 //enemy.Update(nowyKierunek);
-
+                
                 enemy.Draw();
                 player.Draw();
             }
@@ -917,7 +949,7 @@ namespace Game.Windows
             {
                 Vector2 poz = new Vector2(0, 0);
                 Enemy enemy = new Enemy(poz, 40, 40, 1);
-                enemy.Position = enemy.RandomSpawnPosition(gameArea, player, rand);
+                enemy.Position = new Vector2((i+1)*80+250, (i + 1)*80);
                 enemy.Create(gameArea);
                 enemy.Draw();
                 enemies.Add(enemy);
