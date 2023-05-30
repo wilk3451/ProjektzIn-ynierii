@@ -32,6 +32,8 @@ namespace Game.Creatures
 
         public ObservableCollection<Item> Inventory { get; set; }
 
+        Inventory inventory;
+
         public int Direction { get; set; }
 
         public Player(Vector2 Position, int Width, int Height, int Speed,
@@ -59,6 +61,7 @@ namespace Game.Creatures
             Inventory = new ObservableCollection<Item>();
             Inventory.Add(ItemsList.CreateItem(1));//temp item
 
+            inventory = new Inventory();
         }
 
 
@@ -81,6 +84,8 @@ namespace Game.Creatures
 
             Direction = 0;
             SetStats();
+
+            inventory = new Inventory();
         }
 
         new public void Create(Canvas gameArea)

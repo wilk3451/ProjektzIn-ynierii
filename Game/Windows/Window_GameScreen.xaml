@@ -142,8 +142,9 @@
 
 
                             <Grid Grid.Column="0" Grid.Row="0">
-                                <TextBlock>Lista posiadanych przedmiotow......................</TextBlock>
-                                
+                                <Canvas x:Name="inv">
+                                </Canvas>
+
                             </Grid>
                             <Grid Grid.Column="0" Grid.Row="1">
                                 <Button Content="Close" Click="button_Close"></Button>
@@ -152,7 +153,7 @@
 
 
                             <Grid Grid.Column="2" Grid.Row="0">
-                                <TextBlock>Opis wybranej rzeczy</TextBlock>
+                                <TextBlock></TextBlock>
                             </Grid>
                             <Grid Grid.Column="2" Grid.Row="1">
                                 <Button Content="Use" Click="button_Close"></Button>

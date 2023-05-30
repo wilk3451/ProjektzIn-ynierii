@@ -18,7 +18,7 @@ namespace Game.Items
         }
         public static Item CreateItem(int ItemId)
         {
-            Item standardItem = _ItemsList.FirstOrDefault(item => item.ItemID == ItemId);
+            Item standardItem = _ItemsList.FirstOrDefault(item => item.ID == ItemId);
 
             if (standardItem != null)
             {

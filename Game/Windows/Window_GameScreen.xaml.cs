@@ -119,7 +119,7 @@ namespace Game.Windows
             gameArea.Focus();
 
             DrawWorld();
-            inventory.DrawInventory(Inventory);
+            inventory.DrawInventory(inv);
 
             gameTimer.Tick += GameTimerEvent;
             gameTimer.Interval = TimeSpan.FromMilliseconds(10);
@@ -466,11 +466,13 @@ namespace Game.Windows
                     // w warunku spr kolizji z eliksirem!
                     if (map.potions[i] != null && isColliding(player, map.potions[i]) && map.potions[i].interactable == true)
                     {
-                        inventory.AddPotion(map.potions[i]); // spr klonowanie
+                        //inventory.AddPotion(map.potions[i]); // spr klonowanie
+                        Item potion = new Item(1000, "Potion", 50);
+                        inventory.addItem(potion);
                         map.potions[i].Delete(gameArea);
                         map.potions.RemoveAt(i);
 
-                        inventory.DrawInventory(Inventory); // add proper update() later
+                        inventory.DrawInventory(inv); // add proper update() later
                     }
                 }
                 
@@ -487,17 +489,18 @@ namespace Game.Windows
                 // open inventory window
                 //inventoryWindow.Show();
                 
-                if (Inventory.Visibility == Visibility.Visible)
-                {
-                    Inventory.Visibility = Visibility.Hidden;
-                    lastSpeed = PauseTheGame();
-                }
-                else
+                if (Inventory.Visibility == Visibility.Hidden)
                 {
                     Inventory.Visibility = Visibility.Visible;
+                    lastSpeed = PauseTheGame();
+                }
+                /*
+                else
+                {
+                    Inventory.Visibility = Visibility.Hidden;
                     UnpauseTheGame(lastSpeed);
                 }
-
+                */
             }
 
             

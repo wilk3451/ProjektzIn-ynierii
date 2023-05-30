@@ -9,19 +9,21 @@ namespace Game.Items
 {
     public class Item
     {
-        public int ItemID { get; set; }
+        public uint ID { get; set; }
         public string Name { get; set; }
+
+        public int Quantity { get; set; }
         public int Price { get; set; }
-        public Item(int ItemID,string Name,int Price)
+        public Item(uint ID,string Name,int Price)
         {
-            this.ItemID = ItemID;
+            this.ID = ID;
             this.Name = Name;
             this.Price = Price;
         }
 
         public Item Clone()
         {
-            return new Item(this.ItemID, this.Name, this.Price);
+            return new Item(this.ID, this.Name, this.Price);
         }
     }
 }

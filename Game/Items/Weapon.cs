@@ -11,7 +11,7 @@ namespace Game.Items
         public int MinDmg { get; set; }
         public int MaxDmg { get; set; }
         
-        public Weapon(int ItemID, string Name, int Price, int MinDmg, int maxDmg) : base(ItemID, Name, Price)
+        public Weapon(uint ID, string Name, int Price, int MinDmg, int maxDmg) : base(ID, Name, Price)
         {
             this.MinDmg = MinDmg;
             this.MaxDmg = MaxDmg;
@@ -19,7 +19,7 @@ namespace Game.Items
 
         public new Weapon Clone()
         {
-            return new Weapon(this.ItemID, this.Name, this.Price, this.MinDmg, this.MaxDmg);
+            return new Weapon(this.ID, this.Name, this.Price, this.MinDmg, this.MaxDmg);
         }
         
     }
