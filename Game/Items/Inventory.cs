@@ -58,7 +58,7 @@ namespace Game.Items
                 length++;
 
                 // if the same item is already added then increase the quantity of item 
-                if (items.ContainsKey(entity.ID) && entity.Quantity > 0)
+                if (items.ContainsKey(entity.ID) && entity.Quantity >= 0)
                 {
                     itemsQuantity[entity.ID] += 1;
                 }
@@ -83,15 +83,15 @@ namespace Game.Items
             text.LineHeight = 30;
             text.TextWrapping = TextWrapping.Wrap;
             text.TextAlignment = TextAlignment.Center;
-            string temp_string = "Item ID\tQuantity";
+            string temp_string = "Item ID\t\tQuantity";
             text.Text = temp_string;
-            text.Inlines.Add(new Run(temp_string));
             text.Foreground = System.Windows.Media.Brushes.Black;
             inv.Children.Add(text);
             Canvas.SetTop(text, 80);
             Canvas.SetLeft(text, 50);
             int line = 1;
 
+            
             foreach (var item in items)
             {
                 TextBlock t = new TextBlock();
@@ -100,9 +100,15 @@ namespace Game.Items
                 t.LineHeight = 30;
                 t.TextWrapping = TextWrapping.Wrap;
                 t.TextAlignment = TextAlignment.Center;
-                string tring = item.Key + "\t\t\t" + itemsQuantity[item.Key];
-                t.Text = tring;
-                t.Inlines.Add(new Run(temp_string));
+
+                if (item.Key == 1000)
+                {
+                    string tring = "Potion\t\t" + itemsQuantity[item.Key];
+                    t.Text = tring;
+                }
+
+               
+
                 t.Foreground = System.Windows.Media.Brushes.Black;
                 inv.Children.Add(t);
                 Canvas.SetTop(t, 80+t.LineHeight*line+t.LineHeight);
@@ -111,6 +117,8 @@ namespace Game.Items
                 line++;
                 line++;
             }
+            
+            
         }
 
 

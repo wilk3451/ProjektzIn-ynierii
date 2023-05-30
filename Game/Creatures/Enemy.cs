@@ -192,7 +192,12 @@ namespace Game.Creatures
             Position.Y += position.Y * kierunekY;
         }
 
-
+        public void Update(Vector2 position, int angle)
+        {
+            Position.X += position.X;
+            Position.Y += position.Y;
+            Flip(angle);
+        }
         public Vector2 RandomSpawnPosition(Canvas gameArea, GameSprite toAvoid, Random rand)
         {
             int Top = rand.Next(100, (int)gameArea.Height - 100);

@@ -523,6 +523,7 @@ namespace Game.Windows
                     gameArea.Children.Remove(bullets[i].BulletBody);
                     
                     bullets.RemoveAt(i);
+
                     //updateWorld();
                 }
                 else
@@ -538,15 +539,12 @@ namespace Game.Windows
             licznikKierunkow = 0;
 
             Random r = new Random();
-            foreach (var enemy in enemies)
+            foreach (Enemy enemy in enemies)
             {
                 // Karolina
                 int rInt = r.Next(0, 4);
                 int rInt2 = r.Next(0, 4);
-                if (enemy.Position.X < 0 || enemy.Position.X > 810) { enemy.markedForDeletion = true; }
-                if (enemy.Position.X < 0 || enemy.Position.X > 410) { enemy.markedForDeletion = true; }
-                //
-                enemy.Lastpos=enemy.Position;
+                
                 enemy.Draw();
 
                 enemySpeed = 1;
@@ -600,7 +598,7 @@ namespace Game.Windows
 
                     if (!isCollidingWithWall(enemy, new Vector2(0, enemySpeed)))
                     {
-                        enemy.Update(new Vector2(0, enemySpeed));
+                        enemy.Update(new Vector2(0, enemySpeed),90);
                         enemy.kierunekY = 1;
 
 
@@ -608,7 +606,7 @@ namespace Game.Windows
 
                     else if (!isCollidingWithWall(enemy, new Vector2(0, -enemySpeed)))
                     {
-                        enemy.Update(new Vector2(0, -enemySpeed));
+                        enemy.Update(new Vector2(0, -enemySpeed),90);
                         enemy.kierunekY = -1;
 
                     }
@@ -722,9 +720,9 @@ namespace Game.Windows
 
             if (bullets != null)
             { 
-                foreach (var enemy in enemies)
+                foreach (Enemy enemy in enemies)
                 {
-                    foreach (var bullet in bullets)
+                    foreach (Bullet bullet in bullets)
                     {
                         if (isColliding(bullet, enemy))
                         {
@@ -752,14 +750,14 @@ namespace Game.Windows
                 }
             }
 
-            /*for (int i = enemies.Count - 1; i >= 0; i--)
+            for (int i = enemies.Count - 1; i >= 0; i--)
             {
                 if (enemies[i].markedForDeletion)
                 {
                     enemies[i].Delete(gameArea);
                     enemies.RemoveAt(i);
                 }
-            }*/
+            }
 
 
 
