@@ -75,7 +75,7 @@ namespace Game.Windows
 
         Random random = new Random((int)DateTime.Now.Ticks);
 
-        public static Vector2 skarb = new Vector2(270, 350);
+        public static Vector2 skarb = new Vector2(120, 350);
 
         public static Vector2 Punkty = new Vector2(0, 0);
         public Wynik W = new Wynik(Punkty, 100, 30);
@@ -99,7 +99,7 @@ namespace Game.Windows
         public List<Ruby> rubys = new List<Ruby>();
         public List<Diamond> diamonds = new List<Diamond>();
 
-        public int Score = 0;
+        public int Score = 0, index;
 
         public bool WasTouched = false;
         public bool DifferentRoom, DifferentMap, NewGame;
@@ -133,6 +133,7 @@ namespace Game.Windows
             //if (NewGame == true || (DifferentRoom != true || NewGame != true))
             {
                 File.Delete(@".\ZapisGry.txt");
+                File.Delete(@".\PozycjeWrogow.txt");
 
                 InitializeComponent();
 
@@ -167,22 +168,23 @@ namespace Game.Windows
                 //string tekst = File.ReadAllLines(fileName);
                 //string[] linie = File.ReadAllLines(fileName);
                 string[] linie = File.ReadAllLines(@".\ZapisGry.txt");
+                //string[] przeciwnicy = File.ReadAllLines(@".\PozycjeWrogow.txt");
 
                 respawnLocation = new Vector2(float.Parse(linie[0]), float.Parse(linie[1]));
                 //respawnLocation = new Vector2(100, 100);
                 player = new Player(respawnLocation, 30, 30);
-                skarb = new Vector2(float.Parse(linie[4]), float.Parse(linie[5]));
-                Score = int.Parse(linie[8]);
-                if (bool.Parse(linie[11]) == true)
+                //skarb = new Vector2(float.Parse(linie[4]), float.Parse(linie[5]));
+                Score = int.Parse(linie[2]);
+                if (bool.Parse(linie[5]) == true)
                 {
-                    map_index = int.Parse(linie[9]);
+                    map_index = int.Parse(linie[3]);
                     //MapsList.get(int.Parse(linie[9]));
                     map = new Map(MapsList.get(map_index - 1));
                 }
-                else if (bool.Parse(linie[11]) == false)
+                else if (bool.Parse(linie[5]) == false)
                 {
-                    Room_index = int.Parse(linie[9]);
-                    map_index = int.Parse(linie[9]) + 1;
+                    Room_index = int.Parse(linie[3]);
+                    map_index = int.Parse(linie[3]) + 1;
                     //RoomList.get(int.Parse(linie[9]));
                     //map = new Map(MapsList.get(map_index-1));
                     map = new Map(RoomList.get(Room_index));
@@ -193,27 +195,6 @@ namespace Game.Windows
                 }
 
                 DrawWorld_Continue();
-                inventory.DrawInventory(inv);
-
-                gameTimer.Tick += GameTimerEvent;
-                gameTimer.Interval = TimeSpan.FromMilliseconds(10);
-                gameTimer.Start();
-            }
-            else
-            {
-                InitializeComponent();
-
-                gameArea.Focus();
-
-                map_index = 1;
-                map = new Map(MapsList.get(0));
-
-                Score = 0;
-                respawnLocation = new Vector2(100, 100); // polożenie gracza na początku gry
-
-                player = new Player(respawnLocation, 30, 30);
-
-                DrawWorld();
                 inventory.DrawInventory(inv);
 
                 gameTimer.Tick += GameTimerEvent;
@@ -253,22 +234,29 @@ namespace Game.Windows
 
             player.Create(gameArea);
 
+            if (enemies != null)
+                enemies.Clear();
+
+            string[] linie = File.ReadAllLines(@".\ZapisGry.txt");
+            string[] przeciwnicy = File.ReadAllLines(@".\PozycjeWrogow.txt");
+            int j = 0;
             //Agnieszka
-            killer.Create(gameArea);
+            //killer.Create(gameArea);
             //W.Create(gameArea);
             //Agnieszka
 
-            /*for (int i = 0; i < enemies.Count-1; i++)
+            for (int i = 0; i < int.Parse(linie[4]); i++)
             {
-                Vector2 poz = new Vector2(0, 0);
+                Vector2 poz = new Vector2(double.Parse(przeciwnicy[j]), double.Parse(przeciwnicy[j+1]));
                 Enemy enemy = new Enemy(poz, 40, 40, 1);
-                enemy.Position = enemy.RandomSpawnPosition(gameArea, player, rand);
+                //enemy.Position = enemy.RandomSpawnPosition(gameArea, player, rand);
                 enemy.Create(gameArea);
                 enemy.Draw();
                 enemies.Add(enemy);
-            }*/
+                j += 2;
+            }
 
-            updateWorld();
+            updateWorld_Continue();
         }
 
         void NxtLvl()
@@ -283,7 +271,7 @@ namespace Game.Windows
             player.Position = new Vector2(100, 100);
             lastSide = 1;
             updateWorld();
-            SaveGame(player, killer);
+            SaveGame(player);
         }
         void NxtRoom(int Room_index)
         {
@@ -293,13 +281,16 @@ namespace Game.Windows
                 map.changeMap(RoomList.get(Room_index));
                 player.Position = RoomList.getRoomPosition(Room_index);
                 is_in_room = true;
+                SaveGame(player);
             }
             else
             {
                 map.changeMap(MapsList.get(map_index - 1));
                 player.Position = RoomList.getReturnPosition(Room_index);
                 is_in_room = false;
+                SaveGame(player);
             }
+            SaveGame(player);
             player.Create(gameArea);
             //player.Position = new Vector2(100, 100);
             lastSide = 1;
@@ -327,6 +318,7 @@ namespace Game.Windows
 
             //Agnieszka
             EarnMoney();
+            SaveGame(player);
             //Agnieszka
 
             /*
@@ -340,18 +332,18 @@ namespace Game.Windows
                 directionTimer = TimerLimit;
             }*/
 
-            
+
 
             if ((Keyboard.GetKeyStates(Key.D) & KeyStates.Down) > 0)
             {
-                SaveGame(player, killer);
+                SaveGame(player);
                 if (isCollidingWithNxtLvlDoor(player, new Vector2(moveDistance, 0)))
                 {
                     NxtLvl();
                     DifferentMap = true;
                     DifferentRoom = false;
                     NewGame = true;
-                    SaveGame(player, killer);
+                    SaveGame(player);
                 }
 
                 if (isCollidingWithDoor(player, new Vector2(moveDistance, 0)) != -1)
@@ -364,7 +356,7 @@ namespace Game.Windows
                     DifferentRoom = true;
                     DifferentMap = false;
                     NewGame = true;
-                    SaveGame(player, killer);
+                    SaveGame(player);
                 }
                 if (!isCollidingWithWall(player, new Vector2(moveDistance, 0)))
                 {
@@ -382,7 +374,7 @@ namespace Game.Windows
 
             if ((Keyboard.GetKeyStates(Key.A) & KeyStates.Down) > 0)
             {
-                SaveGame(player, killer);
+                SaveGame(player);
 
                 if (isCollidingWithNxtLvlDoor(player, new Vector2(-moveDistance, 0)))
                 {
@@ -390,7 +382,7 @@ namespace Game.Windows
                     DifferentMap = true;
                     DifferentRoom = false;
                     NewGame = true;
-                    SaveGame(player, killer);
+                    SaveGame(player);
                 }
                 if (isCollidingWithDoor(player, new Vector2( -moveDistance,0)) != -1)
                 {
@@ -400,7 +392,7 @@ namespace Game.Windows
                     DifferentMap = false;
                     DifferentRoom = true;
                     NewGame = true;
-                    SaveGame(player, killer);
+                    SaveGame(player);
                     /*gameArea.Children.Clear();
                     if (is_in_room == false)
                     {
@@ -431,7 +423,7 @@ namespace Game.Windows
 
             if ((Keyboard.GetKeyStates(Key.W) & KeyStates.Down) > 0)
             {
-                SaveGame(player, killer);
+                SaveGame(player);
 
                 if (isCollidingWithNxtLvlDoor(player, new Vector2(0, -moveDistance)))
                 {
@@ -439,7 +431,7 @@ namespace Game.Windows
                     DifferentMap = false;
                     DifferentRoom = true;
                     NewGame = true;
-                    SaveGame(player, killer);
+                    SaveGame(player);
                 }
                 if (isCollidingWithDoor(player, new Vector2(0, -moveDistance))!=-1) 
                 {
@@ -449,7 +441,7 @@ namespace Game.Windows
                     DifferentMap = false;
                     DifferentRoom = true;
                     NewGame = true;
-                    SaveGame(player, killer);
+                    SaveGame(player);
                     /*gameArea.Children.Clear();
                     if (is_in_room == false)
                     {
@@ -480,15 +472,15 @@ namespace Game.Windows
 
             if ((Keyboard.GetKeyStates(Key.S) & KeyStates.Down) > 0)
             {
-                SaveGame(player, killer);
+                SaveGame(player);
 
                 if (isCollidingWithNxtLvlDoor(player, new Vector2(0, moveDistance)))
                 {
                     NxtLvl();
-                    DifferentMap = false;
-                    DifferentRoom = true;
+                    DifferentMap = true;
+                    DifferentRoom = false;
                     NewGame = true;
-                    SaveGame(player, killer);
+                    SaveGame(player);
                 }
                 if (isCollidingWithDoor(player, new Vector2(0, moveDistance)) != -1)
                 {
@@ -498,7 +490,7 @@ namespace Game.Windows
                     DifferentMap = false;
                     DifferentRoom = true;
                     NewGame = true;
-                    SaveGame(player, killer);
+                    SaveGame(player);
                     /*gameArea.Children.Clear();
                     if (is_in_room == false)
                     {
@@ -563,7 +555,7 @@ namespace Game.Windows
                     if (isCollidingWithTreasure(player, new Vector2(0,0))>=0)
                     {
                         //killer = (isCollidingWithTreasure(player, new Vector2(0, 0)));
-                        int index= (isCollidingWithTreasure(player, new Vector2(0, 0)));
+                        index= (isCollidingWithTreasure(player, new Vector2(0, 0)));
                         Vector2 temp= map.treasures[index].Position;
                         
                         HowManyC = random.Next(1, 8);
@@ -1149,6 +1141,9 @@ namespace Game.Windows
 
         public void updateEnemies()
         {
+            if (enemies != null)
+                enemies.Clear();
+
             for (int i = 0; i < 5; i++)
             {
                 Vector2 poz = new Vector2(0, 0);
@@ -1212,6 +1207,15 @@ namespace Game.Windows
             updateWalls();
             updateInterface();
             
+        }
+
+        public void updateWorld_Continue()
+        {
+            updateDoors();
+            updatePotions();
+            //updateEnemies();
+            updateWalls();
+            updateInterface();
         }
         
         public void EarnMoney()
@@ -1401,72 +1405,82 @@ namespace Game.Windows
         // Karolina - end
 
 
-        void SaveGame(Player P, Treasure T)
+        void SaveGame(Player P)
         {
-            if (DifferentRoom == true || DifferentMap == true)
-            {
-                string PozycjaGraczaX, PozycjaGraczaY, SzerGracza, WysGracza, Zdrowie, SkrzynieX, SkrzynieY, SzerSkrzynie, WysSkrzynie, LiczbaPunktow, Gdzie;
+            //if (DifferentRoom == true || DifferentMap == true)
+            //{
+                string PozycjaGraczaX, PozycjaGraczaY, Zdrowie, SkrzynieX, SkrzynieY, LiczbaPunktow, Gdzie;
                 //string[] WrogowieX = new string[enemies.Count];
                 //string[] WrogowieY = new string[enemies.Count];
                 string Wrogowie;
+                List<string> pozycje = new List<string>();
                 //CzyMapa = false;
                 CzyPokoj = false;
 
 
-                string folder = @"";
-                string fileName = "ZapisGry.txt";
-                string fullPath = folder + fileName;
+                string folder = @"", folder2 = @"";
+                string fileName = "ZapisGry.txt", fileName2 = "PozycjeWrogow.txt";
+                string fullPath = folder + fileName, fullPath2 = folder2 + fileName2;
                 //string fullPath = uri.ToString() + fileName;
 
                 PozycjaGraczaX = P.Position.X.ToString();
                 PozycjaGraczaY = P.Position.Y.ToString();
-                SzerGracza = P.Width.ToString();
-                WysGracza = P.Height.ToString();
 
-                if (WasTouched == false)
-                {
-                    SkrzynieX = T.Position.X.ToString();
-                    SkrzynieY = T.Position.Y.ToString();
-                    SzerSkrzynie = T.Width.ToString();
-                    WysSkrzynie = T.Height.ToString();
-                }
-                else
-                {
-                    SkrzynieX = "0";
-                    SkrzynieY = "0";
-                    SzerSkrzynie = "0";
-                    WysSkrzynie = "0";
-                }
+            /* if (WasTouched == false)
+             {
+                 SkrzynieX = T.Position.X.ToString();
+                 SkrzynieY = T.Position.Y.ToString();
+             }
+             else
+             {
+                 SkrzynieX = "0";
+                 SkrzynieY = "0";
+             }*/
+
+            if (DifferentMap == true || DifferentRoom == true)
+            { 
+                File.WriteAllText(fullPath2, string.Empty);
+                //enemies.Count = 5;
+            }
+                
                 LiczbaPunktow = Score.ToString();
 
                 if (is_in_room == false)
                 {
-                    //map.changeMap(RoomList.get(Room_index));
-                    //player.Position = RoomList.getRoomPosition(Room_index);
-                    //is_in_room = true;
+                //map.changeMap(RoomList.get(Room_index));
+                //player.Position = RoomList.getRoomPosition(Room_index);
+                //is_in_room = true;
 
-                    //Miejsce = map_index;
-                    Gdzie = map_index.ToString();
+                //Miejsce = map_index;
+                //File.WriteAllText(fullPath2, string.Empty);
+                Gdzie = map_index.ToString();
                     CzyMapa = true;
                 }
                 else
                 {
-                    //map.changeMap(MapsList.get(map_index - 1));
-                    //player.Position = RoomList.getReturnPosition(Room_index);
-                    //is_in_room = false;
-                    //Miejsce = Room_index;
-                    Gdzie = Room_index.ToString();
+                //map.changeMap(MapsList.get(map_index - 1));
+                //player.Position = RoomList.getReturnPosition(Room_index);
+                //is_in_room = false;
+                //Miejsce = Room_index;
+                //File.WriteAllText(fullPath2, string.Empty);
+                Gdzie = Room_index.ToString();
 
                     CzyMapa = false;
                 }
 
+                if (pozycje != null)
+                    pozycje.Clear();
+
                 if (enemies != null)
                 {
-                    /*for(int i=0; i<enemies.Count; i++)
+                
+                    for(int i=0; i<enemies.Count; i++)
                     {
-                        WrogowieX[i] = enemies[i].Position.X.ToString();
-                        WrogowieY[i] = enemies[i].Position.Y.ToString();
-                    }*/
+                      //WrogowieX[i] = enemies[i].Position.X.ToString();
+                      //WrogowieY[i] = enemies[i].Position.Y.ToString();
+                      pozycje.Add(enemies[i].Position.X.ToString());
+                      pozycje.Add(enemies[i].Position.Y.ToString());
+                    }
                     Wrogowie = enemies.Count.ToString();
                 }
                 else
@@ -1476,16 +1490,18 @@ namespace Game.Windows
 
                 ///gdgsgsggfddgd
 
-                string[] dane = { PozycjaGraczaX, PozycjaGraczaY, SzerGracza, WysGracza, SkrzynieX, SkrzynieY, SzerSkrzynie, WysSkrzynie, LiczbaPunktow, Gdzie, Wrogowie, CzyMapa.ToString() };
+                string[] dane = { PozycjaGraczaX, PozycjaGraczaY, /*SkrzynieX, SkrzynieY,*/ LiczbaPunktow, Gdzie, Wrogowie, CzyMapa.ToString() };
+                string[] PozWrogow = pozycje.ToArray();
                 File.WriteAllLines(fullPath, dane);
+                File.WriteAllLines(fullPath2, PozWrogow);
                 //File.WriteAllLines(uri.ToString(), dane);
-                DifferentRoom = false;
-                DifferentMap = false;
+                //DifferentRoom = false;
+                //DifferentMap = false;
                 //NewGame = false;///zapisac te trzy boole do pliku tekstowego
 
                 //zapisac dane obiektow w ktorych cos sie zmienia do petli
                 //zrobic wczytywanie danych
-            }
+            //}
         }
 
     }
