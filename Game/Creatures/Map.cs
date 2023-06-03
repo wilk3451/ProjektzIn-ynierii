@@ -1,4 +1,4 @@
-﻿using Game.Items;
+using Game.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +15,8 @@ namespace Game.Creatures
         public List<Door> doors;
         public List<Treasure> treasures;
         public List<Potion> potions;
+        public bool Contact = false;
+        Player P;
 
         int wall_counter = 0;
         int nextleveldoors_counter = 0;
@@ -81,15 +83,19 @@ namespace Game.Creatures
                     {
 
 
-                        Treasure treasure = new Treasure(new Vector2(j * mlply2 + przes, i * mlply1), mlply2, mlply2);
+                        Treasure treasure = new Treasure(new Vector2(j * mlply2 + przes, i * mlply1), 60, 60/*mlply2, mlply2*/);
                         treasure.Body = new System.Windows.Shapes.Rectangle();
 
-                        treasure.Body.Width = 20;
-                        treasure.Body.Height = 20;
+                        //treasure.Body.Width = 20;
+                        //treasure.Body.Height = 20;
+                        treasure.Body.Width = 60;
+                        treasure.Body.Height = 60;
 
                         treasures.Add(treasure);
 
                         treasures_counter++;
+
+                        //map[i, j] = ",";
 
                     }
                     char temp = char.Parse(map[i, j]);
@@ -215,6 +221,8 @@ namespace Game.Creatures
                         treasures.Add(treasure);
 
                         treasures_counter++;
+
+                        //map[i, j] = ",";
 
                     }
                     string temp2 = map[i, j];
