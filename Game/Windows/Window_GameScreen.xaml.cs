@@ -283,7 +283,8 @@ namespace Game.Windows
             enemies.Clear();
             if (map_index < MapsList.length())
             {
-                map.changeMap(MapsList.get(map_index++));
+                map.changeMap(MapsList.get(map_index));
+                map_index++;
             }
             player.Create(gameArea);
             player.Position = new Vector2(100, 100);
