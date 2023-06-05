@@ -319,7 +319,7 @@ namespace Game.Creatures
         }
         public void removeEnemy(int i)
         {
-            map[enemies[i].i, enemies[i].j] = ",";
+            this.map[enemies[i].i, enemies[i].j] = ",";
             enemies.RemoveAt(i);
             enemies_counter--;
             

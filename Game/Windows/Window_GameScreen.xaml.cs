@@ -787,7 +787,7 @@ namespace Game.Windows
 
                 if (isColliding(player, enemy))
                 {
-                    player.CurrentHp -= 20;
+                    player.CurrentHp -= 2;
                     updateInterface();
                 }
                 
@@ -819,7 +819,7 @@ namespace Game.Windows
 
                     if (!isCollidingWithWall(enemy, new Vector2(0, enemySpeed)))
                     {
-                        enemy.Update(new Vector2(0, enemySpeed),90);
+                        enemy.Update(new Vector2(0, enemySpeed));
                         enemy.kierunekY = 1;
 
 
@@ -827,7 +827,7 @@ namespace Game.Windows
 
                     else if (!isCollidingWithWall(enemy, new Vector2(0, -enemySpeed)))
                     {
-                        enemy.Update(new Vector2(0, -enemySpeed),90);
+                        enemy.Update(new Vector2(0, -enemySpeed));
                         enemy.kierunekY = -1;
 
                     }
@@ -879,51 +879,7 @@ namespace Game.Windows
                         enemy.Update(new Vector2(0, enemySpeed));
                     }
                 }
-                /*
-                if (enemy.kierunekX == 1 && !isCollidingWithWall(enemy, new Vector2(enemySpeed, 0)))
-                {
-                    enemy.Update(new Vector2(enemySpeed, 0));
-                }
-                else if(enemy.kierunekX == 1)
-                {
-                    enemy.kierunekX = -1;
-                    enemy.Update(new Vector2(-enemySpeed, 20));
-                    enemy.Flip(90);
-                }
-
-                if (enemy.kierunekX == -1 && !isCollidingWithWall(enemy, new Vector2(-enemySpeed, 0)))
-                {
-                    enemy.Update(new Vector2(-enemySpeed, 0));
-                }
-                else if (enemy.kierunekX == -1)
-                {
-                    enemy.kierunekX =1;
-                    enemy.Update(new Vector2(enemySpeed, 20));
-                    enemy.Flip(90);
-                }
-
-                if (enemy.kierunekY == 1 && !isCollidingWithWall(enemy, new Vector2(0, enemySpeed)))
-                {
-                    enemy.Update(new Vector2(0,enemySpeed));
-                }
-                else if(enemy.kierunekY == 1)
-                {
-                    enemy.kierunekY = -1;
-                    enemy.Update(new Vector2(30, -enemySpeed));
-                    enemy.Flip(90);
-                }
-
-                if (enemy.kierunekY == -1 && !isCollidingWithWall(enemy, new Vector2(0, -enemySpeed )))
-                {
-                    enemy.Update(new Vector2(0, enemySpeed));
-                }
-                else if(enemy.kierunekY == -1)
-                {
-                    enemy.kierunekY = -1;
-                    enemy.Update(new Vector2(30, -enemySpeed));
-                    enemy.Flip(90);
-                }//przez te else znikaja
-                */
+               
 
                 if (enemy.IsDead()) 
                 { 
@@ -951,12 +907,12 @@ namespace Game.Windows
                             bullet.markedForDeletion = true;
                             enemy.markedForDeletion = true;
                         }
-                        if (isColliding(bullet, player))
+                        /*if (isColliding(bullet, player))
                         {
                             bullet.markedForDeletion = true;
                             player.CurrentHp -= 10;
                             updateInterface();
-                        }
+                        }*/
                         else
                         {
                             bullet.markedForDeletion = false;
@@ -982,9 +938,11 @@ namespace Game.Windows
             {
                 if (enemies[i].markedForDeletion)
                 {
+                    //map.enemies.RemoveAt(i);
+                    map.removeEnemy(i);
                     enemies[i].Delete(gameArea);
                     enemies.RemoveAt(i);
-                    map.removeEnemy(i);
+                    
                     
                 }
             }
@@ -1249,6 +1207,7 @@ namespace Game.Windows
         }
         public void updateInterface()
         {
+            Interface.Children.Clear();
             
             TextBlock score = new TextBlock();
 
@@ -1282,8 +1241,10 @@ namespace Game.Windows
             hp.LineHeight = 30;
             hp.TextWrapping = TextWrapping.Wrap;
             hp.TextAlignment = TextAlignment.Center;
-            temp_string = "hp: " + player.Hp;
+            temp_string = "hp: " + player.CurrentHp;
+            hp.Inlines.Clear();
             hp.Inlines.Add(new Run(temp_string));
+            
             hp.Background = Brushes.AntiqueWhite;
             Interface.Children.Add(hp);
             Canvas.SetTop(hp, W.Position.Y +level.LineHeight+score.LineHeight);
