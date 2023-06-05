@@ -125,8 +125,8 @@ namespace Game.Creatures
             Body.Height = this.Height;
             Canvas.SetTop(Body, Position.Y);
             Canvas.SetLeft(Body, Position.X);
-            Body.Fill = new SolidColorBrush(Colors.DarkRed);
-            Body.Stroke = new SolidColorBrush(Colors.White);
+            //Body.Fill = new SolidColorBrush(Colors.DarkRed);
+            //Body.Stroke = new SolidColorBrush(Colors.White);
             gameArea.DataContext = Body;
 
             ImageBrush enemySprite = new ImageBrush();

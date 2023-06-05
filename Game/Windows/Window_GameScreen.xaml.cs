@@ -78,7 +78,7 @@ namespace Game.Windows
         public static Vector2 skarb = new Vector2(120, 350);
 
         public static Vector2 Punkty = new Vector2(0, 0);
-        public Wynik W = new Wynik(Punkty, 100, 30);
+        public Wynik W = new Wynik(Punkty, 100, 50);
 
         /*public static Vector2 kasa = new Vector2(250, 370);
         public static Vector2 kasa2 = new Vector2(290, 370);
@@ -266,7 +266,7 @@ namespace Game.Windows
             for (int i = 0; i < int.Parse(linie[4]); i++)
             {
                 Vector2 poz = new Vector2(double.Parse(przeciwnicy[j]), double.Parse(przeciwnicy[j+1]));
-                Enemy enemy = new Enemy(poz, 40, 40, 1);
+                Enemy enemy = new Enemy(poz, 70, 70, 1);
                 //enemy.Position = enemy.RandomSpawnPosition(gameArea, player, rand);
                 enemy.Create(gameArea);
                 enemy.Draw();
@@ -1185,20 +1185,11 @@ namespace Game.Windows
 
             for (int i = 0; i < map.enemies.Count(); i++)
             {
-                
-
-
-                //map.wallsinmap[wall_counter].Body.Fill = new SolidColorBrush(Colors.Blue);
-
-                // Karolina
-
-                //map.enemies[i].Body.Fill = wallSprite;
-                //
-
+               
                 //gameArea.DataContext = map.enemies[i].Body;
 
                 Vector2 poz = new Vector2(0, 0);
-                Enemy enemy = new Enemy(poz, 40, 40, 1);
+                Enemy enemy = new Enemy(poz, 70, 70, 1);
                 enemy.Position = new Vector2(map.enemies[i].Position.X, map.enemies[i].Position.Y);
                 enemy.Create(gameArea);
                 enemy.Draw();
@@ -1211,46 +1202,44 @@ namespace Game.Windows
             
             TextBlock score = new TextBlock();
 
-            score.FontSize = 22;
-            score.LineHeight = 30;
+            score.FontSize = 24;
+            score.LineHeight = 34;
             score.TextWrapping = TextWrapping.Wrap;
             score.TextAlignment = TextAlignment.Center;
-            string temp_string = "score: " + Score;//XDDDD
+            string temp_string = "score: " + Score;
             score.Inlines.Add(new Run(temp_string));
-            score.Background = Brushes.AntiqueWhite;
+            //score.Background = Brushes.AntiqueWhite;
             Interface.Children.Add(score);
             Canvas.SetTop(score, W.Position.Y);
             Canvas.SetLeft(score, W.Position.X + 100);
 
             TextBlock level = new TextBlock();
 
-            level.FontSize = 22;
-            level.LineHeight = 30;
+            level.FontSize = 24;
+            level.LineHeight = 34;
             level.TextWrapping= TextWrapping.Wrap;
             level.TextAlignment = TextAlignment.Center;
             temp_string = "level: " + map_index;
             level.Inlines.Add(new Run(temp_string));
-            level.Background=Brushes.AntiqueWhite;
+           // level.Background=Brushes.AntiqueWhite;
             Interface.Children.Add(level);
             Canvas.SetTop(level, W.Position.Y+score.LineHeight);
             Canvas.SetLeft(level, W.Position.X + 100);
 
             TextBlock hp = new TextBlock();
 
-            hp.FontSize = 22;
-            hp.LineHeight = 30;
+            hp.FontSize = 24;
+            hp.LineHeight = 34;
             hp.TextWrapping = TextWrapping.Wrap;
             hp.TextAlignment = TextAlignment.Center;
             temp_string = "hp: " + player.CurrentHp;
             hp.Inlines.Clear();
             hp.Inlines.Add(new Run(temp_string));
             
-            hp.Background = Brushes.AntiqueWhite;
+            //hp.Background = Brushes.AntiqueWhite;
             Interface.Children.Add(hp);
             Canvas.SetTop(hp, W.Position.Y +level.LineHeight+score.LineHeight);
             Canvas.SetLeft(hp, W.Position.X + 100);
-
-
 
         }
         public void updateWorld()

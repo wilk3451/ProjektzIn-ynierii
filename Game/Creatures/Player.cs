@@ -172,6 +172,7 @@ namespace Game.Creatures
             Attack = 200;
             Defence = 10;
             CurrentHp = Hp;
+            Stamina = 200;
         }
 
 

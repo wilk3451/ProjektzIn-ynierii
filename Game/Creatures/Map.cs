@@ -151,10 +151,10 @@ namespace Game.Creatures
                     {
 
 
-                        Enemy enemy = new Enemy(new Vector2(j * mlply2 + przes, i * mlply1), mlply2, mlply2,i,j);
+                        Enemy enemy = new Enemy(new Vector2(j * mlply2 + przes, i * mlply1), 70, 70,i,j);
                         enemy.Body = new System.Windows.Shapes.Rectangle();
 
-                        enemy.Body.Width = mlply2;
+                        enemy.Body.Width = 70;
                         enemy.Body.Height = mlply1;
 
                         enemies.Add(enemy);
@@ -302,11 +302,11 @@ namespace Game.Creatures
                     {
 
 
-                        Enemy enemy = new Enemy(new Vector2(j * mlply2 + przes, i * mlply1), mlply2, mlply2,i,j);
+                        Enemy enemy = new Enemy(new Vector2(j * mlply2 + przes, i * mlply1), 70, 70,i,j);
                         enemy.Body = new System.Windows.Shapes.Rectangle();
 
-                        enemy.Body.Width = mlply2;
-                        enemy.Body.Height = mlply1;
+                        enemy.Body.Width = 70;
+                        enemy.Body.Height = 70;
 
                         enemies.Add(enemy);
 
