@@ -371,13 +371,13 @@ namespace Game.Windows
                     SaveGame(player);
                 }
 
-                if (isCollidingWithDoor(player, new Vector2(moveDistance, 0)) != -1)
+                if (isCollidingWithDoor(player, new Vector2(moveDistance, 0)) != (-1))
                 {
                     int Room_index = isCollidingWithDoor(player, new Vector2(moveDistance,0));
 
                     NxtRoom(Room_index);
 
-                    NxtRoom(Room_index);
+                    //NxtRoom(Room_index);
                     DifferentRoom = true;
                     DifferentMap = false;
                     NewGame = true;
