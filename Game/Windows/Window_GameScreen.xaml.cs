@@ -99,7 +99,7 @@ namespace Game.Windows
         public List<Ruby> rubys = new List<Ruby>();
         public List<Diamond> diamonds = new List<Diamond>();
 
-        public int Score = 0, index;
+        public int Score = 0, index, PotionsNumber = 0;
 
         public bool WasTouched = false;
         public bool DifferentRoom, DifferentMap, NewGame;
@@ -108,7 +108,7 @@ namespace Game.Windows
 
         public string[] dane;
 
-        public int Room_index;
+        public int RI;
 
         //Agnieszka
 
@@ -129,7 +129,7 @@ namespace Game.Windows
             string[] status = File.ReadAllLines(@".\StanGry.txt");
             //odczytac plik tekstowy z uri
 
-            if (bool.Parse(status[0]) == true && bool.Parse(status[1]) == false)
+            if (bool.Parse(status[0]) == true)
             //if (NewGame == true || (DifferentRoom != true || NewGame != true))
             {
                 File.Delete(@".\ZapisGry.txt");
@@ -148,6 +148,7 @@ namespace Game.Windows
                 player = new Player(respawnLocation, 30, 30);
 
                 DrawWorld();
+                //inventory.Clear();
                 inventory.DrawInventory(inv);
 
                 gameTimer.Tick += GameTimerEvent;
@@ -156,7 +157,7 @@ namespace Game.Windows
 
                 //DifferentRoom = false;
             }
-            else if (bool.Parse(status[0]) == false && bool.Parse(status[1]) == true && File.Exists(@".\ZapisGry.txt"))
+            else if (bool.Parse(status[0]) == false && File.Exists(@".\ZapisGry.txt"))
             {
                 InitializeComponent();
 
@@ -175,23 +176,40 @@ namespace Game.Windows
                 player = new Player(respawnLocation, 30, 30);
                 //skarb = new Vector2(float.Parse(linie[4]), float.Parse(linie[5]));
                 Score = int.Parse(linie[2]);
-                if (bool.Parse(linie[5]) == true)
+                if (bool.Parse(linie[6]) == true)
                 {
                     map_index = int.Parse(linie[3]);
                     //MapsList.get(int.Parse(linie[9]));
                     map = new Map(MapsList.get(map_index - 1));
+                    //index = (isCollidingWithTreasure(player, new Vector2(double.Parse(linie[2]), double.Parse(linie[3]))));
+                    //Vector2 temp = map.treasures[index].Position;
+
                 }
-                else if (bool.Parse(linie[5]) == false)
+                else if (bool.Parse(linie[6]) == false)
                 {
-                    Room_index = int.Parse(linie[3]);
+                    RI = int.Parse(linie[3]);
                     map_index = int.Parse(linie[3]) + 1;
                     //RoomList.get(int.Parse(linie[9]));
                     //map = new Map(MapsList.get(map_index-1));
-                    map = new Map(RoomList.get(Room_index));
+                    map = new Map(RoomList.get(RI));
                     //map.changeMap(RoomList.get(Room_index));
                     //map.changeMap(MapsList.get(map_index-1));
                     is_in_room = true;
                     //player.Position = RoomList.getRoomPosition(Room_index);
+                }
+
+                if(int.Parse(linie[5])>0)
+                {
+                    for (int i = int.Parse(linie[5]) - 1; i >= 0; i--)
+                    {
+                        Item potion = new Item(1000, "Potion", 50);
+                        inventory.addItem(potion);
+                        //PotionsNumber++;
+                        //map.potions[i].Delete(gameArea);
+                        //map.potions.RemoveAt(i);
+
+                        inventory.DrawInventory(inv); // add proper update() later
+                    }
                 }
 
                 DrawWorld_Continue();
@@ -282,6 +300,7 @@ namespace Game.Windows
                 player.Position = RoomList.getRoomPosition(Room_index);
                 is_in_room = true;
                 SaveGame(player);
+                RI = Room_index;
             }
             else
             {
@@ -289,6 +308,7 @@ namespace Game.Windows
                 player.Position = RoomList.getReturnPosition(Room_index);
                 is_in_room = false;
                 SaveGame(player);
+                RI = Room_index;
             }
             SaveGame(player);
             player.Create(gameArea);
@@ -348,7 +368,7 @@ namespace Game.Windows
 
                 if (isCollidingWithDoor(player, new Vector2(moveDistance, 0)) != -1)
                 {
-                    Room_index = isCollidingWithDoor(player, new Vector2(moveDistance,0));
+                    int Room_index = isCollidingWithDoor(player, new Vector2(moveDistance,0));
 
                     NxtRoom(Room_index);
 
@@ -357,6 +377,7 @@ namespace Game.Windows
                     DifferentMap = false;
                     NewGame = true;
                     SaveGame(player);
+                    RI = Room_index;
                 }
                 if (!isCollidingWithWall(player, new Vector2(moveDistance, 0)))
                 {
@@ -386,13 +407,14 @@ namespace Game.Windows
                 }
                 if (isCollidingWithDoor(player, new Vector2( -moveDistance,0)) != -1)
                 {
-                    Room_index = isCollidingWithDoor(player, new Vector2(-moveDistance,0));
+                    int Room_index = isCollidingWithDoor(player, new Vector2(-moveDistance,0));
 
                     NxtRoom(Room_index);
                     DifferentMap = false;
                     DifferentRoom = true;
                     NewGame = true;
                     SaveGame(player);
+                    RI = Room_index;
                     /*gameArea.Children.Clear();
                     if (is_in_room == false)
                     {
@@ -435,13 +457,14 @@ namespace Game.Windows
                 }
                 if (isCollidingWithDoor(player, new Vector2(0, -moveDistance))!=-1) 
                 {
-                    Room_index = isCollidingWithDoor(player, new Vector2(0, -moveDistance));
+                    int Room_index = isCollidingWithDoor(player, new Vector2(0, -moveDistance));
 
                     NxtRoom(Room_index);
                     DifferentMap = false;
                     DifferentRoom = true;
                     NewGame = true;
                     SaveGame(player);
+                    RI = Room_index;
                     /*gameArea.Children.Clear();
                     if (is_in_room == false)
                     {
@@ -491,6 +514,7 @@ namespace Game.Windows
                     DifferentRoom = true;
                     NewGame = true;
                     SaveGame(player);
+                    RI = Room_index;
                     /*gameArea.Children.Clear();
                     if (is_in_room == false)
                     {
@@ -551,62 +575,92 @@ namespace Game.Windows
             //Agnieszka 
             if ((Keyboard.GetKeyStates(Key.F) & KeyStates.Down) > 0)
             {
-                
-                    if (isCollidingWithTreasure(player, new Vector2(0,0))>=0)
-                    {
-                        //killer = (isCollidingWithTreasure(player, new Vector2(0, 0)));
-                        index= (isCollidingWithTreasure(player, new Vector2(0, 0)));
-                        Vector2 temp= map.treasures[index].Position;
-                        
-                        HowManyC = random.Next(1, 8);
-                        HowManyE = random.Next(1, 6);
-                        HowManyR = random.Next(1, 4);
-                        HowManyD = random.Next(0, 2);
-
-                        for (int i = 0; i <= HowManyC; i++)
+                if (map.treasures != null)
+                {
+                    //foreach (Treasure Treasure in map.treasures)
+                    //{
+                        if (isCollidingWithTreasure(player, new Vector2(0, 0)) >= 0)
                         {
-                            Coin C = new Coin(temp, 10, 10);
-                            C.Position = C.RandomSpawnPosition(gameArea, map.treasures[index], rand);
-                            C.Create(gameArea);
-                            C.Draw();
-                            coins.Add(C);
-                        }
+                            //Treasure.czyUsunac = true;
+                            //killer = (isCollidingWithTreasure(player, new Vector2(0, 0)));
+                            index = (isCollidingWithTreasure(player, new Vector2(0, 0)));
+                            Vector2 temp = map.treasures[index].Position;
 
-                        for (int i = 0; i <= HowManyE; i++)
-                        {
-                            Emerald E = new Emerald(temp, 15, 15);
-                            E.Position = E.RandomSpawnPosition(gameArea, map.treasures[index], rand);
-                            E.Create(gameArea);
-                            E.Draw();
-                            emeralds.Add(E);
-                        }
+                            HowManyC = random.Next(1, 8);
+                            HowManyE = random.Next(1, 6);
+                            HowManyR = random.Next(1, 4);
+                            HowManyD = random.Next(0, 2);
 
-                        for (int i = 0; i <= HowManyR; i++)
-                        {
-                            Ruby R = new Ruby(temp, 16, 16);
-                            R.Position = R.RandomSpawnPosition(gameArea, map.treasures[index], rand);
-                            R.Create(gameArea);
-                            R.Draw();
-                            rubys.Add(R);
-                        }
+                            for (int i = 0; i <= HowManyC; i++)
+                            {
+                                Coin C = new Coin(temp, 10, 10);
+                                C.Position = C.RandomSpawnPosition(gameArea, map.treasures[index], rand);
+                                C.Create(gameArea);
+                                C.Draw();
+                                coins.Add(C);
+                            }
 
-                        for (int i = 0; i <= HowManyD; i++)
-                        {
-                            Diamond D = new Diamond(temp, 20, 20);
-                            D.Position = D.RandomSpawnPosition(gameArea, map.treasures[index], rand);
-                            D.Create(gameArea);
-                            D.Draw();
-                            diamonds.Add(D);
-                        }
-                        //Karolina
+                            for (int i = 0; i <= HowManyE; i++)
+                            {
+                                Emerald E = new Emerald(temp, 15, 15);
+                                E.Position = E.RandomSpawnPosition(gameArea, map.treasures[index], rand);
+                                E.Create(gameArea);
+                                E.Draw();
+                                emeralds.Add(E);
+                            }
 
-                        map.treasures[index].Delete(gameArea);
-                        map.treasures.RemoveAt(index);
+                            for (int i = 0; i <= HowManyR; i++)
+                            {
+                                Ruby R = new Ruby(temp, 16, 16);
+                                R.Position = R.RandomSpawnPosition(gameArea, map.treasures[index], rand);
+                                R.Create(gameArea);
+                                R.Draw();
+                                rubys.Add(R);
+                            }
+
+                            for (int i = 0; i <= HowManyD; i++)
+                            {
+                                Diamond D = new Diamond(temp, 20, 20);
+                                D.Position = D.RandomSpawnPosition(gameArea, map.treasures[index], rand);
+                                D.Create(gameArea);
+                                D.Draw();
+                                diamonds.Add(D);
+                            }
+                            //Karolina
+
+                            
+                            map.treasures[index].Delete(gameArea);
+                            map.treasures.RemoveAt(index);
+                            //map.map[(int)map.treasures[index+1].Position.X, (int)map.treasures[index+1].Position.Y] = ",";
+                        //map.treasures[index].Position.ToString() = ",";
+                        //map.treasures.Count()--;
                         //
                         //gameArea.Children.Remove(killer.Body);
-                        WasTouched = true;
-                    
+                        //WasTouched = true;
+
                     }
+                    //}
+                }
+
+                /*if(map.treasures != null)
+                {
+                    for (int i = map.treasures.Count - 1; i > 0; i--)
+                    {
+                        if (map.treasures[i].czyUsunac)
+                        {
+                            //string Pozycja = map.map[(int)map.treasures[index].Position.X, (int)map.treasures[index].Position.Y];
+                            //diamonds[i].Delete(gameArea);
+                            //diamonds.RemoveAt(i);
+                            //Score += 8;
+                            //map.map[(int)map.treasures[i].Position.X, (int)map.treasures[i].Position.Y] = ",";
+                            //Pozycja = ",";
+                            map.treasures[index].Delete(gameArea);
+                            map.treasures.RemoveAt(index);
+                            // W.Suma(Score, gameArea);
+                            //updateInterface();
+                        }
+                    }
+                }*/
 
                 // Karolina - start
  
@@ -618,6 +672,7 @@ namespace Game.Windows
                         //inventory.AddPotion(map.potions[i]); // spr klonowanie
                         Item potion = new Item(1000, "Potion", 50);
                         inventory.addItem(potion);
+                        PotionsNumber++;
                         map.potions[i].Delete(gameArea);
                         map.potions.RemoveAt(i);
 
@@ -1405,11 +1460,11 @@ namespace Game.Windows
         // Karolina - end
 
 
-        void SaveGame(Player P)
+        public void SaveGame(Player P)
         {
             //if (DifferentRoom == true || DifferentMap == true)
             //{
-                string PozycjaGraczaX, PozycjaGraczaY, Zdrowie, SkrzynieX, SkrzynieY, LiczbaPunktow, Gdzie;
+                string PozycjaGraczaX, PozycjaGraczaY, Zdrowie, SkrzynieX, SkrzynieY, LiczbaPunktow, Gdzie, Napoje;
                 //string[] WrogowieX = new string[enemies.Count];
                 //string[] WrogowieY = new string[enemies.Count];
                 string Wrogowie;
@@ -1437,6 +1492,9 @@ namespace Game.Windows
                  SkrzynieY = "0";
              }*/
 
+            //SkrzynieX = map.treasures[index].Position.X.ToString();
+            //SkrzynieY = map.treasures[index].Position.Y.ToString();
+
             if (DifferentMap == true || DifferentRoom == true)
             { 
                 File.WriteAllText(fullPath2, string.Empty);
@@ -1463,7 +1521,7 @@ namespace Game.Windows
                 //is_in_room = false;
                 //Miejsce = Room_index;
                 //File.WriteAllText(fullPath2, string.Empty);
-                Gdzie = Room_index.ToString();
+                Gdzie = RI.ToString();
 
                     CzyMapa = false;
                 }
@@ -1488,9 +1546,11 @@ namespace Game.Windows
                     Wrogowie = "0";
                 }
 
+
+                Napoje = PotionsNumber.ToString();
                 ///gdgsgsggfddgd
 
-                string[] dane = { PozycjaGraczaX, PozycjaGraczaY, /*SkrzynieX, SkrzynieY,*/ LiczbaPunktow, Gdzie, Wrogowie, CzyMapa.ToString() };
+                string[] dane = { PozycjaGraczaX, PozycjaGraczaY, /*SkrzynieX, SkrzynieY,*/ LiczbaPunktow, Gdzie, Wrogowie, Napoje, CzyMapa.ToString() };
                 string[] PozWrogow = pozycje.ToArray();
                 File.WriteAllLines(fullPath, dane);
                 File.WriteAllLines(fullPath2, PozWrogow);
@@ -1503,6 +1563,11 @@ namespace Game.Windows
                 //zrobic wczytywanie danych
             //}
         }
+
+        /*public void Usuwanie()
+        {
+
+        }*/
 
     }
 
