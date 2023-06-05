@@ -1564,9 +1564,19 @@ namespace Game.Windows
             //}
         }
 
-        /*public void Usuwanie()
+       /*public void Wynik()
         {
+            int moveDistance = (int)player.Speed;
+            if ((isCollidingWithNxtLvlDoor(player, new Vector2(moveDistance, 0)) && map_index == 3) || (isCollidingWithNxtLvlDoor(player, new Vector2(-moveDistance, 0)) && map_index == 3) || (isCollidingWithNxtLvlDoor(player, new Vector2(0, moveDistance)) && map_index == 3) || (isCollidingWithNxtLvlDoor(player, new Vector2(0, -moveDistance)) && map_index == 3))
+            {
+                Window score = new Window_Score()
+                {
+                    Owner = this.Parent as Window,
+                    ShowInTaskbar = false
+                };
 
+                score.ShowDialog();
+            }
         }*/
 
     }
