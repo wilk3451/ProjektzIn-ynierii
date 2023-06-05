@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using Game.Creatures;
-
+using System.Windows.Controls;
 using static System.Net.Mime.MediaTypeNames;
 
 using Game.Items;
@@ -788,6 +788,7 @@ namespace Game.Windows
                 if (isColliding(player, enemy))
                 {
                     player.CurrentHp -= 20;
+                    updateInterface();
                 }
                 
 
@@ -929,7 +930,7 @@ namespace Game.Windows
                     enemy.markedForDeletion = true; 
                 }
 
-
+               
 
 
                 //enemy.Update(nowyKierunek);
@@ -937,6 +938,7 @@ namespace Game.Windows
                 enemy.Draw();
                 player.Draw();
             }
+            
 
             if (bullets != null)
             { 
@@ -948,6 +950,12 @@ namespace Game.Windows
                         {
                             bullet.markedForDeletion = true;
                             enemy.markedForDeletion = true;
+                        }
+                        if (isColliding(bullet, player))
+                        {
+                            bullet.markedForDeletion = true;
+                            player.CurrentHp -= 10;
+                            updateInterface();
                         }
                         else
                         {
@@ -976,6 +984,8 @@ namespace Game.Windows
                 {
                     enemies[i].Delete(gameArea);
                     enemies.RemoveAt(i);
+                    map.removeEnemy(i);
+                    
                 }
             }
 
@@ -1215,11 +1225,23 @@ namespace Game.Windows
             if (enemies != null)
                 enemies.Clear();
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < map.enemies.Count(); i++)
             {
+                
+
+
+                //map.wallsinmap[wall_counter].Body.Fill = new SolidColorBrush(Colors.Blue);
+
+                // Karolina
+
+                //map.enemies[i].Body.Fill = wallSprite;
+                //
+
+                //gameArea.DataContext = map.enemies[i].Body;
+
                 Vector2 poz = new Vector2(0, 0);
                 Enemy enemy = new Enemy(poz, 40, 40, 1);
-                enemy.Position = new Vector2((i+1)*80+250, (i + 1)*80);
+                enemy.Position = new Vector2(map.enemies[i].Position.X, map.enemies[i].Position.Y);
                 enemy.Create(gameArea);
                 enemy.Draw();
                 enemies.Add(enemy);
@@ -1586,13 +1608,14 @@ namespace Game.Windows
             //if ((isCollidingWithNxtLvlDoor(player, new Vector2(moveDistance, 0)) && map_index == 3) || (isCollidingWithNxtLvlDoor(player, new Vector2(-moveDistance, 0)) && map_index == 3) || (isCollidingWithNxtLvlDoor(player, new Vector2(0, moveDistance)) && map_index == 3) || (isCollidingWithNxtLvlDoor(player, new Vector2(0, -moveDistance)) && map_index == 3))
             //if(map_index == 3)
             //{
-                Window score = new Window_Score()
+               Window score = new Window
                 {
                     Owner = this.Parent as Window,
                     ShowInTaskbar = false
                 };
 
                 score.ShowDialog();
+            
             //}
         }
 

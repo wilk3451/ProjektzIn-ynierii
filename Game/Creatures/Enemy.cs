@@ -19,6 +19,8 @@ namespace Game.Creatures
         public int Attack { get; private set; }
         public int Defence { get; private set; }
         public int Level { get; set; }
+        public int i { get; set; }
+        public int j { get; set; }
         public Vector2 Lastpos { get; set; }
 
         int currentStep = 100;
@@ -80,6 +82,24 @@ namespace Game.Creatures
             SetStats(Level);
         }
 
+        public Enemy(Vector2 Position, int Width, int Height,int i,int j) : base(Position, Width, Height)
+        {
+            this.Position = Position;
+            this.Width = Width;
+            this.Height = Height;
+            this.j = j;
+            this.i = i;
+            HitBox = new System.Windows.Shapes.Ellipse();
+            NormalAttackArea = new System.Windows.Shapes.Ellipse();
+            StrongAttackArea = new System.Windows.Shapes.Ellipse();
+            VisionArea = new System.Windows.Shapes.Ellipse();
+
+            Vision = new System.Windows.Shapes.Rectangle();
+
+            Speed = (float)1;
+            
+            SetStats(Level);
+        }
         private void SetStats(int level)
         {
             Hp = 100;
