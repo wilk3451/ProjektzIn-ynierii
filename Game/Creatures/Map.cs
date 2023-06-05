@@ -15,6 +15,7 @@ namespace Game.Creatures
         public List<Door> doors;
         public List<Treasure> treasures;
         public List<Potion> potions;
+        public List<Enemy> enemies;
         public bool Contact = false;
         Player P;
 
@@ -23,6 +24,9 @@ namespace Game.Creatures
         int door_counter = 0;
         int treasures_counter = 0;
         int potions_counter = 0;
+        public int enemies_counter = 0;
+
+        
         public Map(string[,] map)
         {
             this.map = map;
@@ -33,6 +37,7 @@ namespace Game.Creatures
             doors = new List<Door>();
             treasures = new List<Treasure>();
             potions = new List<Potion>();
+            enemies = new List<Enemy>();
 
 
 
@@ -142,6 +147,21 @@ namespace Game.Creatures
                             potions_counter++;
                         }
                     }
+                    if (map[i, j] == "e")
+                    {
+
+
+                        Enemy enemy = new Enemy(new Vector2(j * mlply2 + przes, i * mlply1), mlply2, mlply2,i,j);
+                        enemy.Body = new System.Windows.Shapes.Rectangle();
+
+                        enemy.Body.Width = mlply2;
+                        enemy.Body.Height = mlply1;
+
+                        enemies.Add(enemy);
+
+                        enemies_counter++;
+
+                    }
                     // - end
                 }
             }
@@ -153,12 +173,16 @@ namespace Game.Creatures
 
             wall_counter = 0;
             nextleveldoors_counter = 0;
+            door_counter = 0;
+            potions_counter = 0;
+            enemies_counter = 0;
 
             wallsinmap.Clear();
             nextleveldoors.Clear();
             doors.Clear();
             treasures.Clear();
             potions.Clear();
+            enemies.Clear();
 
             //K
             //K
@@ -274,9 +298,31 @@ namespace Game.Creatures
                             potions_counter++;
                         }
                     }
+                    if (map[i, j] == "e")
+                    {
+
+
+                        Enemy enemy = new Enemy(new Vector2(j * mlply2 + przes, i * mlply1), mlply2, mlply2,i,j);
+                        enemy.Body = new System.Windows.Shapes.Rectangle();
+
+                        enemy.Body.Width = mlply2;
+                        enemy.Body.Height = mlply1;
+
+                        enemies.Add(enemy);
+
+                        enemies_counter++;
+
+                    }
                     // - end
                 }
             }
+        }
+        public void removeEnemy(int i)
+        {
+            map[enemies[i].i, enemies[i].j] = ",";
+            enemies.RemoveAt(i);
+            enemies_counter--;
+            
         }
     }
 }
