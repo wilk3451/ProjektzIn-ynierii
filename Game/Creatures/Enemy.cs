@@ -139,7 +139,7 @@ namespace Game.Creatures
             HitBox.Height = this.Height;
             Canvas.SetTop(HitBox, Position.Y);
             Canvas.SetLeft(HitBox, Position.X);
-            HitBox.Stroke = new SolidColorBrush(Colors.White);
+            //HitBox.Stroke = new SolidColorBrush(Colors.White);
             gameArea.DataContext = HitBox;
 
             //Normal Attack Area
@@ -148,7 +148,7 @@ namespace Game.Creatures
             NormalAttackArea.Height = this.Height + 30;
             Canvas.SetTop(NormalAttackArea, Position.Y - Height / 2);
             Canvas.SetLeft(NormalAttackArea, Position.X);
-            NormalAttackArea.Stroke = new SolidColorBrush(Colors.White);
+            //NormalAttackArea.Stroke = new SolidColorBrush(Colors.White);
             gameArea.DataContext = NormalAttackArea;
 
             // Strong Attack Area - na razie to samo co Normal Attack Area
@@ -157,7 +157,7 @@ namespace Game.Creatures
             StrongAttackArea.Height = this.Height + 30;
             Canvas.SetTop(StrongAttackArea, Position.Y - Height / 2);
             Canvas.SetLeft(StrongAttackArea, Position.X);
-            HitBox.Stroke = new SolidColorBrush(Colors.White);
+            //HitBox.Stroke = new SolidColorBrush(Colors.White);
             gameArea.DataContext = StrongAttackArea;
 
             // Vision Area
@@ -166,7 +166,7 @@ namespace Game.Creatures
             VisionArea.Height = this.Height + 60;
             Canvas.SetTop(VisionArea, Position.Y - Height / 2);
             Canvas.SetLeft(VisionArea, Position.X);
-            VisionArea.Stroke = new SolidColorBrush(Colors.White);
+            //VisionArea.Stroke = new SolidColorBrush(Colors.White);
             gameArea.DataContext = VisionArea;
 
             // Rectangle for Help

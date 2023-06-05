@@ -53,7 +53,7 @@ namespace Game.Windows
 
         public static Vector2 respawnLocation = new Vector2(100, 100); // polożenie gracza na początku gry
 
-        public Player player = new Player(respawnLocation, 30, 30);
+        public Player player = new Player(respawnLocation, 20, 60);
 
         public List<Bullet> bullets = new List<Bullet>();
 
@@ -145,7 +145,7 @@ namespace Game.Windows
                 Score = 0;
                 respawnLocation = new Vector2(100, 100); // polożenie gracza na początku gry
 
-                player = new Player(respawnLocation, 30, 30);
+                player = new Player(respawnLocation, 50, 50);
 
                 DrawWorld();
                 //inventory.Clear();
