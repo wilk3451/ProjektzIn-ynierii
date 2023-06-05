@@ -283,7 +283,8 @@ namespace Game.Windows
             enemies.Clear();
             if (map_index < MapsList.length())
             {
-                map.changeMap(MapsList.get(map_index++));
+                map.changeMap(MapsList.get(map_index));
+                map_index++;
             }
             player.Create(gameArea);
             player.Position = new Vector2(100, 100);
@@ -370,13 +371,13 @@ namespace Game.Windows
                     SaveGame(player);
                 }
 
-                if (isCollidingWithDoor(player, new Vector2(moveDistance, 0)) != -1)
+                if (isCollidingWithDoor(player, new Vector2(moveDistance, 0)) != (-1))
                 {
                     int Room_index = isCollidingWithDoor(player, new Vector2(moveDistance,0));
 
                     NxtRoom(Room_index);
 
-                    NxtRoom(Room_index);
+                    //NxtRoom(Room_index);
                     DifferentRoom = true;
                     DifferentMap = false;
                     NewGame = true;
