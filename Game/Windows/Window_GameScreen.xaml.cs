@@ -374,7 +374,7 @@ namespace Game.Windows
                 {
                     int Room_index = isCollidingWithDoor(player, new Vector2(moveDistance,0));
 
-                    //NxtRoom(Room_index);
+                    NxtRoom(Room_index);
 
                     NxtRoom(Room_index);
                     DifferentRoom = true;
