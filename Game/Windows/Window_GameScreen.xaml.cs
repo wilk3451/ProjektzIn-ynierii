@@ -359,6 +359,10 @@ namespace Game.Windows
                 SaveGame(player);
                 if (isCollidingWithNxtLvlDoor(player, new Vector2(moveDistance, 0)))
                 {
+                    if (map_index == 3)
+                    {
+                        Scoreboard();
+                    }
                     NxtLvl();
                     DifferentMap = true;
                     DifferentRoom = false;
@@ -399,6 +403,10 @@ namespace Game.Windows
 
                 if (isCollidingWithNxtLvlDoor(player, new Vector2(-moveDistance, 0)))
                 {
+                    if (map_index == 3)
+                    {
+                        Scoreboard();
+                    }
                     NxtLvl();
                     DifferentMap = true;
                     DifferentRoom = false;
@@ -449,6 +457,10 @@ namespace Game.Windows
 
                 if (isCollidingWithNxtLvlDoor(player, new Vector2(0, -moveDistance)))
                 {
+                    if (map_index == 3)
+                    {
+                        Scoreboard();
+                    }
                     NxtLvl();
                     DifferentMap = false;
                     DifferentRoom = true;
@@ -499,6 +511,10 @@ namespace Game.Windows
 
                 if (isCollidingWithNxtLvlDoor(player, new Vector2(0, moveDistance)))
                 {
+                    if (map_index == 3)
+                    {
+                        Scoreboard();
+                    }
                     NxtLvl();
                     DifferentMap = true;
                     DifferentRoom = false;
@@ -1564,11 +1580,12 @@ namespace Game.Windows
             //}
         }
 
-       /*public void Wynik()
+       public void Scoreboard()
         {
             int moveDistance = (int)player.Speed;
-            if ((isCollidingWithNxtLvlDoor(player, new Vector2(moveDistance, 0)) && map_index == 3) || (isCollidingWithNxtLvlDoor(player, new Vector2(-moveDistance, 0)) && map_index == 3) || (isCollidingWithNxtLvlDoor(player, new Vector2(0, moveDistance)) && map_index == 3) || (isCollidingWithNxtLvlDoor(player, new Vector2(0, -moveDistance)) && map_index == 3))
-            {
+            //if ((isCollidingWithNxtLvlDoor(player, new Vector2(moveDistance, 0)) && map_index == 3) || (isCollidingWithNxtLvlDoor(player, new Vector2(-moveDistance, 0)) && map_index == 3) || (isCollidingWithNxtLvlDoor(player, new Vector2(0, moveDistance)) && map_index == 3) || (isCollidingWithNxtLvlDoor(player, new Vector2(0, -moveDistance)) && map_index == 3))
+            //if(map_index == 3)
+            //{
                 Window score = new Window_Score()
                 {
                     Owner = this.Parent as Window,
@@ -1576,8 +1593,8 @@ namespace Game.Windows
                 };
 
                 score.ShowDialog();
-            }
-        }*/
+            //}
+        }
 
     }
 
