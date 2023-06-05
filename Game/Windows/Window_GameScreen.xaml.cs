@@ -53,7 +53,7 @@ namespace Game.Windows
 
         public static Vector2 respawnLocation = new Vector2(100, 100); // polożenie gracza na początku gry
 
-        public Player player = new Player(respawnLocation, 20, 60);
+        public Player player = new Player(respawnLocation, 50, 50);
 
         public List<Bullet> bullets = new List<Bullet>();
 
@@ -173,7 +173,7 @@ namespace Game.Windows
 
                 respawnLocation = new Vector2(float.Parse(linie[0]), float.Parse(linie[1]));
                 //respawnLocation = new Vector2(100, 100);
-                player = new Player(respawnLocation, 30, 30);
+                player = new Player(respawnLocation, 50, 50);
                 //skarb = new Vector2(float.Parse(linie[4]), float.Parse(linie[5]));
                 Score = int.Parse(linie[2]);
                 if (bool.Parse(linie[6]) == true)
@@ -360,10 +360,10 @@ namespace Game.Windows
                 SaveGame(player);
                 if (isCollidingWithNxtLvlDoor(player, new Vector2(moveDistance, 0)))
                 {
-                    if (map_index == 3)
+                    /*if (map_index == 4)
                     {
                         Scoreboard();
-                    }
+                    }*/
                     NxtLvl();
                     DifferentMap = true;
                     DifferentRoom = false;
@@ -404,10 +404,10 @@ namespace Game.Windows
 
                 if (isCollidingWithNxtLvlDoor(player, new Vector2(-moveDistance, 0)))
                 {
-                    if (map_index == 3)
+                    /*if (map_index == 4)
                     {
                         Scoreboard();
-                    }
+                    }*/
                     NxtLvl();
                     DifferentMap = true;
                     DifferentRoom = false;
@@ -458,10 +458,10 @@ namespace Game.Windows
 
                 if (isCollidingWithNxtLvlDoor(player, new Vector2(0, -moveDistance)))
                 {
-                    if (map_index == 3)
+                    /*if (map_index == 4)
                     {
                         Scoreboard();
-                    }
+                    }*/
                     NxtLvl();
                     DifferentMap = false;
                     DifferentRoom = true;
@@ -512,10 +512,10 @@ namespace Game.Windows
 
                 if (isCollidingWithNxtLvlDoor(player, new Vector2(0, moveDistance)))
                 {
-                    if (map_index == 3)
+                    /*if (map_index == 4)
                     {
                         Scoreboard();
-                    }
+                    }*/
                     NxtLvl();
                     DifferentMap = true;
                     DifferentRoom = false;
@@ -1553,7 +1553,7 @@ namespace Game.Windows
             //}
         }
 
-       public void Scoreboard()
+       /*public void Scoreboard()
         {
             int moveDistance = (int)player.Speed;
             //if ((isCollidingWithNxtLvlDoor(player, new Vector2(moveDistance, 0)) && map_index == 3) || (isCollidingWithNxtLvlDoor(player, new Vector2(-moveDistance, 0)) && map_index == 3) || (isCollidingWithNxtLvlDoor(player, new Vector2(0, moveDistance)) && map_index == 3) || (isCollidingWithNxtLvlDoor(player, new Vector2(0, -moveDistance)) && map_index == 3))
@@ -1568,7 +1568,7 @@ namespace Game.Windows
                 score.ShowDialog();
             
             //}
-        }
+        }*/
 
     }
 
