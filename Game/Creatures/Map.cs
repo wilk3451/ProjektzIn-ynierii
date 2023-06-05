@@ -271,7 +271,7 @@ namespace Game.Creatures
                         Potion potion;
                         Random random = new Random();
                         int Type = random.Next(0, 4);
-                        int width = 40, height = 40;
+                        int width = 40, height = 50;
 
                         if (Type == 0)
                         {
