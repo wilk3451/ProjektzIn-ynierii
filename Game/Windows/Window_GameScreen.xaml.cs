@@ -360,10 +360,10 @@ namespace Game.Windows
                 SaveGame(player);
                 if (isCollidingWithNxtLvlDoor(player, new Vector2(moveDistance, 0)))
                 {
-                    /*if (map_index == 4)
-                    {
+                    //if (map_index == 4)
+                    //{
                         Scoreboard();
-                    }*/
+                    //}
                     NxtLvl();
                     DifferentMap = true;
                     DifferentRoom = false;
@@ -404,10 +404,10 @@ namespace Game.Windows
 
                 if (isCollidingWithNxtLvlDoor(player, new Vector2(-moveDistance, 0)))
                 {
-                    /*if (map_index == 4)
-                    {
+                    //if (map_index == 4)
+                    //{
                         Scoreboard();
-                    }*/
+                    //}
                     NxtLvl();
                     DifferentMap = true;
                     DifferentRoom = false;
@@ -458,10 +458,10 @@ namespace Game.Windows
 
                 if (isCollidingWithNxtLvlDoor(player, new Vector2(0, -moveDistance)))
                 {
-                    /*if (map_index == 4)
-                    {
+                    //if (map_index == 4)
+                    //{
                         Scoreboard();
-                    }*/
+                    //}
                     NxtLvl();
                     DifferentMap = false;
                     DifferentRoom = true;
@@ -512,10 +512,10 @@ namespace Game.Windows
 
                 if (isCollidingWithNxtLvlDoor(player, new Vector2(0, moveDistance)))
                 {
-                    /*if (map_index == 4)
-                    {
+                    //if (map_index == 4)
+                    //{
                         Scoreboard();
-                    }*/
+                    //}
                     NxtLvl();
                     DifferentMap = true;
                     DifferentRoom = false;
@@ -1553,22 +1553,66 @@ namespace Game.Windows
             //}
         }
 
-       /*public void Scoreboard()
+       public void Scoreboard()
         {
             int moveDistance = (int)player.Speed;
             //if ((isCollidingWithNxtLvlDoor(player, new Vector2(moveDistance, 0)) && map_index == 3) || (isCollidingWithNxtLvlDoor(player, new Vector2(-moveDistance, 0)) && map_index == 3) || (isCollidingWithNxtLvlDoor(player, new Vector2(0, moveDistance)) && map_index == 3) || (isCollidingWithNxtLvlDoor(player, new Vector2(0, -moveDistance)) && map_index == 3))
-            //if(map_index == 3)
-            //{
-               Window score = new Window
+            if(map_index == 4)
+            {
+                if(File.Exists(@".\Punkty.txt"))
+                {
+                    string[] KoniecGry = File.ReadAllLines(@".\Punkty.txt");
+                    string Folder = @"";
+                    string FileName = "Punkty.txt";
+                    string fullPath = Folder + FileName;
+
+                    if (Score > int.Parse(KoniecGry[0]))
+                    {
+                        Highscore = Score;
+                        HighestScore[0] = Highscore.ToString();
+                        HighestScore[1] = Score.ToString();
+                    }
+                    else
+                    {
+                        HighestScore[0] = KoniecGry[0];
+                        HighestScore[1] = Score.ToString();
+                    }
+                    File.WriteAllLines(fullPath, HighestScore);
+                }
+                else 
+                {
+                    string Folder = @"";
+                    string FileName = "Punkty.txt";
+                    string fullPath = Folder + FileName;
+                    Highscore = Score;
+
+                    HighestScore[0] = Highscore.ToString();
+                    HighestScore[1] = Score.ToString();
+                    File.WriteAllLines(fullPath, HighestScore);
+                    //File.WriteAllLines(fullPath, HighestScore);
+                    /*if (Score > Highscore)
+                    {
+                        Highscore1 = Score;
+                        HighestScore[0] = Highscore.ToString();
+                        HighestScore[1] = Score.ToString();
+                    }
+                    else
+                    {
+                        HighestScore[1] = Score.ToString();
+                    }*/
+                }
+                
+
+                Window score = new Window_Score()
                 {
                     Owner = this.Parent as Window,
                     ShowInTaskbar = false
                 };
 
+                //Highscore_Screen();
                 score.ShowDialog();
-            
-            //}
-        }*/
+            }
+        }
 
     }
 
