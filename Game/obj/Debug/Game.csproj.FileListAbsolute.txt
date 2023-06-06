@@ -102,3 +102,5 @@ C:\Users\Student_PL\Desktop\ProjektzInzynierii-main\Game\obj\Debug\Game.csproj.G
 C:\Users\Student_PL\Desktop\ProjektzInzynierii-main\Game\obj\Debug\Game.csproj.CoreCompileInputs.cache
 C:\Users\Student_PL\Desktop\ProjektzInzynierii-main\Game\obj\Debug\Game.exe
 C:\Users\Student_PL\Desktop\ProjektzInzynierii-main\Game\obj\Debug\Game.pdb
+C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\Windows\Window_Score.g.cs
+C:\Users\PC\source\repos\ProjektzInzynierii\Game\obj\Debug\Windows\Window_Score.baml

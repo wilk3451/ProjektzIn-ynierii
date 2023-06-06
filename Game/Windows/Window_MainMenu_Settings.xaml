@@ -88,10 +88,12 @@
 
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="360"></ColumnDefinition>
-                        <ColumnDefinition Width="160"></ColumnDefinition>
+                        <ColumnDefinition Width="200"></ColumnDefinition>
+                        <ColumnDefinition Width="170"></ColumnDefinition>
+                        <ColumnDefinition Width="100"></ColumnDefinition>
+                        <ColumnDefinition Width="170"></ColumnDefinition>
                         <ColumnDefinition Width="40"></ColumnDefinition>
-                        <ColumnDefinition Width="360"></ColumnDefinition>
+                        <ColumnDefinition Width="200"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
                     <Grid.RowDefinitions>
@@ -116,7 +118,7 @@
                         <TextBlock>Move right</TextBlock>
                     </Grid>
                     <Grid Grid.Column="1" Grid.Row="4">
-                        <TextBlock>Menu</TextBlock>
+                        <TextBlock>Use</TextBlock>
                     </Grid>
 
 
@@ -133,8 +135,38 @@
                         <TextBlock>D</TextBlock>
                     </Grid>
                     <Grid Grid.Column="2" Grid.Row="4">
-                        <TextBlock>M</TextBlock>
+                        <TextBlock>F</TextBlock>
                     </Grid>
+
+
+                    <Grid Grid.Column="3" Grid.Row="0">
+                        <TextBlock>Normal attack</TextBlock>
+                    </Grid>
+                    <Grid Grid.Column="3" Grid.Row="1">
+                        <TextBlock>Strong attack</TextBlock>
+                    </Grid>
+                    <Grid Grid.Column="3" Grid.Row="2">
+                        <TextBlock>Shoot</TextBlock>
+                    </Grid>
+                    <Grid Grid.Column="3" Grid.Row="3">
+                        <TextBlock>Inventory</TextBlock>
+                    </Grid>
+                    
+
+
+                    <Grid Grid.Column="4" Grid.Row="0">
+                        <TextBlock>R</TextBlock>
+                    </Grid>
+                    <Grid Grid.Column="4" Grid.Row="1">
+                        <TextBlock>T</TextBlock>
+                    </Grid>
+                    <Grid Grid.Column="4" Grid.Row="2">
+                        <TextBlock>E</TextBlock>
+                    </Grid>
+                    <Grid Grid.Column="4" Grid.Row="3">
+                        <TextBlock>I</TextBlock>
+                    </Grid>
+                    
 
                 </Grid>
 

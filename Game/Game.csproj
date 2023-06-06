@@ -112,6 +112,9 @@
     <Compile Include="Windows\Window_MainMenu_Settings.xaml.cs">
       <DependentUpon>Window_MainMenu_Settings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Window_Score.xaml.cs">
+      <DependentUpon>Window_Score.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -143,6 +146,10 @@
     <Page Include="Windows\Window_MainMenu_Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Window_Score.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
