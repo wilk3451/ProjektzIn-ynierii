@@ -952,7 +952,8 @@ namespace Game.Windows
                     map.removeEnemy(i);
                     enemies[i].Delete(gameArea);
                     enemies.RemoveAt(i);
-                    //Score += 5;
+                    Score += 5;
+                    updateInterface();
                     
                 }
             }
