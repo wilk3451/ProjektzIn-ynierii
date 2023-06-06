@@ -87,7 +87,7 @@ namespace Game.Windows
         public static Vector2 kasa3 = new Vector2(290, 330);
         public static Vector2 kasa4 = new Vector2(250, 330);*/
 
-        public Treasure killer = new Treasure(skarb, 50, 20);
+        //public Treasure killer = new Treasure(skarb, 50, 20);
 
         /*public Coin C = new Coin(kasa, 10, 10);
         public Emerald E = new Emerald(kasa2, 12, 12);
@@ -104,7 +104,7 @@ namespace Game.Windows
         public int Score = 0, Highscore, index, PotionsNumber = 0;
 
         public bool WasTouched = false;
-        public bool DifferentRoom, DifferentMap, NewGame;
+        public bool DifferentRoom, DifferentMap, NewGame, DoorContact = false;
         //public bool NewGame = false;
         bool CzyMapa, CzyPokoj;
 
@@ -365,7 +365,8 @@ namespace Game.Windows
                 {
                     //if (map_index == 4)
                     //{
-                        Scoreboard();
+                    DoorContact = true;
+                    Scoreboard();
                     //}
                     NxtLvl();
                     DifferentMap = true;
@@ -409,7 +410,8 @@ namespace Game.Windows
                 {
                     //if (map_index == 4)
                     //{
-                        Scoreboard();
+                    DoorContact = true;
+                    Scoreboard();
                     //}
                     NxtLvl();
                     DifferentMap = true;
@@ -463,7 +465,8 @@ namespace Game.Windows
                 {
                     //if (map_index == 4)
                     //{
-                        Scoreboard();
+                    DoorContact = true;
+                    Scoreboard();
                     //}
                     NxtLvl();
                     DifferentMap = false;
@@ -517,7 +520,8 @@ namespace Game.Windows
                 {
                     //if (map_index == 4)
                     //{
-                        Scoreboard();
+                    DoorContact = true;
+                    Scoreboard();
                     //}
                     NxtLvl();
                     DifferentMap = true;
@@ -793,6 +797,8 @@ namespace Game.Windows
                 {
                     player.CurrentHp -= 2;
                     updateInterface();
+                    if (player.CurrentHp <= 0)
+                        Scoreboard();
                 }
                 
 
@@ -946,7 +952,7 @@ namespace Game.Windows
                     map.removeEnemy(i);
                     enemies[i].Delete(gameArea);
                     enemies.RemoveAt(i);
-                    
+                    //Score += 5;
                     
                 }
             }
@@ -1541,7 +1547,6 @@ namespace Game.Windows
                     Wrogowie = "0";
                 }
 
-
                 Zdrowie = player.CurrentHp.ToString();
 
                 Napoje = PotionsNumber.ToString();
@@ -1565,7 +1570,7 @@ namespace Game.Windows
         {
             int moveDistance = (int)player.Speed;
             //if ((isCollidingWithNxtLvlDoor(player, new Vector2(moveDistance, 0)) && map_index == 3) || (isCollidingWithNxtLvlDoor(player, new Vector2(-moveDistance, 0)) && map_index == 3) || (isCollidingWithNxtLvlDoor(player, new Vector2(0, moveDistance)) && map_index == 3) || (isCollidingWithNxtLvlDoor(player, new Vector2(0, -moveDistance)) && map_index == 3))
-            if(map_index == 4)
+            if(map_index == 4 && DoorContact == true)
             {
                 if(File.Exists(@".\Punkty.txt"))
                 {
@@ -1610,6 +1615,65 @@ namespace Game.Windows
                     }*/
                 }
                 
+
+                Window score = new Window_Score()
+                {
+                    Owner = this.Parent as Window,
+                    ShowInTaskbar = false
+                };
+
+                //Highscore_Screen();
+                score.ShowDialog();
+            }
+            else if(player.CurrentHp == 0)
+            {
+                if (File.Exists(@".\Punkty.txt"))
+                {
+                    string[] KoniecGry = File.ReadAllLines(@".\Punkty.txt");
+                    string Folder = @"";
+                    string FileName = "Punkty.txt";
+                    string fullPath = Folder + FileName;
+
+                    if (Score > int.Parse(KoniecGry[0]))
+                    {
+                        Highscore = Score;
+                        HighestScore[0] = Highscore.ToString();
+                        HighestScore[1] = Score.ToString();
+                    }
+                    else
+                    {
+                        HighestScore[0] = KoniecGry[0];
+                        HighestScore[1] = Score.ToString();
+                    }
+                    File.WriteAllLines(fullPath, HighestScore);
+                    player.CurrentHp = 100;
+                    SaveGame(player);
+                }
+                else
+                {
+                    string Folder = @"";
+                    string FileName = "Punkty.txt";
+                    string fullPath = Folder + FileName;
+                    Highscore = Score;
+
+                    HighestScore[0] = Highscore.ToString();
+                    HighestScore[1] = Score.ToString();
+                    File.WriteAllLines(fullPath, HighestScore);
+                    player.CurrentHp = 100;
+                    SaveGame(player);
+                    //File.WriteAllLines(fullPath, HighestScore);
+                    /*if (Score > Highscore)
+                    {
+                        Highscore1 = Score;
+                        HighestScore[0] = Highscore.ToString();
+                        HighestScore[1] = Score.ToString();
+                    }
+                    else
+                    {
+                        HighestScore[1] = Score.ToString();
+                    }*/
+                }
+
 
                 Window score = new Window_Score()
                 {
