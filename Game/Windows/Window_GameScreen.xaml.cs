@@ -79,6 +79,8 @@ namespace Game.Windows
 
         public static Vector2 Punkty = new Vector2(0, 0);
         public Wynik W = new Wynik(Punkty, 100, 50);
+        string[] HighestScore = new string[2];
+        
 
         /*public static Vector2 kasa = new Vector2(250, 370);
         public static Vector2 kasa2 = new Vector2(290, 370);
@@ -99,7 +101,7 @@ namespace Game.Windows
         public List<Ruby> rubys = new List<Ruby>();
         public List<Diamond> diamonds = new List<Diamond>();
 
-        public int Score = 0, index, PotionsNumber = 0;
+        public int Score = 0, Highscore, index, PotionsNumber = 0;
 
         public bool WasTouched = false;
         public bool DifferentRoom, DifferentMap, NewGame;
