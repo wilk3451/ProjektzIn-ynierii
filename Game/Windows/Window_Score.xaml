@@ -1,4 +1,4 @@
-﻿<Window x:Class="Game.Windows.Window_Score"
+<Window x:Class="Game.Windows.Window_Score"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -13,11 +13,13 @@
 
     <Window.Resources>
 
+        
         <Style TargetType="Border">
             <Setter Property="Background" Value="#191919"/>
             <Setter Property="Margin" Value="0"/>
             <Setter Property="TextElement.FontFamily" Value="/Game;component/Fonts/#Bernard MT Condensed"/>
         </Style>
+            
 
         <Style TargetType="Button">
 
@@ -56,7 +58,7 @@
             <Setter Property="Foreground" Value="#c3c3c3"/>
         </Style>
     </Window.Resources>
-
+     
 
 
 
@@ -76,7 +78,7 @@
 
             <Grid Grid.Row="0">
                 <TextBlock Style="{StaticResource Title}">
-                    Scoreboard
+                    Game Over
                 </TextBlock>
             </Grid>
 
@@ -85,8 +87,13 @@
 
 
             <Grid Grid.Row="1">
-
-                <Grid>
+            <Canvas x:Name="GameOver"
+                
+            Background="#2b2e33"
+            Focusable="False"
+            Width="920" Height="280" Margin="0,0,0,0"
+            Panel.ZIndex="1" Grid.ColumnSpan="2"/>
+                <!--Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="360"></ColumnDefinition>
                         <ColumnDefinition Width="160"></ColumnDefinition>
@@ -116,7 +123,7 @@
                     <Grid Grid.Column="2" Grid.Row="3"/>
                     <Grid Grid.Column="2" Grid.Row="4"/>
 
-                </Grid>
+                </Grid-->
 
             </Grid>
 
