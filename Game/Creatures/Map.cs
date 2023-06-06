@@ -88,7 +88,7 @@ namespace Game.Creatures
                     {
 
 
-                        Treasure treasure = new Treasure(new Vector2(j * mlply2 + przes, i * mlply1), 60, 60/*mlply2, mlply2*/);
+                        Treasure treasure = new Treasure(new Vector2(j * mlply2 + przes, i * mlply1), 60, 60/*mlply2, mlply2*/, i, j);
                         treasure.Body = new System.Windows.Shapes.Rectangle();
 
                         //treasure.Body.Width = 20;
@@ -124,25 +124,25 @@ namespace Game.Creatures
 
                         if (Type == 0)
                         { 
-                            potion = new Potion(new Vector2(j * mlply2 + przes, i * mlply1), width, height, TypeOfPotion.HealthRegeneration);
+                            potion = new Potion(new Vector2(j * mlply2 + przes, i * mlply1), width, height, TypeOfPotion.HealthRegeneration, i, j);
                             potions.Add(potion);
                             potions_counter++;
                         }
                         else if (Type == 1)
                         { 
-                            potion = new Potion(new Vector2(j * mlply2 + przes, i * mlply1), width, height, TypeOfPotion.StaminaRegenerationBoost);
+                            potion = new Potion(new Vector2(j * mlply2 + przes, i * mlply1), width, height, TypeOfPotion.StaminaRegenerationBoost, i, j);
                             potions.Add(potion);
                             potions_counter++;
                         }
                         else if (Type == 2) 
                         { 
-                            potion = new Potion(new Vector2(j * mlply2 + przes, i * mlply1), width, height, TypeOfPotion.HigherAttackValue);
+                            potion = new Potion(new Vector2(j * mlply2 + przes, i * mlply1), width, height, TypeOfPotion.HigherAttackValue, i, j);
                             potions.Add(potion);
                             potions_counter++;
                         }
                         else if (Type == 3) 
                         { 
-                            potion = new Potion(new Vector2(j * mlply2 + przes, i * mlply1), width, height, TypeOfPotion.HigherDefenceValue);
+                            potion = new Potion(new Vector2(j * mlply2 + przes, i * mlply1), width, height, TypeOfPotion.HigherDefenceValue, i, j);
                             potions.Add(potion);
                             potions_counter++;
                         }
@@ -234,7 +234,7 @@ namespace Game.Creatures
                     {
 
 
-                        Treasure treasure = new Treasure(new Vector2(j * mlply2, i * mlply1), 60, 60);
+                        Treasure treasure = new Treasure(new Vector2(j * mlply2, i * mlply1), 60, 60, i, j);
                         
                         //treasure.Body = new System.Windows.Shapes.Rectangle();
                      
@@ -275,25 +275,25 @@ namespace Game.Creatures
 
                         if (Type == 0)
                         {
-                            potion = new Potion(new Vector2(j * mlply2 + przes, i * mlply1), width, height, TypeOfPotion.HealthRegeneration);
+                            potion = new Potion(new Vector2(j * mlply2 + przes, i * mlply1), width, height, TypeOfPotion.HealthRegeneration, i, j);
                             potions.Add(potion);
                             potions_counter++;
                         }
                         else if (Type == 1)
                         {
-                            potion = new Potion(new Vector2(j * mlply2 + przes, i * mlply1), width, height, TypeOfPotion.StaminaRegenerationBoost);
+                            potion = new Potion(new Vector2(j * mlply2 + przes, i * mlply1), width, height, TypeOfPotion.StaminaRegenerationBoost, i, j);
                             potions.Add(potion);
                             potions_counter++;
                         }
                         else if (Type == 2)
                         {
-                            potion = new Potion(new Vector2(j * mlply2 + przes, i * mlply1), width, height, TypeOfPotion.HigherAttackValue);
+                            potion = new Potion(new Vector2(j * mlply2 + przes, i * mlply1), width, height, TypeOfPotion.HigherAttackValue, i, j);
                             potions.Add(potion);
                             potions_counter++;
                         }
                         else if (Type == 3)
                         {
-                            potion = new Potion(new Vector2(j * mlply2 + przes, i * mlply1), width, height, TypeOfPotion.HigherDefenceValue);
+                            potion = new Potion(new Vector2(j * mlply2 + przes, i * mlply1), width, height, TypeOfPotion.HigherDefenceValue, i, j);
                             potions.Add(potion);
                             potions_counter++;
                         }
@@ -323,6 +323,22 @@ namespace Game.Creatures
             enemies.RemoveAt(i);
             enemies_counter--;
             
+        }
+
+        public void removeTreasure(int i)
+        {
+            this.map[treasures[i].i, treasures[i].j] = ",";
+            treasures.RemoveAt(i);
+            treasures_counter--;
+
+        }
+
+        public void removePotion(int i)
+        {
+            this.map[potions[i].i, potions[i].j] = ",";
+            potions.RemoveAt(i);
+            potions_counter--;
+
         }
     }
 }
