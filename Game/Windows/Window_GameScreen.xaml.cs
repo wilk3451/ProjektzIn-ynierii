@@ -1126,21 +1126,24 @@ namespace Game.Windows
                 gameArea.DataContext = map.doors[door_counter].Body;
             }
             ImageBrush TSprite = new ImageBrush();
-            TSprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/treasure.png"));
-            for (int treasureCounter = 0; treasureCounter < map.treasures.Count(); treasureCounter++)
+            if (map.treasures.Count() > 0)
             {
-                gameArea.Children.Add(map.treasures[treasureCounter].Body);
+                TSprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/treasure.png"));
+                for (int treasureCounter = 0; treasureCounter < map.treasures.Count(); treasureCounter++)
+                {
+                    gameArea.Children.Add(map.treasures[treasureCounter].Body);
 
-                Canvas.SetTop(map.treasures[treasureCounter].Body, map.treasures[treasureCounter].Position.Y);
-                Canvas.SetLeft(map.treasures[treasureCounter].Body, map.treasures[treasureCounter].Position.X);
+                    Canvas.SetTop(map.treasures[treasureCounter].Body, map.treasures[treasureCounter].Position.Y);
+                    Canvas.SetLeft(map.treasures[treasureCounter].Body, map.treasures[treasureCounter].Position.X);
 
-                //
-                //map.treasures[treasureCounter].Body.Fill = new SolidColorBrush(Colors.Brown);
-                
-                map.treasures[treasureCounter].Body.Fill = TSprite;
+                    //
+                    //map.treasures[treasureCounter].Body.Fill = new SolidColorBrush(Colors.Brown);
+
+                    map.treasures[treasureCounter].Body.Fill = TSprite;
 
 
-                gameArea.DataContext = map.treasures[treasureCounter].Body;
+                    gameArea.DataContext = map.treasures[treasureCounter].Body;
+                }
             }
         }
 
