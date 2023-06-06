@@ -178,7 +178,8 @@ namespace Game.Windows
                 player = new Player(respawnLocation, 50, 50);
                 //skarb = new Vector2(float.Parse(linie[4]), float.Parse(linie[5]));
                 Score = int.Parse(linie[2]);
-                if (bool.Parse(linie[6]) == true)
+                player.CurrentHp = int.Parse(linie[6]);
+                if (bool.Parse(linie[7]) == true)
                 {
                     map_index = int.Parse(linie[3]);
                     //MapsList.get(int.Parse(linie[9]));
@@ -187,7 +188,7 @@ namespace Game.Windows
                     //Vector2 temp = map.treasures[index].Position;
 
                 }
-                else if (bool.Parse(linie[6]) == false)
+                else if (bool.Parse(linie[7]) == false)
                 {
                     RI = int.Parse(linie[3]);
                     map_index = int.Parse(linie[3]) + 1;
@@ -1541,10 +1542,12 @@ namespace Game.Windows
                 }
 
 
+                Zdrowie = player.CurrentHp.ToString();
+
                 Napoje = PotionsNumber.ToString();
                 ///gdgsgsggfddgd
 
-                string[] dane = { PozycjaGraczaX, PozycjaGraczaY, /*SkrzynieX, SkrzynieY,*/ LiczbaPunktow, Gdzie, Wrogowie, Napoje, CzyMapa.ToString() };
+                string[] dane = { PozycjaGraczaX, PozycjaGraczaY, /*SkrzynieX, SkrzynieY,*/ LiczbaPunktow, Gdzie, Wrogowie, Napoje, Zdrowie, CzyMapa.ToString() };
                 string[] PozWrogow = pozycje.ToArray();
                 File.WriteAllLines(fullPath, dane);
                 File.WriteAllLines(fullPath2, PozWrogow);
