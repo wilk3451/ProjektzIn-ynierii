@@ -20,6 +20,8 @@ namespace Game.Creatures
     {
         public int i { get; set; }
         public int j { get; set; }
+        public bool czyUsunac = false;
+        
         public Treasure(Vector2 Position, int Width, int Height, int i, int j) : base(Position, Width, Height)
         {
             this.Position = Position;
