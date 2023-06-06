@@ -700,7 +700,7 @@ namespace Game.Windows
                         inventory.addItem(potion);
                         PotionsNumber--;
                         map.potions[i].Delete(gameArea);
-                        map.potions.RemoveAt(i);
+                        map.removePotion(i);
 
                         inventory.DrawInventory(inv); // add proper update() later
                     }
