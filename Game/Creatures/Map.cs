@@ -19,11 +19,11 @@ namespace Game.Creatures
         public bool Contact = false;
         Player P;
 
-        int wall_counter = 0;
-        int nextleveldoors_counter = 0;
-        int door_counter = 0;
-        int treasures_counter = 0;
-        int potions_counter = 0;
+        public int wall_counter = 0;
+        public int nextleveldoors_counter = 0;
+        public int door_counter = 0;
+        public int treasures_counter = 0;
+        public int potions_counter = 0;
         public int enemies_counter = 0;
 
         

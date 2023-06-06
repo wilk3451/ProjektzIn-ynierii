@@ -45,6 +45,8 @@ namespace Game.Items
             this.Width = Width;
             this.Height = Height;
             this.type = type;
+            this.i = i;
+            //this.j = j;
             Body.Width = Width;
             Body.Height = Height;
         }

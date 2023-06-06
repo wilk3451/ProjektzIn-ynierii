@@ -27,6 +27,8 @@ namespace Game.Creatures
             this.Position = Position;
             this.Body.Width = this.Width = Width;
             this.Body.Height = this.Height = Height;
+            this.j = j;
+            this.i = i;
             //this.Body.Fill = new SolidColorBrush(Colors.Brown);
 
             //Karolina

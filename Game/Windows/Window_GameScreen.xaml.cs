@@ -650,12 +650,14 @@ namespace Game.Windows
                                 D.Draw();
                                 diamonds.Add(D);
                             }
-                            //Karolina
+                        //Karolina
 
-                            
-                            map.treasures[index].Delete(gameArea);
-                            map.treasures.RemoveAt(index);
-                            //map.map[(int)map.treasures[index+1].Position.X, (int)map.treasures[index+1].Position.Y] = ",";
+
+                        map.treasures[index].Delete(gameArea);
+                        map.removeTreasure(index);
+                        //map.treasures.RemoveAt(index);
+
+                        //map.map[(int)map.treasures[index+1].Position.X, (int)map.treasures[index+1].Position.Y] = ",";
                         //map.treasures[index].Position.ToString() = ",";
                         //map.treasures.Count()--;
                         //
@@ -696,7 +698,7 @@ namespace Game.Windows
                         //inventory.AddPotion(map.potions[i]); // spr klonowanie
                         Item potion = new Item(1000, "Potion", 50);
                         inventory.addItem(potion);
-                        PotionsNumber++;
+                        PotionsNumber--;
                         map.potions[i].Delete(gameArea);
                         map.potions.RemoveAt(i);
 
