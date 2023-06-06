@@ -37,6 +37,7 @@ namespace Game.Items
         public TypeOfPotion type;
         public int i { get; set; }
         public int j { get; set; }
+        public bool czyUsunac = false;
 
         public Potion(Vector2 Position, int Width, int Height, TypeOfPotion type, int i, int j) : base(Position, Width, Height)
         {
